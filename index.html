@@ -408,10 +408,10 @@ footer {
     © 2025 WW3HourlyUpdates | Real-Time War Alerts, Global Conflict Tracking, and Preparedness News
   </footer>
 
-  <script>
-    // Feed fetching (Al Jazeera)
-    const feedUrl = 'https://www.aljazeera.com/xml/rss/all.xml';
 <script>
+  // Feed fetching (Al Jazeera)
+  const feedUrl = 'https://www.aljazeera.com/xml/rss/all.xml';
+
   async function fetchFeed() {
     const sourceImages = {
       "DW": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Dw_logo_2019.svg",
@@ -449,18 +449,15 @@ footer {
     }
   }
   fetchFeed();
+
+  // Dynamic DEFCON level example - currently hardcoded to 3
+  function setDefconLevel(level) {
+    const badge = document.getElementById('defcon-badge');
+    badge.textContent = `DEFCON ${level}`;
+    badge.className = 'defcon-badge defcon-' + level;
+  }
+  setDefconLevel(3);
 </script>
 
-
-    // Dynamic DEFCON level example - currently hardcoded to 3
-    function setDefconLevel(level) {
-      const badge = document.getElementById('defcon-badge');
-      badge.textContent = `DEFCON ${level}`;
-      badge.className = 'defcon-badge defcon-' + level;
-    }
-    setDefconLevel(3);
-
-    // Your other scripts for fetching WW3 news and updating the "What's Happening Now" section can be added here
-  </script>
 </body>
 </html>
