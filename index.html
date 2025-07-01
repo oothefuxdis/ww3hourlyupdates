@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WW3 Hourly Updates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet" />
+  <style>
+body {
+  margin: 0;
+  background-color: #181818;      /* Slightly lighter dark bg for less harsh contrast */
+  color: #ddd;                    /* Softer white */
+  font-family: 'Roboto', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;          /* Darker but smooth nav bg */
+  padding: 12px 24px;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links li a {
+  color: #ddd;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.25s ease;
+  letter-spacing: 0.04em;
+}
+
+.nav-links li a:hover,
+.nav-links li a:focus {
+  color: #ff4c4c; /* Brighter red accent */
+  outline: none;
+}
+
+.defcon-badge {
+  background: #ff4c4c;
+  color: white;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 14px;
+  font-size: 1rem;
+  cursor: default;
+  font-family: 'Anton', sans-serif;
+  letter-spacing: 1.5px;
+  user-select: none;
+  box-shadow: 0 0 8px #ff4c4caa;
+}
+
+@media (max-width: 600px) {
+  .top-nav {
+    flex-direction: column;
+    gap: 14px;
+    padding: 12px 16px;
+  }
+  .nav-links {
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 1.2em 0;
+  font-size: 2.4em;
+  font-weight: 700;
+  font-family: 'Anton', sans-serif;
+  letter-spacing: 3px;
+  color: #ff4c4c;
+  text-shadow: 0 0 8px #ff4c4caa;
+}
+
+/* What’s Happening Now */
+.whats-now {
+  background-color: #2e2e2e;
+  padding: 2.5em 2.5em;
+  margin-top: 1.4em;
+  border-left: 8px solid #ff4c4c;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  color: #f0f0f0;
+}
+
+.whats-now h2 {
+  font-weight: 700;
+  font-size: 2.1em;
+  margin-bottom: 12px;
+}
+
+.whats-now p#whats-happening-now-text {
+  font-size: 1.35em;
+  font-weight: 700;
+  margin-bottom: 0.3em;
+}
+
+.whats-now p:nth-child(3) {
+  font-size: 1.1em;
+  margin-bottom: 0.6em;
+}
+
+.whats-now p:last-child {
+  font-size: 0.95em;
+  color: #bbb;
+}
+
+/* Feed container */
+.feed-container h2 {
+  margin-bottom: 0.8em;
+  font-weight: 700;
+  font-size: 1.8em;
+  color: #ff4c4c;
+  text-shadow: 0 0 6px #ff4c4caa;
+}
+
+.feed-item {
+  display: flex;
+  gap: 1.2em;
+  margin-bottom: 1.4em;
+  background: #2b2b2b;
+  padding: 1.2em 1.5em;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  transition: background-color 0.3s ease;
+}
+
+.feed-item:hover {
+  background-color: #3a1b1b;
+}
+
+.feed-item img {
+  width: 170px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px #ff4c4caa;
+}
+
+.feed-content h3 {
+  margin: 0 0 0.6em 0;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.feed-content h3 a {
+  color: #eee;
+  text-decoration: none;
+}
+
+.feed-content h3 a:hover,
+.feed-content h3 a:focus {
+  color: #ff4c4c;
+  outline: none;
+}
+
+.feed-content p {
+  margin: 0;
+  color: #ccc;
+  font-size: 1em;
+}
+
+.feed-content .meta {
+  font-size: 0.85em;
+  color: #999;
+  margin-top: 0.5em;
+}
+
+/* Container for columns */
+.container {
+  display: flex;
+  gap: 2.5em;
+  margin: 2.4em auto;
+  max-width: 1200px;
+  padding: 0 1em;
+  flex-wrap: wrap;
+}
+
+.column {
+  flex: 1 1 300px;
+  color: #ddd;
+}
+
+.headline {
+  margin-bottom: 1.2em;
+  font-weight: 700;
+  font-size: 1.1em;
+  cursor: default;
+  color: #ccc;
+}
+
+.headline time {
+  font-weight: 400;
+  color: #888;
+  margin-left: 0.6em;
+  font-size: 0.9em;
+}
+
+/* Featured box */
+.featured {
+  background: #2a2a2a;
+  padding: 1.2em;
+  border-radius: 10px;
+  margin-bottom: 2.2em;
+  box-shadow: 0 0 12px rgba(255, 76, 76, 0.4);
+  color: #eee;
+}
+
+.featured h2 {
+  margin-top: 0;
+  margin-bottom: 0.8em;
+  font-size: 1.6em;
+  font-weight: 700;
+}
+
+/* Bottom row links */
+.bottom-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2em;
+  max-width: 1200px;
+  margin: 2.4em auto;
+  padding: 0 1em;
+}
+
+.bottom-card {
+  background: #2b2b2b;
+  padding: 1.2em;
+  border-radius: 10px;
+  flex: 1 1 180px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  user-select: none;
+  color: #ddd;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.bottom-card:hover,
+.bottom-card:focus {
+  background-color: #ff4c4c;
+  color: white;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Subscribe section */
+.subscribe-section {
+  text-align: center;
+  background: #222;
+  padding: 2.5em 1.2em;
+  margin-top: 3.2em;
+  border-radius: 10px;
+  box-shadow: 0 0 12px #ff4c4c44;
+}
+
+.subscribe-section h2 {
+  font-size: 2em;
+  color: #ff4c4c;
+  margin-bottom: 0.6em;
+  font-weight: 700;
+  text-shadow: 0 0 8px #ff4c4cbb;
+}
+
+.subscribe-section p {
+  font-size: 1.2em;
+  color: #eee;
+  margin-bottom: 1em;
+}
+
+.subscribe-button {
+  background: #ff4c4c;
+  color: white;
+  padding: 0.9em 2.8em;
+  font-weight: 700;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1em;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 10px #ff4c4caa;
+}
+
+.subscribe-button:hover,
+.subscribe-button:focus {
+  background-color: #cc3a3a;
+  outline: none;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1.2em 0;
+  margin-top: 3.5em;
+  font-size: 0.9rem;
+  color: #999;
+  background-color: #222;
+  user-select: none;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="top-nav" role="navigation" aria-label="Primary Navigation">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="timeline.html">Timeline</a></li>
+      <li><a href="survival.html">Survival</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div id="defcon-badge" class="defcon-badge defcon-3" title="Current DEFCON Status">DEFCON 3</div>
+  </nav>
+
+  <header>WW3 HOURLY UPDATES</header>
+
+  <section class="whats-now" aria-live="polite" aria-atomic="true">
+    <h2 style="font-size: 2em; margin-bottom: 10px;">🔴 What’s Happening Now</h2>
+    <p id="whats-happening-now-text" style="font-size: 1.2em; font-weight: bold;">
+      ⚠️ Russian Naval Fleet Enters Baltic Crisis Zone
+    </p>
+    <p style="font-size: 1em;">
+      Tensions spike as NATO responds with air patrols near the Kaliningrad corridor.
+    </p>
+    <p style="font-size: 0.9em; color: #ccc;">
+      🕒 Updated 6:20 PM PT · June 24, 2025
+    </p>
+  </section>
+
+  <section style="margin:2em auto; max-width: 1200px; padding: 0 1em;">
+    <div class="feed-container">
+      <h2>🌍 WW3 Hourly Updates — Visual News Feed</h2>
+      <div id="feed"></div>
+    </div>
+  </section>
+
+  <section class="container" aria-label="Additional News and Context">
+    <div class="column">
+      <h3>Latest Headlines</h3>
+      <div class="headline">Cyberattack disables U.K. defense grid overnight <time>2:30 PM</time></div>
+      <div class="headline">Israeli and Iranian forces clash on Syrian border <time>2:15 PM</time></div>
+      <div class="headline">Russian troop movements spotted near Finnish border <time>1:55 PM</time></div>
+      <div class="headline">Oil prices spike as Strait of Hormuz tensions rise <time>1:40 PM</time></div>
+    </div>
+    <div class="column">
+      <div class="featured">
+        <h2>Inside the WW3 Shadow Ops</h2>
+        <p>Secret Bunkers, AI Command, and the Race for Nuclear Advantage</p>
+        <ul>
+          <li>Exclusive imagery of underground facilities</li>
+          <li>Interview with a former intelligence operative</li>
+        </ul>
+      </div>
+      <h3>Explainers + Context</h3>
+      <ul>
+        <li>What’s the WW3 DEFCON alert system and how does it work?</li>
+        <li>The 3 flashpoints that could trigger global war</li>
+        <li>A guide to nuclear arsenals by country</li>
+      </ul>
+    </div>
+    <div class="column">
+      <h3>Most Popular</h3>
+      <ul>
+        <li>Russia deploys hypersonic missiles near Alaska</li>
+        <li>U.S. draft rumors spark panic across Gen Z</li>
+        <li>China’s AI drones spotted in North Korea</li>
+        <li>Israel strikes Hezbollah base in Lebanon</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="bottom-row" aria-label="Quick Links">
+    <a href="map.html" class="bottom-card" style="text-decoration:none;color:inherit;">📍 Map: Where WW3 conflicts are erupting now</a>
+    <a href="timeline.html" class="bottom-card" style="text-decoration:none;color:inherit;">🕑 Timeline: Key escalation events in last 48 hours</a>
+    <a href="survival.html" class="bottom-card" style="text-decoration:none;color:inherit;">🎒 How to build your own survival kit</a>
+    <a href="moldova.html" class="bottom-card" style="text-decoration:none;color:inherit;">🇺🇦 Why Moldova may be the next hotspot</a>
+    <a href="underground.html" class="bottom-card" style="text-decoration:none;color:inherit;">🏙️ Underground cities: Future of life during war?</a>
+  </section>
+
+  <section class="subscribe-section" aria-label="Subscription Section">
+    <h2>📰 Stay Updated</h2>
+    <p>Subscribe for hourly WW3 alerts, global risk data, and breaking headlines.</p>
+    <a class="subscribe-button" href="https://eepurl.com/jhJvBw" target="_blank" rel="noopener noreferrer">Subscribe Now</a>
+  </section>
+
+  <footer>
+    © 2025 WW3HourlyUpdates | Real-Time War Alerts, Global Conflict Tracking, and Preparedness News
+  </footer>
+
+  <script>
+    // Feed fetching (Al Jazeera)
+    const feedUrl = 'https://www.aljazeera.com/xml/rss/all.xml';
+    async function fetchFeed() {
+      const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feedUrl));
+      const data = await response.json();
+      const items = data.items.slice(0, 5);
+      const feed = document.getElementById('feed');
+      feed.innerHTML = '';
+
+      items.forEach(item => {
+        const imgMatch = item.description.match(/<img[^>]+src="([^">]+)"/);
+        const imgUrl = imgMatch ? imgMatch[1] : 'https://via.placeholder.com/160x100?text=No+Image';
+
+        const div = document.createElement('div');
+        div.className = 'feed-item';
+        div.innerHTML = `
+          <img src="${imgUrl}" alt="">
+          <div class="feed-content">
+            <h3><a href="${item.link}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">${item.title}</a></h3>
+            <p>${item.description.replace(/<[^>]+>/g, '').slice(0, 150)}...</p>
+            <div class="meta">🌐 Al Jazeera · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
+          </div>
+        `;
+        feed.appendChild(div);
+      });
+    }
+    fetchFeed();
+
+    // Dynamic DEFCON level example - currently hardcoded to 3
+    function setDefconLevel(level) {
+      const badge = document.getElementById('defcon-badge');
+      badge.textContent = `DEFCON ${level}`;
+      badge.className = 'defcon-badge defcon-' + level;
+    }
+    setDefconLevel(3);
+
+    // Your other scripts for fetching WW3 news and updating the "What's Happening Now" section can be added here
+  </script>
+</body>
+</html>

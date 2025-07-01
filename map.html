@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Live WW3 Conflict Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+    }
+    header {
+      background: #c40000;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.75rem;
+      font-weight: bold;
+    }
+    #map {
+      height: 85vh;
+      width: 100%;
+    }
+    .back-btn {
+      text-align: center;
+      padding: 1rem;
+      background-color: #111;
+    }
+    .back-btn a {
+      background: #333;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .back-btn a:hover {
+      background: #ff4444;
+    }
+  </style>
+</head>
+<body>
+  <header>🗺️ Live WW3 Conflict Map</header>
+
+  <div class="back-btn">
+    <a href="/">⬅️ Back to Home</a>
+  </div>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([30, 10], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const hotspots = [
+      { name: "Ukraine Conflict", coords: [48.3794, 31.1656] },
+      { name: "Israel-Gaza Region", coords: [31.5, 34.8] },
+      { name: "Taiwan Strait", coords: [23.6978, 120.9605] },
+      { name: "Iran Strategic Region", coords: [32.0, 53.0] },
+      { name: "North Korea DMZ", coords: [38.6, 127.0] },
+      { name: "Baltic Tension Zone", coords: [55.0, 24.0] }
+    ];
+
+    hotspots.forEach(hotspot => {
+      L.marker(hotspot.coords).addTo(map)
+        .bindPopup(`<strong>${hotspot.name}</strong><br><em>Click for latest update (coming soon)</em>`);
+    });
+  </script>
+</body>
+</html>
