@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Test Headline: Russian troops spotted near border",
+    "link": "https://example.com/russian-troops",
+    "description": "Satellite images show increased military movement.",
+    "published": "2025-07-01T14:00:00Z",
+    "source": "Al Jazeera"
+  },
+  {
+    "title": "Cyberattack on US infrastructure",
+    "link": "https://example.com/cyberattack",
+    "description": "Massive outage across northeast states.",
+    "published": "2025-07-01T13:00:00Z",
+    "source": "DW"
+  }
+]
