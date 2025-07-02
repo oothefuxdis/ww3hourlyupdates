@@ -14,27 +14,161 @@
       line-height: 1.6;
       min-height: 100vh;
     }
-    .top-nav { display: flex; justify-content: space-between; align-items: center; background-color: #222; padding: 12px 24px; user-select: none; box-shadow: 0 2px 6px rgba(0,0,0,0.7); }
-    .nav-links { list-style: none; margin: 0; padding: 0; display: flex; gap: 24px; }
-    .nav-links li a { color: #ddd; text-decoration: none; font-weight: 600; font-size: 1rem; transition: color 0.25s ease; letter-spacing: 0.04em; }
-    .nav-links li a:hover { color: #ff4c4c; }
-    .defcon-badge { background: #ff4c4c; color: white; font-weight: 700; padding: 6px 14px; border-radius: 14px; font-size: 1rem; font-family: 'Anton', sans-serif; box-shadow: 0 0 8px #ff4c4caa; }
-    @media (max-width: 600px) { .top-nav { flex-direction: column; gap: 14px; } .nav-links { justify-content: center; gap: 18px; flex-wrap: wrap; } }
-    header { text-align: center; padding: 1.2em 0; font-size: 2.4em; font-weight: 700; font-family: 'Anton', sans-serif; color: #ff4c4c; text-shadow: 0 0 8px #ff4c4caa; }
-    .whats-now { background-color: #2e2e2e; padding: 2.5em; margin: 1.4em auto 0; border-left: 8px solid #ff4c4c; border-radius: 10px; max-width: 1200px; }
-    .whats-now h2 { font-size: 2em; margin-bottom: 10px; }
-    .whats-now p { margin: 0.5em 0; }
-    .feed-container { max-width: 1200px; margin: 2em auto; padding: 0 1em; }
-    .feed-container h2 { font-size: 1.8em; color: #ff4c4c; text-shadow: 0 0 6px #ff4c4caa; }
-    .feed-item { display: flex; gap: 1.2em; margin-bottom: 1.4em; background: #2b2b2b; padding: 1.2em 1.5em; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.6); }
-    .feed-item img { width: 170px; height: 110px; object-fit: cover; border-radius: 8px; box-shadow: 0 0 8px #ff4c4caa; }
-    .feed-content h3 a { color: #eee; text-decoration: none; }
-    .feed-content h3 a:hover { color: #ff4c4c; }
-    .feed-content .meta { font-size: 0.85em; color: #999; margin-top: 0.5em; }
-    footer { text-align: center; padding: 1.2em 0; margin-top: 3.5em; font-size: 0.9rem; color: #999; background-color: #222; }
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #222;
+      padding: 12px 24px;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    }
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 24px;
+    }
+    .nav-links li a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.25s ease;
+      letter-spacing: 0.04em;
+    }
+    .nav-links li a:hover,
+    .nav-links li a:focus {
+      color: #ff4c4c;
+      outline: none;
+    }
+    .defcon-badge {
+      background: #ff4c4c;
+      color: white;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 1.5px;
+      box-shadow: 0 0 8px #ff4c4caa;
+    }
+    header {
+      text-align: center;
+      padding: 1.2em 0;
+      font-size: 2.4em;
+      font-weight: 700;
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 3px;
+      color: #ff4c4c;
+      text-shadow: 0 0 8px #ff4c4caa;
+    }
+    .whats-now {
+      background-color: #2e2e2e;
+      padding: 2.5em;
+      margin-top: 1.4em;
+      border-left: 8px solid #ff4c4c;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .whats-now h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .feed-container {
+      max-width: 1200px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    .feed-container h2 {
+      font-size: 1.8em;
+      margin-bottom: 0.8em;
+      color: #ff4c4c;
+      text-shadow: 0 0 6px #ff4c4caa;
+    }
+    .feed-item {
+      display: flex;
+      gap: 1.2em;
+      margin-bottom: 1.4em;
+      background: #2b2b2b;
+      padding: 1.2em;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+    .feed-item img {
+      width: 170px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px #ff4c4caa;
+    }
+    .feed-content h3 {
+      margin: 0 0 0.6em 0;
+      font-size: 1.2em;
+    }
+    .feed-content h3 a {
+      color: #eee;
+      text-decoration: none;
+    }
+    .feed-content p {
+      margin: 0;
+      color: #ccc;
+      font-size: 1em;
+    }
+    .feed-content .meta {
+      font-size: 0.85em;
+      color: #999;
+      margin-top: 0.5em;
+    }
+    .container {
+      display: flex;
+      gap: 2em;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    .column {
+      flex: 1 1 300px;
+    }
+    .headline {
+      margin-bottom: 1em;
+      font-weight: 700;
+      font-size: 1.1em;
+      color: #ccc;
+    }
+    .bottom-row, .subscribe-section, footer {
+      max-width: 1200px;
+      margin: 2.5em auto;
+      padding: 1em;
+      text-align: center;
+    }
+    .bottom-card {
+      background: #2b2b2b;
+      padding: 1em;
+      border-radius: 10px;
+      display: inline-block;
+      margin: 0.6em;
+      text-decoration: none;
+      color: #ddd;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .subscribe-button {
+      background: #ff4c4c;
+      color: white;
+      padding: 0.9em 2.8em;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 3px 10px #ff4c4caa;
+    }
   </style>
 </head>
 <body>
+
   <nav class="top-nav">
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
@@ -49,18 +183,58 @@
 
   <header>WW3 HOURLY UPDATES</header>
 
-  <section class="whats-now" aria-live="polite" aria-atomic="true">
+  <section class="whats-now" aria-live="polite">
     <h2>🔴 What’s Happening Now</h2>
-    <p id="whats-happening-now-text">Loading latest update...</p>
+    <p id="whats-happening-now-text">Loading latest headline...</p>
+    <p style="color: #ccc;">🕒 Updated every hour</p>
   </section>
 
   <section class="feed-container">
     <h2>🌍 WW3 Hourly Updates — Visual News Feed</h2>
-    <div id="feed"><p style="color:#888;">Loading feed...</p></div>
+    <div id="feed"><p>Loading live news...</p></div>
+  </section>
+
+  <section class="container">
+    <div class="column">
+      <h3>Latest Headlines</h3>
+      <div class="headline">Cyberattack disables U.K. defense grid overnight</div>
+      <div class="headline">Israeli and Iranian forces clash on Syrian border</div>
+      <div class="headline">Russian troop movements spotted near Finland</div>
+      <div class="headline">Oil prices spike amid Strait of Hormuz tensions</div>
+    </div>
+    <div class="column">
+      <h3>Explainers + Context</h3>
+      <ul>
+        <li>What’s the WW3 DEFCON alert system?</li>
+        <li>The 3 flashpoints that could trigger global war</li>
+        <li>Nuclear arsenals by country</li>
+      </ul>
+    </div>
+    <div class="column">
+      <h3>Most Popular</h3>
+      <ul>
+        <li>Russia deploys hypersonics near Alaska</li>
+        <li>U.S. draft rumors spread on TikTok</li>
+        <li>China’s AI drones spotted in North Korea</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="bottom-row">
+    <a href="map.html" class="bottom-card">📍 Conflict Map</a>
+    <a href="timeline.html" class="bottom-card">🕑 Timeline</a>
+    <a href="survival.html" class="bottom-card">🎒 Survival Kit</a>
+    <a href="underground.html" class="bottom-card">🏙️ Underground Cities</a>
+  </section>
+
+  <section class="subscribe-section">
+    <h2>📰 Stay Updated</h2>
+    <p>Subscribe for hourly WW3 alerts and global conflict data.</p>
+    <a class="subscribe-button" href="https://eepurl.com/jhJvBw" target="_blank">Subscribe Now</a>
   </section>
 
   <footer>
-    © 2025 WW3HourlyUpdates | Real-Time War Alerts, Global Conflict Tracking, and Preparedness News
+    © 2025 WW3HourlyUpdates — Real-Time War Alerts, Global Conflict Tracking, and Preparedness News
   </footer>
 
   <script>
@@ -69,8 +243,10 @@
         "Al Jazeera": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Al_Jazeera_English_Logo.svg/1200px-Al_Jazeera_English_Logo.svg.png"
       };
 
+      const url = `https://api.rss2json.com/v1/api.json?rss_url=https://www.aljazeera.com/xml/rss/all.xml&api_key=zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq`;
+
       try {
-        const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.aljazeera.com/xml/rss/all.xml&api_key=zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq');
+        const response = await fetch(url);
         const data = await response.json();
 
         const feed = document.getElementById('feed');
@@ -84,7 +260,7 @@
           div.innerHTML = `
             ${imgUrl ? `<img src="${imgUrl}" alt="${source} logo">` : ''}
             <div class="feed-content">
-              <h3><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
+              <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
               <p>${item.description.slice(0, 150)}...</p>
               <div class="meta">🌐 ${source} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
             </div>
@@ -92,18 +268,16 @@
           feed.appendChild(div);
         });
 
-        // Update What's Happening Now
         const top = data.items[0];
         document.getElementById('whats-happening-now-text').textContent = `⚠️ ${top.title}`;
       } catch (err) {
-        console.error('Live feed failed:', err);
+        console.error('Live feed error:', err);
         document.getElementById('feed').innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
       }
     }
 
     fetchLiveFeed();
 
-    // DEFCON display
     function setDefconLevel(level) {
       const badge = document.getElementById('defcon-badge');
       badge.textContent = `DEFCON ${level}`;
