@@ -409,49 +409,50 @@ footer {
   </footer>
 
 <script>
-  // Feed fetching (Al Jazeera)
-  const feedUrl = 'https://www.aljazeera.com/xml/rss/all.xml';
-
-  async function fetchFeed() {
+  async function fetchLiveFeed() {
     const sourceImages = {
       "DW": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Dw_logo_2019.svg",
       "CNN": "https://upload.wikimedia.org/wikipedia/commons/b/b1/CNN.svg",
       "Al Jazeera": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Al_Jazeera_English_Logo.svg/1200px-Al_Jazeera_English_Logo.svg.png",
       "Reuters": "https://upload.wikimedia.org/wikipedia/commons/2/20/Reuters_logo.svg"
-      // Add more sources here with URLs to their logos
     };
 
-    try {
-      cconst response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.aljazeera.com/xml/rss/all.xml');
+    const url = `https://api.rss2json.com/v1/api.json?rss_url=https://www.aljazeera.com/xml/rss/all.xml&api_key=60a09b3a344f1608ed2edcb2b7074403`;
 
-      const items = await response.json();
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
       const feed = document.getElementById('feed');
       feed.innerHTML = '';
 
-      items.slice(0, 5).forEach(item => {
-        const source = item.source || 'Source';
-        const imgUrl = sourceImages[source] || ''; // Try to get source logo or empty string
-        const hasImage = imgUrl !== '';
+      data.items.slice(0, 5).forEach(item => {
+        const source = "Al Jazeera";
+        const imgUrl = sourceImages[source] || '';
         const div = document.createElement('div');
         div.className = 'feed-item';
         div.innerHTML = `
-          ${hasImage ? `<img src="${imgUrl}" alt="${source} logo">` : ''}
+          ${imgUrl ? `<img src="${imgUrl}" alt="${source} logo">` : ''}
           <div class="feed-content">
             <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-            <p>${item.description?.slice(0, 150) || ''}...</p>
-            <div class="meta">🌐 ${source} · 🕒 ${new Date(item.published || Date.now()).toLocaleString()}</div>
+            <p>${item.description.slice(0, 150)}...</p>
+            <div class="meta">🌐 ${source} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
           </div>
         `;
         feed.appendChild(div);
       });
+
+      // Update What's Happening Now
+      const top = data.items[0];
+      document.getElementById('whats-happening-now-text').textContent = `⚠️ ${top.title}`;
     } catch (err) {
-      console.error('Feed fetch failed:', err);
-      document.getElementById('feed').innerHTML = "<p style='color:#aaa;'>⚠️ Unable to load live feed.</p>";
+      console.error('Live feed failed:', err);
+      document.getElementById('feed').innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
     }
   }
-  fetchFeed();
 
-  // Dynamic DEFCON level example - currently hardcoded to 3
+  fetchLiveFeed();
+
+  // Still keep DEFCON logic here
   function setDefconLevel(level) {
     const badge = document.getElementById('defcon-badge');
     badge.textContent = `DEFCON ${level}`;
@@ -459,6 +460,7 @@ footer {
   }
   setDefconLevel(3);
 </script>
+
 
 </body>
 </html>
