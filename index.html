@@ -100,13 +100,6 @@
     .feed-item:hover {
       box-shadow: 0 0 12px 2px #ff4c4c;
     }
-    .feed-item img {
-      width: 130px;
-      height: 90px;
-      object-fit: contain;
-      background: white;
-      border-radius: 6px;
-    }
     .feed-content h3 {
       margin: 0 0 0.6em 0;
       font-size: 1.2em;
@@ -151,6 +144,23 @@
       text-decoration: none;
       box-shadow: 0 3px 10px #ff4c4caa;
     }
+    .save-btn {
+      display: block;
+      margin: 20px auto 40px auto;
+      padding: 0.6em 2em;
+      font-size: 1rem;
+      font-weight: bold;
+      background: #444;
+      border: 2px solid #ff4c4c;
+      color: #ff4c4c;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .save-btn:hover {
+      background: #ff4c4c;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -177,32 +187,7 @@
   <section class="feed-container">
     <h2>🌍 WW3 Hourly Updates — Visual News Feed</h2>
     <div id="feed"><p>Loading live news...</p></div>
-  </section>
-
-  <section class="container">
-    <div class="column">
-      <h3>Latest Headlines</h3>
-      <div class="headline">Cyberattack disables U.K. defense grid overnight</div>
-      <div class="headline">Israeli and Iranian forces clash on Syrian border</div>
-      <div class="headline">Russian troop movements spotted near Finland</div>
-      <div class="headline">Oil prices spike amid Strait of Hormuz tensions</div>
-    </div>
-    <div class="column">
-      <h3>Explainers + Context</h3>
-      <ul>
-        <li>What’s the WW3 DEFCON alert system?</li>
-        <li>The 3 flashpoints that could trigger global war</li>
-        <li>Nuclear arsenals by country</li>
-      </ul>
-    </div>
-    <div class="column">
-      <h3>Most Popular</h3>
-      <ul>
-        <li>Russia deploys hypersonics near Alaska</li>
-        <li>U.S. draft rumors spread on TikTok</li>
-        <li>China’s AI drones spotted in North Korea</li>
-      </ul>
-    </div>
+    <button class="save-btn" onclick="saveToArchive()">📦 Save Headlines</button>
   </section>
 
   <section class="bottom-row">
@@ -225,37 +210,40 @@
   <script>
     async function fetchLiveFeed() {
       const sources = [
-        {
-          name: "Al Jazeera",
-          url: "https://www.aljazeera.com/xml/rss/all.xml",
-          image: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Al_Jazeera_English_Logo.svg/1200px-Al_Jazeera_English_Logo.svg.png"
-        },
-        {
-          name: "DW",
-          url: "https://rss.dw.com/rdf/rss-en-world",
-          image: "https://upload.wikimedia.org/wikipedia/commons/6/6c/Deutsche_Welle_Logo.svg"
-        }
+        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
+        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
+        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" },
+        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" }
       ];
 
+      const keywords = ["war", "missile", "nuclear", "conflict", "tensions", "strike", "invasion", "military", "WW3"];
       const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
       const feedContainer = document.getElementById('feed');
+      const headlineNow = document.getElementById('whats-happening-now-text');
       feedContainer.innerHTML = '';
+      let collectedHeadlines = [];
+      let firstHeadline = null;
 
       try {
         for (const source of sources) {
-          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${source.url}&api_key=${apiKey}`);
           const data = await res.json();
-
           if (!data.items || data.items.length === 0) continue;
 
-          data.items.slice(0, 3).forEach(item => {
+          const filtered = data.items.filter(item => {
+            const title = item.title.toLowerCase();
+            return keywords.some(keyword => title.includes(keyword));
+          }).slice(0, 3);
+
+          filtered.forEach((item, idx) => {
+            if (!firstHeadline) firstHeadline = item.title;
+            collectedHeadlines.push({ source: source.name, title: item.title, link: item.link, time: new Date(item.pubDate).toLocaleString() });
             const div = document.createElement('div');
             div.className = 'feed-item';
             div.innerHTML = `
-              ${source.image ? `<img src="${source.image}" alt="${source.name} logo">` : ''}
               <div class="feed-content">
                 <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-                <p>${item.description?.slice(0, 150) || ''}...</p>
+                <p>${item.description.slice(0, 150)}...</p>
                 <div class="meta">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
               </div>
             `;
@@ -263,23 +251,36 @@
           });
         }
 
-        document.getElementById('whats-happening-now-text').textContent = `⚠️ ${feedContainer.querySelector('h3 a')?.textContent || 'No updates available'}`;
-
+        if (firstHeadline) headlineNow.textContent = `⚠️ ${firstHeadline}`;
+        window.latestHeadlines = collectedHeadlines;
       } catch (err) {
         console.error('Live feed error:', err);
         feedContainer.innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
       }
     }
 
-    fetchLiveFeed();
+    function saveToArchive() {
+      if (!window.latestHeadlines || window.latestHeadlines.length === 0) {
+        alert("No headlines to save yet.");
+        return;
+      }
+      const blob = new Blob([JSON.stringify(window.latestHeadlines, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ww3-archive-${Date.now()}.json`;
+      a.click();
+    }
 
     function setDefconLevel(level) {
       const badge = document.getElementById('defcon-badge');
       badge.textContent = `DEFCON ${level}`;
       badge.className = 'defcon-badge defcon-' + level;
     }
+
+    fetchLiveFeed();
     setDefconLevel(3);
+    setInterval(fetchLiveFeed, 3600000);
   </script>
 </body>
 </html>
-
