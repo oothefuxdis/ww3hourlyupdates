@@ -1,165 +1,150 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Archive</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: #0b0b0b;
-      color: #eee;
-      font-family: 'Share Tech Mono', monospace;
-      margin: 0;
-      padding: 2rem;
-    }
-    h1 {
-      color: #1aff1a;
-    }
-    h2 {
-      color: #00aaff;
-      margin-top: 2rem;
-    }
-    ul {
-      margin: 0 0 2rem 0;
-      padding-left: 1.5rem;
-    }
-    li {
-      margin: 0.4rem 0;
-    }
-    p.note {
-      color: #888;
-      font-size: 0.9rem;
-    }
-  </style>
-</head>
-
-<body style="background:#121212;color:#e0e0e0;font-family:sans-serif;text-align:center;padding:2em">
-<h1 style="color: #<!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WW3 Archive</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet" />
   <style>
     body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #181818;
-      color: #eee;
       margin: 0;
-      padding: 1em;
+      background-color: #181818;
+      color: #ddd;
+      font-family: 'Roboto', Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #222;
+      padding: 12px 24px;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+      padding: 0;
+      margin: 0;
+    }
+    .nav-links li a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .nav-links li a:hover {
+      color: #ff4c4c;
     }
     header {
       text-align: center;
+      padding: 1.2em 0;
+      font-size: 2.4em;
+      font-weight: 700;
+      font-family: 'Anton', sans-serif;
       color: #ff4c4c;
-      font-size: 2em;
-      margin-bottom: 1em;
     }
-    #search {
+    .archive-container {
+      max-width: 1200px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    .search-bar {
+      margin-bottom: 1.5em;
+    }
+    .search-bar input {
       width: 100%;
-      max-width: 600px;
-      margin: 1em auto;
-      display: block;
-      padding: 0.7em;
+      padding: 0.8em;
       font-size: 1em;
       border-radius: 6px;
       border: none;
     }
-    .archive-entry {
-      background: #2e2e2e;
-      margin: 1em 0;
+    .archive-item {
+      background: #2b2b2b;
       padding: 1em;
+      margin-bottom: 1em;
       border-radius: 8px;
-      box-shadow: 0 0 8px rgba(255,76,76,0.4);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      border: 1px solid transparent;
+      transition: border-color 0.3s;
     }
-    .archive-entry h3 {
-      margin: 0 0 0.3em 0;
-      color: #fff;
+    .archive-item:hover {
+      border-color: #ff4c4c;
     }
-    .meta {
-      color: #aaa;
-      font-size: 0.9em;
+    .archive-item h3 {
+      margin: 0 0 0.5em 0;
+      font-size: 1.2em;
     }
-    .archive-entry a {
-      color: #ccc;
-      text-decoration: underline;
+    .archive-item p {
+      margin: 0.2em 0;
+      font-size: 0.95em;
     }
   </style>
 </head>
 <body>
-  <header>📦 WW3 Archived Headlines</header>
+  <nav class="top-nav">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="timeline.html">Timeline</a></li>
+      <li><a href="survival.html">Survival</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
 
-  <input type="text" id="search" placeholder="Search headlines or region..." oninput="filterArchive()">
+  <header>🗃️ WW3 Headlines Archive</header>
 
-  <div id="archive-list">Loading archive...</div>
+  <section class="archive-container">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search headlines..." oninput="filterArchive()" />
+    </div>
+    <div id="archiveList">Loading archive...</div>
+  </section>
 
   <script>
-    let archiveData = [];
-
     async function loadArchive() {
       try {
-        const res = await fetch('archive.json');
-        archiveData = await res.json();
-        renderArchive(archiveData);
+        const res = await fetch('archive.json?_ts=' + new Date().getTime());
+        const data = await res.json();
+        const keywords = ['war', 'missile', 'strike', 'conflict', 'attack', 'explosion', 'military', 'nuclear', 'army'];
+        const filteredData = data.filter(item => {
+          const title = item.title.toLowerCase();
+          return keywords.some(word => title.includes(word));
+        });
+        window.archiveHeadlines = filteredData;
+        displayArchive(filteredData);
       } catch (err) {
-        document.getElementById('archive-list').innerHTML = '<p style="color:#999;">⚠️ Could not load archive.json.</p>';
-        console.error('Archive load error:', err);
+        document.getElementById('archiveList').innerHTML = '<p style="color:#aaa;">⚠️ Could not load archive.json.</p>';
+        console.error(err);
       }
     }
 
-    function renderArchive(data) {
-      const container = document.getElementById('archive-list');
-      if (!data.length) {
-        container.innerHTML = '<p>No archived headlines yet.</p>';
-        return;
-      }
-      container.innerHTML = data.map(entry => `
-        <div class="archive-entry">
-          <h3><a href="${entry.link}" target="_blank">${entry.title}</a></h3>
-          <div class="meta">${entry.source} · ${entry.time}</div>
-        </div>
-      `).join('');
+    function displayArchive(data) {
+      const list = document.getElementById('archiveList');
+      list.innerHTML = '';
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'archive-item';
+        div.innerHTML = `
+          <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+          <p>🌐 ${item.source} · 🕒 ${item.time}</p>
+        `;
+        list.appendChild(div);
+      });
     }
 
     function filterArchive() {
-      const q = document.getElementById('search').value.toLowerCase();
-      const filtered = archiveData.filter(entry =>
-        entry.title.toLowerCase().includes(q) ||
-        entry.source.toLowerCase().includes(q) ||
-        entry.time.toLowerCase().includes(q)
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = window.archiveHeadlines.filter(item =>
+        item.title.toLowerCase().includes(query) ||
+        item.source.toLowerCase().includes(query) ||
+        item.time.toLowerCase().includes(query)
       );
-      renderArchive(filtered);
+      displayArchive(filtered);
     }
 
     loadArchive();
+    setInterval(loadArchive, 60000); // Auto-refresh every 60 seconds
   </script>
 </body>
 </html>
-;">📂 WW3 Archive</h1>
-<div style="text-align: center; margin-top: 1rem;">
-  <a href="/" style="background-color: #333; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold;">⬅️ Back to Home</a>
-</div>
-
-    <section style="margin-bottom: 2rem;">
-      <h2 style="color: #00aaff;">🗓️ June 29, 2025</h2>
-      <ul>
-        <li>🕒 06:00 — Russia deploys missiles near Kaliningrad</li>
-        <li>🕒 05:15 — Iran warns of retaliation after drone strike</li>
-        <li>🕒 04:50 — NATO surveillance flights increased over Baltic</li>
-      </ul>
-    </section>
-
-    <section style="margin-bottom: 2rem;">
-      <h2 style="color: #00aaff;">🗓️ June 28, 2025</h2>
-      <ul>
-        <li>🕒 23:30 — US sub docks in South Korea</li>
-        <li>🕒 20:05 — Israel conducts precision airstrike near Damascus</li>
-        <li>🕒 19:10 — NATO confirms high readiness level</li>
-      </ul>
-    </section>
-
-    <p style="color: #888; font-size: 0.9rem;">⚠️ Older records not shown. Manual entries stored via local archive or operator log.</p>
-  </main>
-</body>
