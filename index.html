@@ -422,7 +422,8 @@ footer {
     };
 
     try {
-      const response = await fetch('/feeds/news.json');
+      cconst response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.aljazeera.com/xml/rss/all.xml');
+
       const items = await response.json();
       const feed = document.getElementById('feed');
       feed.innerHTML = '';
