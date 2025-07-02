@@ -78,6 +78,16 @@
       margin: 0.2em 0;
       font-size: 0.95em;
     }
+    .json-block {
+      white-space: pre-wrap;
+      background: #1e1e1e;
+      padding: 1em;
+      border-radius: 6px;
+      margin-top: 1em;
+      border: 1px solid #444;
+      font-family: monospace;
+      color: #fffae3;
+    }
   </style>
 </head>
 <body>
@@ -99,6 +109,7 @@
       <input type="text" id="searchInput" placeholder="Search headlines..." oninput="filterArchive()" />
     </div>
     <div id="archiveList">Loading archive...</div>
+    <div id="savePreview"></div>
   </section>
 
   <script>
@@ -128,6 +139,7 @@
         div.innerHTML = `
           <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
           <p>🌐 ${item.source} · 🕒 ${item.time}</p>
+          <button onclick='copyToClipboard(${JSON.stringify(JSON.stringify(item))})'>💾 Copy JSON Snippet</button>
         `;
         list.appendChild(div);
       });
@@ -143,8 +155,17 @@
       displayArchive(filtered);
     }
 
+    function copyToClipboard(jsonStr) {
+      const parsed = JSON.parse(jsonStr);
+      const formatted = JSON.stringify(parsed, null, 2);
+      navigator.clipboard.writeText(formatted).then(() => {
+        const preview = document.getElementById('savePreview');
+        preview.innerHTML = `<p class="json-block">${formatted}</p>`;
+      });
+    }
+
     loadArchive();
-    setInterval(loadArchive, 60000); // Auto-refresh every 60 seconds
+    setInterval(loadArchive, 60000);
   </script>
 </body>
 </html>
