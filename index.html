@@ -168,7 +168,6 @@
   </style>
 </head>
 <body>
-
   <nav class="top-nav">
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
@@ -239,40 +238,50 @@
 
   <script>
     async function fetchLiveFeed() {
-      const sourceImages = {
-        "Al Jazeera": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Al_Jazeera_English_Logo.svg/1200px-Al_Jazeera_English_Logo.svg.png"
-      };
+      const sources = [
+        {
+          name: "Al Jazeera",
+          url: "https://www.aljazeera.com/xml/rss/all.xml",
+          image: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Al_Jazeera_English_Logo.svg/1200px-Al_Jazeera_English_Logo.svg.png"
+        },
+        {
+          name: "DW",
+          url: "https://rss.dw.com/rdf/rss-en-all",
+          image: "https://upload.wikimedia.org/wikipedia/commons/6/6c/Deutsche_Welle_Logo.svg"
+        }
+      ];
 
-      const url = `https://api.rss2json.com/v1/api.json?rss_url=https://www.aljazeera.com/xml/rss/all.xml&api_key=zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq`;
+      const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
+      const feedContainer = document.getElementById('feed');
+      feedContainer.innerHTML = '';
 
       try {
-        const response = await fetch(url);
-        const data = await response.json();
+        for (const source of sources) {
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${source.url}&api_key=${apiKey}`);
+          const data = await res.json();
 
-        const feed = document.getElementById('feed');
-        feed.innerHTML = '';
+          if (!data.items || data.items.length === 0) continue;
 
-        data.items.slice(0, 5).forEach(item => {
-          const source = "Al Jazeera";
-          const imgUrl = sourceImages[source] || '';
-          const div = document.createElement('div');
-          div.className = 'feed-item';
-          div.innerHTML = `
-            ${imgUrl ? `<img src="${imgUrl}" alt="${source} logo">` : ''}
-            <div class="feed-content">
-              <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-              <p>${item.description.slice(0, 150)}...</p>
-              <div class="meta">🌐 ${source} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
-            </div>
-          `;
-          feed.appendChild(div);
-        });
+          data.items.slice(0, 3).forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'feed-item';
+            div.innerHTML = `
+              ${source.image ? `<img src="${source.image}" alt="${source.name} logo">` : ''}
+              <div class="feed-content">
+                <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                <p>${item.description.slice(0, 150)}...</p>
+                <div class="meta">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
+              </div>
+            `;
+            feedContainer.appendChild(div);
+          });
+        }
 
-        const top = data.items[0];
-        document.getElementById('whats-happening-now-text').textContent = `⚠️ ${top.title}`;
+        document.getElementById('whats-happening-now-text').textContent = `⚠️ ${feedContainer.querySelector('h3 a')?.textContent || 'No updates available'}`;
+
       } catch (err) {
         console.error('Live feed error:', err);
-        document.getElementById('feed').innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
+        feedContainer.innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
       }
     }
 
@@ -287,3 +296,4 @@
   </script>
 </body>
 </html>
+
