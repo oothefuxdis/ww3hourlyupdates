@@ -36,7 +36,108 @@
 </head>
 
 <body style="background:#121212;color:#e0e0e0;font-family:sans-serif;text-align:center;padding:2em">
-<h1 style="color: #1aff1a;">📂 WW3 Archive</h1>
+<h1 style="color: #<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WW3 Archive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #181818;
+      color: #eee;
+      margin: 0;
+      padding: 1em;
+    }
+    header {
+      text-align: center;
+      color: #ff4c4c;
+      font-size: 2em;
+      margin-bottom: 1em;
+    }
+    #search {
+      width: 100%;
+      max-width: 600px;
+      margin: 1em auto;
+      display: block;
+      padding: 0.7em;
+      font-size: 1em;
+      border-radius: 6px;
+      border: none;
+    }
+    .archive-entry {
+      background: #2e2e2e;
+      margin: 1em 0;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(255,76,76,0.4);
+    }
+    .archive-entry h3 {
+      margin: 0 0 0.3em 0;
+      color: #fff;
+    }
+    .meta {
+      color: #aaa;
+      font-size: 0.9em;
+    }
+    .archive-entry a {
+      color: #ccc;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>📦 WW3 Archived Headlines</header>
+
+  <input type="text" id="search" placeholder="Search headlines or region..." oninput="filterArchive()">
+
+  <div id="archive-list">Loading archive...</div>
+
+  <script>
+    let archiveData = [];
+
+    async function loadArchive() {
+      try {
+        const res = await fetch('archive.json');
+        archiveData = await res.json();
+        renderArchive(archiveData);
+      } catch (err) {
+        document.getElementById('archive-list').innerHTML = '<p style="color:#999;">⚠️ Could not load archive.json.</p>';
+        console.error('Archive load error:', err);
+      }
+    }
+
+    function renderArchive(data) {
+      const container = document.getElementById('archive-list');
+      if (!data.length) {
+        container.innerHTML = '<p>No archived headlines yet.</p>';
+        return;
+      }
+      container.innerHTML = data.map(entry => `
+        <div class="archive-entry">
+          <h3><a href="${entry.link}" target="_blank">${entry.title}</a></h3>
+          <div class="meta">${entry.source} · ${entry.time}</div>
+        </div>
+      `).join('');
+    }
+
+    function filterArchive() {
+      const q = document.getElementById('search').value.toLowerCase();
+      const filtered = archiveData.filter(entry =>
+        entry.title.toLowerCase().includes(q) ||
+        entry.source.toLowerCase().includes(q) ||
+        entry.time.toLowerCase().includes(q)
+      );
+      renderArchive(filtered);
+    }
+
+    loadArchive();
+  </script>
+</body>
+</html>
+;">📂 WW3 Archive</h1>
 <div style="text-align: center; margin-top: 1rem;">
   <a href="/" style="background-color: #333; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold;">⬅️ Back to Home</a>
 </div>
