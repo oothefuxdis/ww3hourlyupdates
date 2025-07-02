@@ -246,7 +246,7 @@
         },
         {
           name: "DW",
-          url: "https://rss.dw.com/rdf/rss-en-all",
+          url: "https://rss.dw.com/rdf/rss-en-world",
           image: "https://upload.wikimedia.org/wikipedia/commons/6/6c/Deutsche_Welle_Logo.svg"
         }
       ];
@@ -257,7 +257,7 @@
 
       try {
         for (const source of sources) {
-          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${source.url}&api_key=${apiKey}`);
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
           const data = await res.json();
 
           if (!data.items || data.items.length === 0) continue;
@@ -269,7 +269,7 @@
               ${source.image ? `<img src="${source.image}" alt="${source.name} logo">` : ''}
               <div class="feed-content">
                 <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-                <p>${item.description.slice(0, 150)}...</p>
+                <p>${item.description?.slice(0, 150) || ''}...</p>
                 <div class="meta">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
               </div>
             `;
