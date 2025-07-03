@@ -12,6 +12,7 @@
       color: #ddd;
       font-family: 'Roboto', Arial, sans-serif;
       line-height: 1.6;
+      min-height: 100vh;
     }
     .top-nav {
       display: flex;
@@ -19,21 +20,39 @@
       align-items: center;
       background-color: #222;
       padding: 12px 24px;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
     .nav-links {
       list-style: none;
+      margin: 0;
+      padding: 0;
       display: flex;
       gap: 24px;
-      padding: 0;
-      margin: 0;
     }
     .nav-links li a {
       color: #ddd;
       text-decoration: none;
       font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.25s ease;
+      letter-spacing: 0.04em;
     }
-    .nav-links li a:hover {
+    .nav-links li a:hover,
+    .nav-links li a:focus {
       color: #ff4c4c;
+      outline: none;
+    }
+    .defcon-badge {
+      background: #ff4c4c;
+      color: white;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 1.5px;
+      box-shadow: 0 0 8px #ff4c4caa;
     }
     header {
       text-align: center;
@@ -41,7 +60,9 @@
       font-size: 2.4em;
       font-weight: 700;
       font-family: 'Anton', sans-serif;
+      letter-spacing: 3px;
       color: #ff4c4c;
+      text-shadow: 0 0 8px #ff4c4caa;
     }
     .whats-now {
       background-color: #2e2e2e;
@@ -64,13 +85,19 @@
     }
     .feed-item {
       display: flex;
-      gap: 1.2em;
+      flex-direction: column;
       margin-bottom: 1.4em;
       background: #2b2b2b;
       padding: 1.2em;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.6);
-      position: relative;
+      border: 2px solid transparent;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feed-item:hover {
+      border-color: #ff4c4c;
+      box-shadow: 0 0 12px 3px #ff4c4caa;
+      background-color: #331414;
     }
     .feed-content h3 {
       margin: 0 0 0.6em 0;
@@ -90,36 +117,44 @@
       color: #999;
       margin-top: 0.5em;
     }
-    .save-button {
-      background: #ff4c4c;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 0.3em 0.6em;
-      margin-top: 0.6em;
-      cursor: pointer;
-    }
-    .json-block {
-      white-space: pre-wrap;
-      background: #1e1e1e;
+    .bottom-row, .subscribe-section, footer {
+      max-width: 1200px;
+      margin: 2.5em auto;
       padding: 1em;
-      border-radius: 6px;
-      margin-top: 1em;
-      border: 1px solid #444;
-      font-family: monospace;
-      color: #fffae3;
-      position: relative;
+      text-align: center;
     }
-    .json-block button {
-      position: absolute;
-      top: 8px;
-      right: 10px;
+    .bottom-card {
+      background: #2b2b2b;
+      padding: 1em;
+      border-radius: 10px;
+      display: inline-block;
+      margin: 0.6em;
+      text-decoration: none;
+      color: #ddd;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .subscribe-button {
       background: #ff4c4c;
       color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 2px 6px;
+      padding: 0.9em 2.8em;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 3px 10px #ff4c4caa;
+    }
+    .save-btn {
+      margin-top: 0.5em;
+      padding: 0.4em 1em;
+      font-size: 0.9em;
+      background-color: #444;
+      color: #fff;
+      border: 1px solid #ff4c4c;
+      border-radius: 6px;
       cursor: pointer;
+    }
+    .save-btn:hover {
+      background-color: #ff4c4c;
     }
   </style>
 </head>
@@ -146,58 +181,92 @@
   <section class="feed-container">
     <h2>🌍 WW3 Hourly Updates — Visual News Feed</h2>
     <div id="feed"><p>Loading live news...</p></div>
-    <div id="savePreview"></div>
   </section>
 
+  <section class="bottom-row">
+    <a href="map.html" class="bottom-card">📍 Conflict Map</a>
+    <a href="timeline.html" class="bottom-card">🕑 Timeline</a>
+    <a href="survival.html" class="bottom-card">🎒 Survival Kit</a>
+    <a href="underground.html" class="bottom-card">🏙️ Underground Cities</a>
+  </section>
+
+  <section class="subscribe-section">
+    <h2>📰 Stay Updated</h2>
+    <p>Subscribe for hourly WW3 alerts and global conflict data.</p>
+    <a class="subscribe-button" href="https://eepurl.com/jhJvBw" target="_blank">Subscribe Now</a>
+  </section>
+
+  <footer>
+    © 2025 WW3HourlyUpdates — Real-Time War Alerts, Global Conflict Tracking, and Preparedness News
+  </footer>
+
   <script>
+    let latestHeadlines = [];
+
     async function fetchLiveFeed() {
-      const url = `https://api.rss2json.com/v1/api.json?rss_url=https://www.aljazeera.com/xml/rss/all.xml&api_key=zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq`;
+      const sources = [
+        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
+        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
+        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" },
+        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" }
+      ];
+
+      const keywords = ["war", "missile", "nuclear", "conflict", "tensions", "strike", "invasion", "military", "ww3"];
+      const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
+      const feedContainer = document.getElementById('feed');
+      feedContainer.innerHTML = '';
+      latestHeadlines = [];
+
       try {
-        const response = await fetch(url);
-        const data = await response.json();
+        for (const source of sources) {
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${source.url}&api_key=${apiKey}`);
+          const data = await res.json();
+          if (!data.items || data.items.length === 0) continue;
 
-        const feed = document.getElementById('feed');
-        feed.innerHTML = '';
+          const filtered = data.items.filter(item => {
+            const title = item.title.toLowerCase();
+            return keywords.some(keyword => title.includes(keyword));
+          }).slice(0, 3);
 
-        data.items.slice(0, 5).forEach(item => {
-          const div = document.createElement('div');
-          div.className = 'feed-item';
-          div.innerHTML = `
-            <div class="feed-content">
-              <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-              <p>${item.description.slice(0, 150)}...</p>
-              <div class="meta">🌐 Al Jazeera · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
-              <button class="save-button" onclick='copyToClipboard(${JSON.stringify(JSON.stringify({
-                title: item.title,
-                link: item.link,
-                source: "Al Jazeera",
-                time: new Date(item.pubDate).toLocaleString()
-              }))})'>💾 Save</button>
-            </div>
-          `;
-          feed.appendChild(div);
-        });
+          filtered.forEach(item => {
+            const tag = item.title.toLowerCase().includes("breaking") ? "🔥 Breaking" : "🛡️ Military";
+            const headline = {
+              source: source.name,
+              title: item.title,
+              link: item.link,
+              time: new Date(item.pubDate).toLocaleString(),
+              tag
+            };
+            latestHeadlines.push(headline);
 
-        const top = data.items[0];
-        document.getElementById('whats-happening-now-text').textContent = `⚠️ ${top.title}`;
+            const div = document.createElement('div');
+            div.className = 'feed-item';
+            div.innerHTML = `
+              <div class="feed-content">
+                <h3><a href="${item.link}" target="_blank">${tag} — ${item.title}</a></h3>
+                <p>${item.description.slice(0, 150)}...</p>
+                <div class="meta">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
+                <button class="save-btn" onclick='saveSingle(${JSON.stringify(headline)})'>💾 Save</button>
+              </div>
+            `;
+            feedContainer.appendChild(div);
+          });
+        }
+
+        document.getElementById('whats-happening-now-text').textContent = `⚠️ ${feedContainer.querySelector('h3 a')?.textContent || 'No updates available'}`;
       } catch (err) {
-        document.getElementById('feed').innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
-        console.error(err);
+        console.error('Live feed error:', err);
+        feedContainer.innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
       }
     }
 
-    function copyToClipboard(jsonStr) {
-      const parsed = JSON.parse(jsonStr);
-      const formatted = JSON.stringify(parsed, null, 2);
-      navigator.clipboard.writeText(formatted).then(() => {
-        const preview = document.getElementById('savePreview');
-        preview.innerHTML = `
-          <div class="json-block">
-            <button onclick="document.getElementById('savePreview').innerHTML = ''">❌</button>
-            <pre>${formatted}</pre>
-          </div>
-        `;
-      });
+    function saveSingle(headline) {
+      const blob = new Blob([JSON.stringify([headline], null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ww3-headline-${Date.now()}.json`;
+      a.click();
     }
 
     function setDefconLevel(level) {
