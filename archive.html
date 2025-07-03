@@ -87,6 +87,18 @@
       border: 1px solid #444;
       font-family: monospace;
       color: #fffae3;
+      position: relative;
+    }
+    .json-block button {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: #ff4c4c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 2px 6px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -160,7 +172,12 @@
       const formatted = JSON.stringify(parsed, null, 2);
       navigator.clipboard.writeText(formatted).then(() => {
         const preview = document.getElementById('savePreview');
-        preview.innerHTML = `<p class="json-block">${formatted}</p>`;
+        preview.innerHTML = `
+          <div class="json-block">
+            <button onclick="document.getElementById('savePreview').innerHTML = ''">❌</button>
+            <pre>${formatted}</pre>
+          </div>
+        `;
       });
     }
 
