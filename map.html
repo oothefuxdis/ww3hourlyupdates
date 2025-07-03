@@ -1,77 +1,80 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Live WW3 Conflict Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <title>WW3 Conflict Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', Arial, sans-serif;
       background: #111;
-      color: #eee;
-    }
-    header {
-      background: #c40000;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.75rem;
-      font-weight: bold;
+      color: #fff;
     }
     #map {
-      height: 85vh;
-      width: 100%;
+      height: 100vh;
     }
-    .back-btn {
+    .top-bar {
+      background: #222;
+      color: #ff4c4c;
+      font-family: 'Anton', sans-serif;
+      font-size: 1.4em;
+      padding: 0.6em 1em;
       text-align: center;
-      padding: 1rem;
-      background-color: #111;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
     }
-    .back-btn a {
-      background: #333;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .back-btn a:hover {
-      background: #ff4444;
+    .leaflet-popup-content {
+      font-size: 0.9em;
+      line-height: 1.4em;
     }
   </style>
 </head>
 <body>
-  <header>🗺️ Live WW3 Conflict Map</header>
-
-  <div class="back-btn">
-    <a href="/">⬅️ Back to Home</a>
-  </div>
-
+  <div class="top-bar">📍 WW3 Global Conflict Map</div>
   <div id="map"></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([30, 10], 2);
+    const map = L.map('map').setView([35, 10], 2.2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 18
     }).addTo(map);
 
     const hotspots = [
-      { name: "Ukraine Conflict", coords: [48.3794, 31.1656] },
-      { name: "Israel-Gaza Region", coords: [31.5, 34.8] },
-      { name: "Taiwan Strait", coords: [23.6978, 120.9605] },
-      { name: "Iran Strategic Region", coords: [32.0, 53.0] },
-      { name: "North Korea DMZ", coords: [38.6, 127.0] },
-      { name: "Baltic Tension Zone", coords: [55.0, 24.0] }
+      {
+        coords: [54.6872, 25.2797],
+        title: "Kaliningrad Tensions",
+        message: "⚠️ NATO and Russian forces on alert near Kaliningrad - July 2, 2025"
+      },
+      {
+        coords: [32.0853, 34.7818],
+        title: "Israel-Iran Proxy Clash",
+        message: "🔥 Israeli strikes reported near Syrian border - July 1, 2025"
+      },
+      {
+        coords: [51.9194, 19.1451],
+        title: "Strike in Poland",
+        message: "💥 Missile hit near military base in Poland - June 30, 2025"
+      },
+      {
+        coords: [37.5665, 126.9780],
+        title: "Tensions in Korea",
+        message: "🛡️ Reports of DPRK missile tests detected by South Korea - June 29, 2025"
+      },
+      {
+        coords: [24.7136, 46.6753],
+        title: "Strait of Hormuz Activity",
+        message: "🚢 Iranian naval movement near Hormuz Strait - June 28, 2025"
+      }
     ];
 
-    hotspots.forEach(hotspot => {
-      L.marker(hotspot.coords).addTo(map)
-        .bindPopup(`<strong>${hotspot.name}</strong><br><em>Click for latest update (coming soon)</em>`);
+    hotspots.forEach(spot => {
+      L.marker(spot.coords).addTo(map)
+        .bindPopup(`<strong>${spot.title}</strong><br>${spot.message}`);
     });
   </script>
 </body>
