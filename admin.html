@@ -88,11 +88,6 @@
     .admin-section button:hover {
       background: #cc3333;
     }
-    #copyBtn {
-      margin-top: -0.5em;
-      margin-bottom: 1.5em;
-      background: #333;
-    }
     footer {
       text-align: center;
       padding: 2em 1em;
@@ -111,7 +106,6 @@
       <li><a href="survival.html">Survival</a></li>
       <li><a href="underground.html">Underground</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="admin.html">Admin</a></li>
     </ul>
     <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
   </nav>
@@ -139,9 +133,8 @@
     <label for="headlineSource">Source</label>
     <input type="text" id="headlineSource" />
 
-    <button onclick="generateArchiveEntry()">💾 Generate JSON Entry</button>
+    <button onclick="appendToArchive()">💾 Save Directly to Archive</button>
     <textarea id="outputBox" rows="5" readonly></textarea>
-    <button id="copyBtn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
 
     <h2>Edit Map Hotspot (Coming Soon)</h2>
     <p style="color: #999">Feature to add or modify map markers will be added later.</p>
@@ -152,23 +145,13 @@
   </footer>
 
   <script>
-    // Sync DEFCON using localStorage
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedLevel = localStorage.getItem('defconLevel');
-      if (savedLevel) {
-        document.getElementById('defconLevel').value = savedLevel;
-        document.getElementById('defcon-badge').textContent = `DEFCON ${savedLevel}`;
-      }
-    });
-
     function changeDefcon() {
       const level = document.getElementById("defconLevel").value;
-      localStorage.setItem('defconLevel', level);
       document.getElementById("defcon-badge").textContent = `DEFCON ${level}`;
-      alert(`DEFCON level updated to ${level}. This change will appear across all pages.`);
+      alert(`DEFCON level updated to ${level}. (Note: This change is only visual for now)`);
     }
 
-    function generateArchiveEntry() {
+    async function appendToArchive() {
       const title = document.getElementById("headlineTitle").value.trim();
       const link = document.getElementById("headlineLink").value.trim();
       const source = document.getElementById("headlineSource").value.trim();
@@ -178,23 +161,24 @@
         return;
       }
 
-      const entry = {
+      const newEntry = {
         title: title,
         link: link,
         source: source,
         time: new Date().toISOString().replace("T", " ").slice(0, 16)
       };
 
-      document.getElementById("outputBox").value = JSON.stringify(entry, null, 2);
-    }
+      const response = await fetch("/.netlify/functions/saveHeadline", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newEntry)
+      });
 
-    function copyToClipboard() {
-      const output = document.getElementById("outputBox");
-      output.select();
-      document.execCommand("copy");
-      alert("JSON entry copied to clipboard!");
+      const result = await response.text();
+      document.getElementById("outputBox").value = result;
     }
   </script>
 </body>
 </html>
-
