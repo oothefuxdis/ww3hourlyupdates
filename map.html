@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WW3 Conflict Map</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
@@ -12,18 +13,47 @@
       background: #111;
       color: #fff;
     }
-    #map {
-      height: 100vh;
+    nav.top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #222;
+      padding: 12px 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
-    .top-bar {
-      background: #222;
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 24px;
+    }
+    .nav-links li a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.25s ease;
+      letter-spacing: 0.04em;
+    }
+    .nav-links li a:hover,
+    .nav-links li a:focus {
       color: #ff4c4c;
+      outline: none;
+    }
+    .defcon-badge {
+      background: #ff4c4c;
+      color: white;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: 1rem;
       font-family: 'Anton', sans-serif;
-      font-size: 1.4em;
-      padding: 0.6em 1em;
-      text-align: center;
-      letter-spacing: 1px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      letter-spacing: 1.5px;
+      box-shadow: 0 0 8px #ff4c4caa;
+    }
+    #map {
+      height: 90vh;
     }
     .leaflet-popup-content {
       font-size: 0.9em;
@@ -32,7 +62,18 @@
   </style>
 </head>
 <body>
-  <div class="top-bar">📍 WW3 Global Conflict Map</div>
+  <nav class="top-nav">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="timeline.html">Timeline</a></li>
+      <li><a href="survival.html">Survival</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
+  </nav>
+
   <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -76,6 +117,15 @@
       L.marker(spot.coords).addTo(map)
         .bindPopup(`<strong>${spot.title}</strong><br>${spot.message}`);
     });
+
+    // DEFCON logic placeholder (optional dynamic control)
+    function setDefconLevel(level) {
+      const badge = document.getElementById('defcon-badge');
+      badge.textContent = `DEFCON ${level}`;
+      badge.className = 'defcon-badge defcon-' + level;
+    }
+    setDefconLevel(3);
   </script>
 </body>
 </html>
+
