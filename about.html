@@ -7,11 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet">
   <style>
     body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
       background-color: #111;
       color: #eee;
-      font-family: 'Roboto', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      line-height: 1.6;
     }
     .top-nav {
       display: flex;
@@ -23,16 +23,15 @@
     }
     .nav-links {
       list-style: none;
-      margin: 0;
-      padding: 0;
       display: flex;
       gap: 24px;
+      margin: 0;
+      padding: 0;
     }
     .nav-links li a {
       color: #ddd;
       text-decoration: none;
       font-weight: 600;
-      font-size: 1rem;
     }
     .nav-links li a:hover {
       color: #ff4c4c;
@@ -55,24 +54,21 @@
       color: #ff4c4c;
       text-shadow: 0 0 6px #ff4c4cbb;
     }
-    .about-container {
+    .about-section {
       max-width: 800px;
       margin: 2em auto;
-      padding: 0 1em;
+      background: #1d1d1d;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(255, 76, 76, 0.3);
     }
-    .about-container h2 {
+    .about-section h2 {
       color: #ff4c4c;
-      margin-bottom: 0.5em;
+      font-size: 1.6em;
+      margin-top: 0;
     }
-    .about-container p {
+    .about-section p {
       margin-bottom: 1.5em;
-      line-height: 1.6;
-    }
-    .about-container ul {
-      padding-left: 1.2em;
-    }
-    .about-container ul li {
-      margin-bottom: 0.75em;
     }
     footer {
       text-align: center;
@@ -92,42 +88,44 @@
       <li><a href="survival.html">Survival</a></li>
       <li><a href="underground.html">Underground</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="admin.html">Admin</a></li>
     </ul>
     <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
   </nav>
 
-  <header>📖 About WW3 Hourly Updates</header>
+  <header>📘 About WW3 Hourly Updates</header>
 
-  <section class="about-container">
-    <h2>What We Do</h2>
+  <section class="about-section">
+    <h2>Who We Are</h2>
     <p>
-      WW3 Hourly Updates is an independent real-time tracking platform focused on escalating global conflict. We aggregate the most relevant reports, headlines, and geopolitical signals from trusted sources to give our audience fast and focused war-related updates.
+      WW3 Hourly Updates is an independent, real-time monitoring and information hub created to track rising global tensions and potential military conflicts. Our mission is to keep the public informed through carefully curated feeds, maps, and tools.
     </p>
 
-    <h2>Why We Exist</h2>
+    <h2>What We Cover</h2>
     <p>
-      As the world faces a growing number of military flashpoints, nuclear risks, and cyber warfare threats, staying informed isn't optional — it's essential. Our mission is to present verified information clearly and quickly to help you stay aware and prepared.
+      We focus on events with serious geopolitical impact — including military escalations, cyberwarfare, defense movements, nuclear activity, and diplomacy that could trigger or defuse global crises.
     </p>
 
-    <h2>Who's Behind It</h2>
+    <h2>Why We Built This</h2>
     <p>
-      This site is operated by a small team of researchers, designers, and developers committed to public awareness, digital preparedness, and transparency. We are not affiliated with any government or corporate media outlet.
+      With misinformation rising and news moving faster than ever, this project was launched to centralize critical alerts, credible news, and helpful resources into one platform for situational awareness and personal preparedness.
     </p>
 
-    <h2>How to Use This Site</h2>
-    <ul>
-      <li><strong>Live Feed:</strong> Watch real-time conflict headlines on the homepage</li>
-      <li><strong>Map:</strong> See global flashpoints and zones of escalation</li>
-      <li><strong>Archive:</strong> Search past war events and filter for trends</li>
-      <li><strong>Survival:</strong> Build your kit, checklist, and skills</li>
-      <li><strong>Timeline:</strong> Trace major WW3-related events in sequence</li>
-      <li><strong>Underground:</strong> Explore how bunkers, metros & city shelters will matter</li>
-    </ul>
+    <h2>Contact Us</h2>
+    <p>
+      For suggestions, media inquiries, or collaborations, reach out at: <strong>admin@ww3hourlyupdates.ca</strong>
+    </p>
   </section>
 
   <footer>
-    © 2025 WW3HourlyUpdates — Global War Watch & Real-Time Alert Platform
+    © 2025 WW3HourlyUpdates — Transparency, Preparedness, and Global Risk Awareness
   </footer>
+
+  <script>
+    function setDefconLevel(level) {
+      document.getElementById('defcon-badge').textContent = `DEFCON ${level}`;
+    }
+    setDefconLevel(3);
+  </script>
 </body>
 </html>
-
