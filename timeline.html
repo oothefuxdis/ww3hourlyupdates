@@ -1,4 +1,158 @@
-<h1>Timeline Page Coming Soon</h1>
-<div style="text-align: center; margin-top: 1rem;">
-  <a href="/" style="background-color: #333; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold;">⬅️ Back to Home</a>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WW3 Timeline | Escalation Events</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #222;
+      padding: 12px 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    }
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 24px;
+    }
+    .nav-links li a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .nav-links li a:hover {
+      color: #ff4c4c;
+    }
+    .defcon-badge {
+      background: #ff4c4c;
+      color: white;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-family: 'Anton', sans-serif;
+      box-shadow: 0 0 8px #ff4c4caa;
+    }
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      font-size: 2.2em;
+      font-family: 'Anton', sans-serif;
+      color: #ff4c4c;
+      text-shadow: 0 0 6px #ff4c4cbb;
+    }
+    .timeline {
+      max-width: 800px;
+      margin: 2em auto;
+      padding: 0 1em;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #ff4c4c;
+    }
+    .event {
+      position: relative;
+      margin-left: 50px;
+      margin-bottom: 2em;
+      padding-left: 1em;
+      border-left: 4px solid transparent;
+    }
+    .event::before {
+      content: '🕒';
+      position: absolute;
+      left: -32px;
+      top: 0;
+      font-size: 1.2em;
+    }
+    .event h3 {
+      margin: 0;
+      font-size: 1.2em;
+      color: #ff4c4c;
+    }
+    .event time {
+      display: block;
+      font-size: 0.9em;
+      color: #aaa;
+      margin-bottom: 0.5em;
+    }
+    .event p {
+      margin: 0;
+      line-height: 1.5em;
+    }
+    footer {
+      text-align: center;
+      padding: 2em 1em;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <nav class="top-nav">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="timeline.html">Timeline</a></li>
+      <li><a href="survival.html">Survival</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
+  </nav>
+
+  <header>📅 WW3 Escalation Timeline</header>
+
+  <section class="timeline">
+    <div class="event">
+      <h3>Missile Strike in Poland</h3>
+      <time>July 2, 2025 – 18:45</time>
+      <p>Russian missiles reportedly hit NATO-aligned military installations in eastern Poland.</p>
+    </div>
+    <div class="event">
+      <h3>Cyberattack on UK Grid</h3>
+      <time>July 1, 2025 – 22:10</time>
+      <p>Major coordinated cyberstrike knocks out power across multiple U.K. counties overnight.</p>
+    </div>
+    <div class="event">
+      <h3>China Expands Naval Patrols</h3>
+      <time>June 30, 2025 – 16:20</time>
+      <p>Chinese destroyers pass through Taiwan Strait in a show of force, triggering alerts in Taipei.</p>
+    </div>
+    <div class="event">
+      <h3>Nuclear Drill in Moscow</h3>
+      <time>June 28, 2025 – 12:00</time>
+      <p>Russian Federation initiates unannounced nationwide nuclear preparedness drill.</p>
+    </div>
+    <div class="event">
+      <h3>Iran Launches Drones Toward Israel</h3>
+      <time>June 26, 2025 – 07:30</time>
+      <p>Multiple drone incursions reported from Iranian territory into disputed zones near the Golan Heights.</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 WW3HourlyUpdates — Global Risk Monitoring Timeline
+  </footer>
+</body>
+</html>
+
