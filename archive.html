@@ -127,7 +127,8 @@
   <script>
     async function loadArchive() {
       try {
-        const res = await fetch('archive.json?_ts=' + new Date().getTime());
+        const res = await fetch('/archive.json?_ts=' + new Date().getTime());
+
         const data = await res.json();
         const keywords = ['war', 'missile', 'strike', 'conflict', 'attack', 'explosion', 'military', 'nuclear', 'army'];
         const filteredData = data.filter(item => {
