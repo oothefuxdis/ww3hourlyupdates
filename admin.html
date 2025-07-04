@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Command Center | WW3HourlyUpdates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #ff4c4c;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 2rem;
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 1px;
+    }
+    .section {
+      padding: 2rem;
+      border-bottom: 1px solid #333;
+    }
+    .section h2 {
+      color: #ff4c4c;
+    }
+    .control-group {
+      margin: 1rem 0;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 1rem;
+      background: #222;
+      color: #eee;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #ff4c4c;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #cc3a3a;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>🛠️ Admin Command Center</header>
+
+  <div class="section">
+    <h2>⚠️ Set DEFCON Level</h2>
+    <div class="control-group">
+      <label for="defcon">Choose DEFCON Level:</label>
+      <select id="defcon">
+        <option value="1">DEFCON 1</option>
+        <option value="2">DEFCON 2</option>
+        <option value="3" selected>DEFCON 3</option>
+        <option value="4">DEFCON 4</option>
+        <option value="5">DEFCON 5</option>
+      </select>
+      <button onclick="setDefconLevel()">Update DEFCON</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>💾 Save Live Headlines to Archive</h2>
+    <div class="control-group">
+      <button onclick="saveHeadlinesToArchive()">Download Latest Feed Headlines</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📍 Edit Map Hotspots (Manual)</h2>
+    <p>Paste updated JSON for <code>hotspots</code> used in <code>map.html</code>:</p>
+    <textarea id="hotspot-json" rows="8" placeholder='[{ "name": "New Place", "coords": [0, 0] }]'></textarea>
+    <button onclick="copyHotspotJson()">📋 Copy JSON</button>
+  </div>
+
+  <footer>
+    © 2025 WW3HourlyUpdates — Internal Admin Panel
+  </footer>
+
+  <script>
+    function setDefconLevel() {
+      const level = document.getElementById('defcon').value;
+      alert(`Manually update DEFCON badge to level ${level} on each page.`);
+    }
+
+    function saveHeadlinesToArchive() {
+      if (!window.latestHeadlines || window.latestHeadlines.length === 0) {
+        alert('No headlines available. Visit home page first to fetch live headlines.');
+        return;
+      }
+      const blob = new Blob([JSON.stringify(window.latestHeadlines, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `archive-${Date.now()}.json`;
+      a.click();
+    }
+
+    function copyHotspotJson() {
+      const text = document.getElementById('hotspot-json').value;
+      navigator.clipboard.writeText(text).then(() => alert('JSON copied to clipboard.')); 
+    }
+  </script>
+</body>
+</html>
