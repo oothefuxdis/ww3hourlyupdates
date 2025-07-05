@@ -1,35 +1,170 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.4">
-  <style type="text/css">
-    body {background-color: #131313}
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #d5d5d5; -webkit-text-stroke: #d5d5d5}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 28.8px 'Helvetica Neue'; color: #fc323c; -webkit-text-stroke: #fc323c}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #d5d5d5; -webkit-text-stroke: #d5d5d5; min-height: 15.0px}
-    li.li1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #d5d5d5; -webkit-text-stroke: #d5d5d5}
-    span.s1 {background-color: #1a1a1a; -webkit-text-stroke: 0px #000000}
-    span.s2 {font-kerning: none}
-    span.s3 {font: 28.8px '.Apple Color Emoji UI'; font-kerning: none}
-    ul.ul1 {list-style-type: none}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WW3 Archive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #181818;
+      color: #ddd;
+      font-family: 'Roboto', Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #222;
+      padding: 12px 24px;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+      padding: 0;
+      margin: 0;
+    }
+    .nav-links li a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .nav-links li a:hover {
+      color: #ff4c4c;
+    }
+    .defcon-badge {
+      background: #ff4c4c;
+      color: white;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-family: 'Anton', sans-serif;
+      box-shadow: 0 0 8px #ff4c4caa;
+    }
+    header {
+      text-align: center;
+      padding: 1.2em 0;
+      font-size: 2.4em;
+      font-weight: 700;
+      font-family: 'Anton', sans-serif;
+      color: #ff4c4c;
+    }
+    .archive-container {
+      max-width: 1200px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    .search-bar {
+      margin-bottom: 1.5em;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 0.8em;
+      font-size: 1em;
+      border-radius: 6px;
+      border: none;
+    }
+    .archive-item {
+      background: #2b2b2b;
+      padding: 1em;
+      margin-bottom: 1em;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      border: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .archive-item:hover {
+      border-color: #ff4c4c;
+    }
+    .archive-item h3 {
+      margin: 0 0 0.5em 0;
+      font-size: 1.2em;
+    }
+    .archive-item h3 a {
+      color: #eee;
+      text-decoration: none;
+    }
+    .archive-item h3 a:hover {
+      color: #ff4c4c;
+    }
+    .archive-item p {
+      margin: 0.2em 0;
+      font-size: 0.95em;
+    }
   </style>
 </head>
 <body>
-<ul class="ul1">
-  <li class="li1"><span class="s1"><a href="file:///Users/mike/Desktop/ww3hourlyupdates/index.html"><span class="s2">Home</span></a></span></li>
-  <li class="li1"><span class="s1"><a href="file:///Users/mike/Desktop/ww3hourlyupdates/map.html"><span class="s2">Map</span></a></span></li>
-  <li class="li1"><span class="s1"><a href="file:///Users/mike/Desktop/ww3hourlyupdates/archive.html"><span class="s2">Archive</span></a></span></li>
-  <li class="li1"><span class="s1"><a href="file:///Users/mike/Desktop/ww3hourlyupdates/timeline.html"><span class="s2">Timeline</span></a></span></li>
-  <li class="li1"><span class="s1"><a href="file:///Users/mike/Desktop/ww3hourlyupdates/survival.html"><span class="s2">Survival</span></a></span></li>
-  <li class="li1"><span class="s1"><a href="file:///Users/mike/Desktop/ww3hourlyupdates/about.html"><span class="s2">About</span></a></span></li>
-</ul>
-<p class="p2"><span class="s3">🗃️</span><span class="s2"> WW3 Headlines Archive</span></p>
-<p class="p3"><span class="s2"></span><br></p>
-<p class="p1"><span class="s2">Loading archive...</span></p>
-<p class="p3"><span class="s2"></span><br></p>
+  <nav class="top-nav">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="timeline.html">Timeline</a></li>
+      <li><a href="survival.html">Survival</a></li>
+      <li><a href="underground.html">Underground</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+    <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
+  </nav>
+
+  <header>🗃️ WW3 Headlines Archive</header>
+
+  <section class="archive-container">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search headlines..." oninput="filterArchive()" />
+    </div>
+    <div id="archiveList">Loading archive...</div>
+  </section>
+
+  <script>
+    async function loadArchive() {
+      try {
+        const res = await fetch('archive.json?_ts=' + new Date().getTime());
+        const data = await res.json();
+        const keywords = ['war', 'missile', 'strike', 'conflict', 'attack', 'explosion', 'military', 'nuclear', 'army'];
+        const filteredData = data.filter(item => {
+          const title = item.title.toLowerCase();
+          return keywords.some(word => title.includes(word));
+        });
+        window.archiveHeadlines = filteredData;
+        displayArchive(filteredData);
+      } catch (err) {
+        document.getElementById('archiveList').innerHTML = '<p style="color:#aaa;">⚠️ Could not load archive.json.</p>';
+        console.error(err);
+      }
+    }
+
+    function displayArchive(data) {
+      const list = document.getElementById('archiveList');
+      list.innerHTML = '';
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'archive-item';
+        div.innerHTML = `
+          <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+          <p>🌐 ${item.source} · 🕒 ${item.time}</p>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function filterArchive() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = window.archiveHeadlines.filter(item =>
+        item.title.toLowerCase().includes(query) ||
+        item.source.toLowerCase().includes(query) ||
+        item.time.toLowerCase().includes(query)
+      );
+      displayArchive(filtered);
+    }
+
+    loadArchive();
+    setInterval(loadArchive, 60000); // Auto-refresh every 60 seconds
+  </script>
 </body>
 </html>
