@@ -14,6 +14,13 @@
       line-height: 1.6;
       min-height: 100vh;
     }
+    a {
+      color: #eee;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #ff4c4c;
+    }
     .top-nav {
       display: flex;
       justify-content: space-between;
@@ -32,16 +39,10 @@
     }
     .nav-links li a {
       color: #ddd;
-      text-decoration: none;
       font-weight: 600;
       font-size: 1rem;
       transition: color 0.25s ease;
       letter-spacing: 0.04em;
-    }
-    .nav-links li a:hover,
-    .nav-links li a:focus {
-      color: #ff4c4c;
-      outline: none;
     }
     .defcon-badge {
       background: #ff4c4c;
@@ -120,7 +121,6 @@
     }
     .feed-content h3 a {
       color: #eee;
-      text-decoration: none;
     }
     .feed-content p {
       margin: 0;
@@ -137,6 +137,24 @@
       margin: 2.5em auto;
       padding: 1em;
       text-align: center;
+    }
+    .bottom-card, .subscribe-button {
+      display: inline-block;
+      margin: 1em;
+      padding: 0.8em 2em;
+      border-radius: 10px;
+      background: #2b2b2b;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      font-weight: bold;
+      color: #eee;
+    }
+    .subscribe-button {
+      background: #ff4c4c;
+      color: #fff;
+      box-shadow: 0 3px 10px #ff4c4caa;
+    }
+    .subscribe-button:hover {
+      background: #cc3333;
     }
   </style>
 </head>
@@ -178,7 +196,10 @@
     <section class="subscribe-section">
       <h2>📰 Stay Updated</h2>
       <p>Subscribe for hourly WW3 alerts and global conflict data.</p>
-      <a class="subscribe-button" href="https://eepurl.com/jhJvBw" target="_blank">Subscribe Now</a>
+      <form action="https://ww3hourlyupdates.us17.list-manage.com/subscribe/post?u=bc2b4370a9fc7c46c59aeb60a&amp;id=4bc4603d64" method="post" target="_blank" novalidate>
+        <input type="email" name="EMAIL" placeholder="Enter your email" required style="padding: 0.6em; border-radius: 6px; border: none; width: 250px; max-width: 100%; margin: 1em 0;" />
+        <button class="subscribe-button" type="submit">Subscribe Now</button>
+      </form>
     </section>
     <p style="margin-top: 2em;">© 2025 WW3HourlyUpdates — Real-Time War Alerts, Global Conflict Tracking, and Preparedness News</p>
   </footer>
@@ -186,18 +207,16 @@
   <script>
     async function fetchLiveFeed() {
       const sources = [
-        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml", logo: "https://upload.wikimedia.org/wikipedia/en/f/f5/Al_Jazeera_English_Logo.svg" },
-        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all", logo: "https://upload.wikimedia.org/wikipedia/commons/8/88/Deutsche_Welle_logo.svg" },
-        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml", logo: "https://upload.wikimedia.org/wikipedia/commons/b/bc/BBC_News_2019.svg" },
-        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews", logo: "https://upload.wikimedia.org/wikipedia/commons/5/50/Reuters_logo.svg" }
+        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
+        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
+        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" },
+        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" }
       ];
 
       const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
       const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
       const feed = document.getElementById('feed');
       feed.innerHTML = '';
-
-      let allHeadlines = [];
 
       try {
         for (const source of sources) {
@@ -206,11 +225,9 @@
           const items = data.items?.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))) || [];
 
           items.slice(0, 3).forEach(item => {
-            allHeadlines.push(item);
             const div = document.createElement('div');
             div.className = 'feed-item';
             div.innerHTML = `
-              ${source.logo ? `<img src="${source.logo}" alt="${source.name} logo">` : ''}
               <div class="feed-content">
                 <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
                 <p>${item.description?.slice(0, 150) || ''}...</p>
@@ -220,15 +237,8 @@
             feed.appendChild(div);
           });
         }
-
-        const urgent = allHeadlines.find(h => h.title.includes('🔥') || h.title.includes('🛡️'));
-        const fallback = allHeadlines[1];
-        document.getElementById('whats-happening-now-text').textContent = urgent
-          ? `⚠️ ${urgent.title}`
-          : fallback
-          ? `⚠️ ${fallback.title}`
-          : '⚠️ No major alerts currently.';
-
+        const firstHeadline = feed.querySelector('h3 a');
+        document.getElementById('whats-happening-now-text').textContent = firstHeadline ? `⚠️ ${firstHeadline.textContent}` : '⚠️ No major alerts currently.';
       } catch (err) {
         console.error('Live feed error:', err);
         feed.innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
@@ -242,8 +252,8 @@
       badge.textContent = `DEFCON ${level}`;
       badge.className = 'defcon-badge defcon-' + level;
     }
+
     setDefconLevel(3);
   </script>
 </body>
 </html>
-
