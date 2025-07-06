@@ -219,60 +219,71 @@
   </footer>
 
   <script>
-    async function fetchLiveFeed() {
-      const sources = [
-        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
-        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
-        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" },
-        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" }
-      ];
+  async function fetchLiveFeed() {
+    const sources = [
+      { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
+      { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
+      { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" },
+      { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" }
+    ];
 
-      const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
-      const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
-      const feed = document.getElementById('feed');
-      feed.innerHTML = '';
+    const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
+    const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
+    const feed = document.getElementById('feed');
+    feed.innerHTML = '';
 
-      try {
-        for (const source of sources) {
-          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${source.url}&api_key=${apiKey}`);
-          const data = await res.json();
-          const items = data.items?.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))) || [];
+    const collectedHeadlines = [];
 
-          items.slice(0, 3).forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'feed-item';
-            div.innerHTML = `
-              <div class="feed-content">
-                <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-                <p>${item.description?.slice(0, 150) || ''}...</p>
-                <div class="meta">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
-              </div>
-            `;
-            feed.appendChild(div);
-          });
-        }
-        const firstHeadline = feed.querySelector('h3 a');
-        document.getElementById('whats-happening-now-text').textContent = firstHeadline ? `⚠️ ${firstHeadline.textContent}` : '⚠️ No major alerts currently.';
-      } catch (err) {
-        console.error('Live feed error:', err);
-        feed.innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
+    try {
+      for (const source of sources) {
+        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${source.url}&api_key=${apiKey}`);
+        const data = await res.json();
+        const items = data.items?.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))) || [];
+
+        items.slice(0, 3).forEach(item => {
+          collectedHeadlines.push(item); // 🔑 collect it
+
+          const div = document.createElement('div');
+          div.className = 'feed-item';
+          div.innerHTML = `
+            <div class="feed-content">
+              <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+              <p>${item.description?.slice(0, 150) || ''}...</p>
+              <div class="meta">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
+            </div>
+          `;
+          feed.appendChild(div);
+        });
       }
+
+      if (collectedHeadlines.length > 0) {
+        const random = collectedHeadlines[Math.floor(Math.random() * collectedHeadlines.length)];
+        document.getElementById('whats-happening-now-text').textContent = `⚠️ ${random.title}`;
+      } else {
+        document.getElementById('whats-happening-now-text').textContent = '⚠️ No major events right now.';
+      }
+
+    } catch (err) {
+      console.error('Live feed error:', err);
+      feed.innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
     }
+  }
 
-    fetchLiveFeed();
+  fetchLiveFeed();
 
-    function setDefconLevel(level) {
-      const badge = document.getElementById('defcon-badge');
-      badge.textContent = `DEFCON ${level}`;
-      badge.className = 'defcon-badge defcon-' + level;
-    }
+  function setDefconLevel(level) {
+    const badge = document.getElementById('defcon-badge');
+    badge.textContent = `DEFCON ${level}`;
+    badge.className = 'defcon-badge defcon-' + level;
+  }
 
-    function toggleDefconReason() {
-      const reason = document.getElementById('defcon-reason');
-      reason.style.display = reason.style.display === 'none' ? 'block' : 'none';
-    }
+  function toggleDefconReason() {
+    const reason = document.getElementById('defcon-reason');
+    reason.style.display = reason.style.display === 'none' ? 'block' : 'none';
+  }
 
-    setDefconLevel(3);
-  </script>
+  setDefconLevel(3);
+</script>
+
 </body>
 </html>
