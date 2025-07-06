@@ -44,6 +44,10 @@
       transition: color 0.25s ease;
       letter-spacing: 0.04em;
     }
+    .defcon-container {
+      text-align: center;
+      cursor: pointer;
+    }
     .defcon-badge {
       background: #ff4c4c;
       color: white;
@@ -54,6 +58,13 @@
       font-family: 'Anton', sans-serif;
       letter-spacing: 1.5px;
       box-shadow: 0 0 8px #ff4c4caa;
+    }
+    #defcon-reason {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #ccc;
+      display: none;
+      text-align: center;
     }
     header {
       text-align: center;
@@ -170,7 +181,10 @@
       <li><a href="about.html">About</a></li>
       <li><a href="admin.html">Admin</a></li>
     </ul>
-    <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
+    <div class="defcon-container" title="Click to show current DEFCON explanation" onclick="toggleDefconReason()">
+      <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
+      <div id="defcon-reason">🛡️ Current Readiness: Heightened alert due to troop movement near Taiwan.</div>
+    </div>
   </nav>
 
   <header>WW3 HOURLY UPDATES</header>
@@ -251,6 +265,11 @@
       const badge = document.getElementById('defcon-badge');
       badge.textContent = `DEFCON ${level}`;
       badge.className = 'defcon-badge defcon-' + level;
+    }
+
+    function toggleDefconReason() {
+      const reason = document.getElementById('defcon-reason');
+      reason.style.display = reason.style.display === 'none' ? 'block' : 'none';
     }
 
     setDefconLevel(3);
