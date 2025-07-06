@@ -1,34 +1,35 @@
 const fs = require('fs');
 const path = require('path');
 
-exports.handler = async function(event) {
+exports.handler = async (event, context) => {
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return {
+      statusCode: 405,
+      body: 'Method Not Allowed',
+    };
   }
 
   const newEntry = JSON.parse(event.body);
-  const filePath = path.join(__dirname, '..', '..', 'archive.json');
+  const archivePath = path.resolve(__dirname, '../../archive.json');
 
   try {
-    let archive = [];
+    const fileData = fs.readFileSync(archivePath, 'utf8');
+    const archive = JSON.parse(fileData);
 
-    if (fs.existsSync(filePath)) {
-      const existing = fs.readFileSync(filePath, 'utf8');
-      archive = JSON.parse(existing);
-    }
+    archive.push(newEntry);
 
-    archive.unshift(newEntry); // Add new item to top
-    fs.writeFileSync(filePath, JSON.stringify(archive, null, 2));
+    fs.writeFileSync(archivePath, JSON.stringify(archive, null, 2));
 
     return {
       statusCode: 200,
-      body: '✅ Headline saved to archive.json'
+      body: '✅ Headline saved to archive.json successfully.',
     };
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error('❌ Failed to update archive:', error);
     return {
       statusCode: 500,
-      body: '❌ Failed to save headline'
+      body: '⚠️ Failed to save headline. See logs.',
     };
   }
 };
+

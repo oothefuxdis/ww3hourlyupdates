@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🌍 WW3 HOURLY UPDATES - Real-Time Conflict Tracking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WW3 Hourly Updates</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -72,6 +72,10 @@
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
+    .whats-now h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
     .feed-container {
       max-width: 1200px;
       margin: 2em auto;
@@ -91,13 +95,24 @@
       padding: 1.2em;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      align-items: center;
+      transition: box-shadow 0.3s ease, border 0.3s ease;
       border: 2px solid transparent;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
     .feed-item:hover {
-      border-color: #ff4c4c;
+      border: 2px solid #ff4c4c;
       box-shadow: 0 0 12px 3px #ff4c4caa;
       background-color: #331414;
+    }
+    .feed-item img {
+      width: 96px;
+      height: 64px;
+      object-fit: contain;
+      border-radius: 6px;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px #ff4c4caa;
+      background: #1a1a1a;
+      padding: 4px;
     }
     .feed-content h3 {
       margin: 0 0 0.6em 0;
@@ -117,44 +132,11 @@
       color: #999;
       margin-top: 0.5em;
     }
-    .bottom-row, .subscribe-section, footer {
+    footer {
       max-width: 1200px;
       margin: 2.5em auto;
       padding: 1em;
       text-align: center;
-    }
-    .bottom-card {
-      background: #2b2b2b;
-      padding: 1em;
-      border-radius: 10px;
-      display: inline-block;
-      margin: 0.6em;
-      text-decoration: none;
-      color: #ddd;
-      font-weight: bold;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-    .subscribe-button {
-      background: #ff4c4c;
-      color: white;
-      padding: 0.9em 2.8em;
-      border-radius: 8px;
-      font-weight: 700;
-      text-decoration: none;
-      box-shadow: 0 3px 10px #ff4c4caa;
-    }
-    .save-btn {
-      margin-top: 0.5em;
-      padding: 0.4em 1em;
-      font-size: 0.9em;
-      background-color: #444;
-      color: #fff;
-      border: 1px solid #ff4c4c;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .save-btn:hover {
-      background-color: #ff4c4c;
     }
   </style>
 </head>
@@ -166,16 +148,19 @@
       <li><a href="archive.html">Archive</a></li>
       <li><a href="timeline.html">Timeline</a></li>
       <li><a href="survival.html">Survival</a></li>
+      <li><a href="underground.html">Underground</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="admin.html">Admin</a></li>
     </ul>
     <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
   </nav>
 
   <header>WW3 HOURLY UPDATES</header>
 
-  <section class="whats-now">
+  <section class="whats-now" aria-live="polite">
     <h2>🔴 What’s Happening Now</h2>
-    <p id="whats-happening-now-text">Loading...</p>
+    <p id="whats-happening-now-text">Loading top alert...</p>
+    <p style="color: #ccc;">🕒 Updated hourly · Curated for global conflict alerts</p>
   </section>
 
   <section class="feed-container">
@@ -183,101 +168,71 @@
     <div id="feed"><p>Loading live news...</p></div>
   </section>
 
-  <section class="bottom-row">
-    <a href="map.html" class="bottom-card">📍 Conflict Map</a>
-    <a href="timeline.html" class="bottom-card">🕑 Timeline</a>
-    <a href="survival.html" class="bottom-card">🎒 Survival Kit</a>
-    <a href="underground.html" class="bottom-card">🏙️ Underground Cities</a>
-  </section>
-
-  <section class="subscribe-section">
-    <h2>📰 Stay Updated</h2>
-    <p>Subscribe for hourly WW3 alerts and global conflict data.</p>
-    <a class="subscribe-button" href="https://eepurl.com/jhJvBw" target="_blank">Subscribe Now</a>
-  </section>
-
   <footer>
-    © 2025 WW3HourlyUpdates — Real-Time War Alerts, Global Conflict Tracking, and Preparedness News
+    <div class="bottom-row">
+      <a href="map.html" class="bottom-card">📍 Conflict Map</a>
+      <a href="timeline.html" class="bottom-card">🕑 Timeline</a>
+      <a href="survival.html" class="bottom-card">🎒 Survival Kit</a>
+      <a href="underground.html" class="bottom-card">🏙️ Underground Cities</a>
+    </div>
+    <section class="subscribe-section">
+      <h2>📰 Stay Updated</h2>
+      <p>Subscribe for hourly WW3 alerts and global conflict data.</p>
+      <a class="subscribe-button" href="https://eepurl.com/jhJvBw" target="_blank">Subscribe Now</a>
+    </section>
+    <p style="margin-top: 2em;">© 2025 WW3HourlyUpdates — Real-Time War Alerts, Global Conflict Tracking, and Preparedness News</p>
   </footer>
 
   <script>
-    let latestHeadlines = [];
-
     async function fetchLiveFeed() {
       const sources = [
-        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
-        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
-        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" },
-        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" }
+        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml", logo: "https://upload.wikimedia.org/wikipedia/en/f/f5/Al_Jazeera_English_Logo.svg" },
+        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all", logo: "https://upload.wikimedia.org/wikipedia/commons/8/88/Deutsche_Welle_logo.svg" },
+        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml", logo: "https://upload.wikimedia.org/wikipedia/commons/b/bc/BBC_News_2019.svg" },
+        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews", logo: "https://upload.wikimedia.org/wikipedia/commons/5/50/Reuters_logo.svg" }
       ];
 
-      const keywords = ["war", "missile", "nuclear", "conflict", "tensions", "strike", "invasion", "military", "ww3"];
       const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
-      const feedContainer = document.getElementById('feed');
-      feedContainer.innerHTML = '';
-      latestHeadlines = [];
+      const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
+      const feed = document.getElementById('feed');
+      feed.innerHTML = '';
 
       try {
         for (const source of sources) {
           const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${source.url}&api_key=${apiKey}`);
           const data = await res.json();
-          if (!data.items || data.items.length === 0) continue;
+          const items = data.items?.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))) || [];
 
-          const filtered = data.items.filter(item => {
-            const title = item.title.toLowerCase();
-            return keywords.some(keyword => title.includes(keyword));
-          }).slice(0, 3);
-
-          filtered.forEach(item => {
-            const tag = item.title.toLowerCase().includes("breaking") ? "🔥 Breaking" : "🛡️ Military";
-            const headline = {
-              source: source.name,
-              title: item.title,
-              link: item.link,
-              time: new Date(item.pubDate).toLocaleString(),
-              tag
-            };
-            latestHeadlines.push(headline);
-
+          items.slice(0, 3).forEach(item => {
             const div = document.createElement('div');
             div.className = 'feed-item';
             div.innerHTML = `
+              ${source.logo ? `<img src="${source.logo}" alt="${source.name} logo">` : ''}
               <div class="feed-content">
-                <h3><a href="${item.link}" target="_blank">${tag} — ${item.title}</a></h3>
-                <p>${item.description.slice(0, 150)}...</p>
+                <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                <p>${item.description?.slice(0, 150) || ''}...</p>
                 <div class="meta">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
-                <button class="save-btn" onclick='saveSingle(${JSON.stringify(headline)})'>💾 Save</button>
               </div>
             `;
-            feedContainer.appendChild(div);
+            feed.appendChild(div);
           });
         }
-
-        document.getElementById('whats-happening-now-text').textContent = `⚠️ ${feedContainer.querySelector('h3 a')?.textContent || 'No updates available'}`;
+        const firstHeadline = feed.querySelector('h3 a');
+        document.getElementById('whats-happening-now-text').textContent = firstHeadline ? `⚠️ ${firstHeadline.textContent}` : '⚠️ No major alerts currently.';
       } catch (err) {
         console.error('Live feed error:', err);
-        feedContainer.innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
+        feed.innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
       }
     }
 
-    function saveSingle(headline) {
-      const blob = new Blob([JSON.stringify([headline], null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `ww3-headline-${Date.now()}.json`;
-      a.click();
-    }
+    fetchLiveFeed();
 
     function setDefconLevel(level) {
       const badge = document.getElementById('defcon-badge');
       badge.textContent = `DEFCON ${level}`;
       badge.className = 'defcon-badge defcon-' + level;
     }
-
     setDefconLevel(3);
-    fetchLiveFeed();
   </script>
 </body>
 </html>
-

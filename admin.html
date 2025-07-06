@@ -151,34 +151,33 @@
       alert(`DEFCON level updated to ${level}. (Note: This change is only visual for now)`);
     }
 
-    async function appendToArchive() {
-      const title = document.getElementById("headlineTitle").value.trim();
-      const link = document.getElementById("headlineLink").value.trim();
-      const source = document.getElementById("headlineSource").value.trim();
+async function appendToArchive() {
+  const title = document.getElementById("headlineTitle").value.trim();
+  const link = document.getElementById("headlineLink").value.trim();
+  const source = document.getElementById("headlineSource").value.trim();
 
-      if (!title || !link || !source) {
-        alert("Please fill in all fields.");
-        return;
-      }
+  if (!title || !link || !source) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
-      const newEntry = {
-        title: title,
-        link: link,
-        source: source,
-        time: new Date().toISOString().replace("T", " ").slice(0, 16)
-      };
+  const newEntry = {
+    title,
+    link,
+    source,
+    time: new Date().toISOString().slice(0, 16).replace('T', ' ')
+  };
 
-      const response = await fetch("/.netlify/functions/saveHeadline", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newEntry)
-      });
+  const response = await fetch("/.netlify/functions/saveHeadline", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newEntry)
+  });
 
-      const result = await response.text();
-      document.getElementById("outputBox").value = result;
-    }
+  const text = await response.text();
+  document.getElementById("outputBox").value = text;
+}
+
   </script>
 </body>
 </html>
