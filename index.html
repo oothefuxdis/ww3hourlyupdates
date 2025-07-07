@@ -22,13 +22,17 @@
       color: #ff4c4c;
     }
     .top-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       background-color: #222;
       padding: 12px 24px;
       user-select: none;
       box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    }
+    .nav-center {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     .nav-links {
       list-style: none;
@@ -47,6 +51,9 @@
     .defcon-container {
       text-align: center;
       cursor: pointer;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
     .defcon-badge {
       background: #ff4c4c;
@@ -170,24 +177,26 @@
   </style>
 </head>
 <body>
+  <header>WW3 HOURLY UPDATES</header>
+
   <nav class="top-nav">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="map.html">Map</a></li>
-      <li><a href="archive.html">Archive</a></li>
-      <li><a href="timeline.html">Timeline</a></li>
-      <li><a href="survival.html">Survival</a></li>
-      <li><a href="underground.html">Underground</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
-    <div class="defcon-container" title="Click to show current DEFCON explanation" onclick="toggleDefconReason()">
-      <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
-      <div id="defcon-reason">🛡️ Current Readiness: Heightened alert due to troop movement near Taiwan.</div>
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="map.html">Map</a></li>
+        <li><a href="archive.html">Archive</a></li>
+        <li><a href="timeline.html">Timeline</a></li>
+        <li><a href="survival.html">Survival</a></li>
+        <li><a href="underground.html">Underground</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+      <div class="defcon-container" title="Click to show current DEFCON explanation" onclick="toggleDefconReason()">
+        <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
+        <div id="defcon-reason">🛡️ Current Readiness: Heightened alert due to troop movement near Taiwan.</div>
+      </div>
     </div>
   </nav>
-
-  <header>WW3 HOURLY UPDATES</header>
 
   <section class="whats-now" aria-live="polite">
     <h2>🔴 What’s Happening Now</h2>
