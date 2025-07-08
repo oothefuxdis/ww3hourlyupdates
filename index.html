@@ -365,27 +365,44 @@
     <p style="margin-top: 2em;">© 2025 WW3HourlyUpdates — Real-Time War Alerts, Global Conflict Tracking, and Preparedness News</p>
   </footer>
 
-<script>
+<<script>
   async function fetchLiveFeed() {
     const sources = [
       { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
-      { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" }
+      { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
+      { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" }
     ];
 
     const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
-    const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
+
+    const keywords = [
+      "missile", "nuclear", "military", "airstrike",
+      "conflict", "invasion", "tensions", "ww3",
+      "troop movement", "artillery", "mobilization"
+    ];
+
+    const exclude = [
+      "hollywood", "actor", "movie", "tv", "entertainment",
+      "baseball", "football", "basketball", "tennis",
+      "strike vote", "union", "labor", "labour", "teacher", "actor"
+    ];
+
     const feed = document.getElementById('feed');
     feed.innerHTML = '';
-
     const collectedHeadlines = [];
 
     try {
       for (const source of sources) {
         const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${source.url}&api_key=${apiKey}`);
         const data = await res.json();
-        const items = data.items?.filter(item =>
-          keywords.some(k => item.title.toLowerCase().includes(k))
-        ) || [];
+
+        const items = data.items?.filter(item => {
+          const text = (item.title + item.description).toLowerCase();
+          return (
+            keywords.some(k => text.includes(k)) &&
+            !exclude.some(bad => text.includes(bad))
+          );
+        }) || [];
 
         items.slice(0, 3).forEach(item => {
           collectedHeadlines.push(item);
@@ -393,12 +410,13 @@
           const div = document.createElement('div');
           div.className = 'feed-item';
           div.innerHTML = `
-            <img src="${item.thumbnail || 'https://via.placeholder.com/96x64/222/eee?text=%E2%80%A2'}" alt="Article thumbnail" />
+            <img src="${item.thumbnail || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}" alt="Article thumbnail" />
             <div class="feed-content">
               <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
               <p>${(item.description || '').slice(0, 120).replace(/<\/?[^>]+(>|$)/g, '')}...</p>
               <div class="meta">
-                🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}
+                <span>🌐 ${source.name}</span>
+                <span>🕒 ${new Date(item.pubDate).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</span>
               </div>
             </div>
           `;
@@ -406,16 +424,15 @@
         });
       }
 
-      const alertBox = document.getElementById('whats-happening-now-text');
-      if (collectedHeadlines.length > 0) {
-        const random = collectedHeadlines[Math.floor(Math.random() * collectedHeadlines.length)];
-        alertBox.innerHTML = `
-          <span style="color: #ff4c4c;">⚠️</span>
-          <span style="text-shadow: 0 0 8px #ff4c4c55;">${random.title}</span>
-        `;
-      } else {
-        alertBox.textContent = '⚠️ No major events right now.';
-      }
+      // Populate “What’s Happening Now”
+      const headline = collectedHeadlines.length > 0
+        ? collectedHeadlines[Math.floor(Math.random() * collectedHeadlines.length)].title
+        : '⚠️ No major events right now.';
+
+      document.getElementById('whats-happening-now-text').innerHTML = `
+        <span style="color: #ff4c4c">⚠️</span> 
+        <span style="text-shadow: 0 0 8px #ff4c4c55">${headline}</span>
+      `;
 
     } catch (err) {
       console.error('Live feed error:', err);
@@ -437,6 +454,5 @@
   fetchLiveFeed();
   setDefconLevel(3);
 </script>
-
 </body>
 </html>
