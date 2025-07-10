@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WW3 Hourly Updates</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
@@ -30,7 +30,7 @@
     .nav-center {
       margin: 0 auto;
       display: flex;
-      justify-content: flex-end;
+      justify-content: flex-start;
       align-items: center;
       position: relative;
       max-width: none;
@@ -40,90 +40,44 @@
       margin: 0;
       padding: 0;
       display: flex;
-      gap: 24px;
+      gap: 12px;
       margin-left: auto;
+    }
+    .nav-links li a {
+      color: #ddd;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: color 0.25s ease;
+      letter-spacing: 0.03em;
+      padding: 0 6px;
+    }
+    .nav-links li a.active {
+      color: #ff4c4c;
     }
     .logo-container {
       display: flex;
       align-items: center;
-      gap: 15px;
-      margin-right: 30px;
+      gap: 8px;
+      margin-right: 16px;
     }
-    .sphere-container {
-      width: 40px;
-      height: 40px;
-      perspective: 1000px;
-    }
-    
-    .sphere {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      animation: rotate3d 20s linear infinite;
-      transform-style: preserve-3d;
-    }
-    
-    .sphere::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 30% 30%, 
-        #ff4c4c 0%, 
-        #cc0000 20%, 
-        #660000 80%);
-      border-radius: 50%;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-    }
-    
-    .sphere::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 70% 70%, 
-        rgba(255,76,76,0.3) 0%, 
-        rgba(204,0,0,0.3) 20%, 
-        transparent 80%);
+    .rotating-globe {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      background-color: #222;
       border-radius: 50%;
     }
-    
-    .shadow {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.2);
-      border-radius: 50%;
-      transform: translateZ(-20px);
-      filter: blur(5px);
+    .logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 1px;
     }
-    
-    @keyframes rotate3d {
-      from { transform: rotateZ(0deg) rotateX(20deg) rotateY(20deg); }
-      to { transform: rotateZ(360deg) rotateX(20deg) rotateY(380deg); }
-    }
-    .title-text {
-      font-family: 'Anton', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 4px;
-      font-weight: 200;
-      margin-left: 0;
-      text-transform: uppercase;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
-    .ww3-white {
+    .logo-text .white {
       color: white;
     }
-    .hourly-red {
+    .logo-text .red {
       color: #ff4c4c;
-    }
-    .nav-links li a {
-      color: #ddd;
-      font-weight: 300;
-      font-size: 0.85rem;
-      transition: color 0.25s ease;
-      letter-spacing: 0.03em;
-      padding: 0 8px;
     }
     .defcon-container {
       text-align: center;
@@ -150,151 +104,97 @@
       display: none;
       text-align: center;
     }
-    header {
-      text-align: center;
-      padding: 1.2em 0;
-      font-size: 2.4em;
-      font-weight: 700;
-      font-family: 'Anton', sans-serif;
-      letter-spacing: 3px;
-      color: #ff4c4c;
-      text-shadow: 0 0 8px #ff4c4caa;
-    }
+
     .whats-now {
       background-color: #2e2e2e;
-      padding: 2.5em;
-      margin-top: 1.4em;
-      border-left: 8px solid #ff4c4c;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      position: relative;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0px rgba(255,76,76,0.3); }
-      70% { box-shadow: 0 0 0 15px rgba(255,76,76,0); }
-      100% { box-shadow: 0 0 0 0px rgba(255,76,76,0); }
-    }
-
-    .breaking-alert {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .breaking-alert::before {
-      content: '🚨';
-      font-size: 2em;
-      filter: drop-shadow(0 0 4px #ff4c4c);
-    }
-
-    .breaking-label {
-      color: #ff4c4c;
-      font-size: 0.8em;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .breaking-headline {
-      font-weight: 700;
-      margin: 0.5em 0;
-      opacity: 0;
-      animation: fadeIn 0.5s ease-out forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      padding: 2em;
+      text-align: center;
+      border-bottom: 2px solid #444;
     }
     .whats-now h2 {
-      font-size: 2em;
-      margin-bottom: 10px;
+      color: #ff4c4c;
+      margin: 0 0 0.5em;
     }
-    .feed-container {
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 1em;
       max-width: 1200px;
       margin: 2em auto;
       padding: 0 1em;
     }
-    .feed-container h2 {
-      font-size: 1.8em;
-      margin-bottom: 0.8em;
+    .logo-area {
+      background: #1e1e1e;
+      padding: 1em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .logo-area img {
+      width: 100%;
+      max-width: 700px;
+      height: auto;
+    }
+    .alert-box {
+      background: rgba(255, 76, 76, 0.15);
+      border: 1px solid #ff4c4c;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(255, 76, 76, 0.4);
+      margin-bottom: 1em;
+    }
+    .related-box {
+      background: #2b2b2b;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.5);
+      margin-bottom: 1em;
+    }
+    .alert-box h3, .related-box h3 {
       color: #ff4c4c;
-      text-shadow: 0 0 6px #ff4c4caa;
+      margin-top: 0;
+    }
+
+    .feed-section {
+      background: #2e2e2e;
+      padding: 2em 1em;
+      max-width: 1200px;
+      margin: 2em auto;
+      border-top: 2px solid #444;
+    }
+    .feed-section h2 {
+      color: #ff4c4c;
+      margin-bottom: 1em;
     }
     .feed-item {
-      display: flex;
-      gap: 1.5em;
-      margin-bottom: 2em;
       background: #1f1f1f;
-      padding: 1.5em;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      align-items: flex-start;
-      transition: all 0.3s ease;
-      border: 1px solid #363636;
-      position: relative;
-    }
-    .feed-item:hover {
-      border: 2px solid #ff4c4c;
-      box-shadow: 0 0 12px 3px #ff4c4caa;
-      background-color: #331414;
-    }
-    .feed-item img {
-      width: 120px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 4px;
-      flex-shrink: 0;
-      border: 1px solid #ff4c4c33;
-      background: #2b2b2b;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
-    }
-    .feed-content h3 {
-      margin: 0 0 0.6em 0;
-      font-size: 1.2em;
-    }
-    .feed-content h3 a {
-      color: #eee;
-    }
-    .feed-content p {
-      margin: 0;
-      color: #ccc;
-      font-size: 1em;
-    }
-    .feed-content .meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.8em;
-      color: #777;
-      margin-top: 1em;
-      padding-top: 0.8em;
-      border-top: 1px solid #363636;
-    }
-    footer {
-      max-width: 1200px;
-      margin: 2.5em auto;
+      border: 1px solid #333;
+      border-left: 5px solid #ff4c4c;
       padding: 1em;
-      text-align: center;
+      margin-bottom: 1em;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
-    .bottom-card, .subscribe-button {
-      display: inline-block;
-      margin: 1em;
-      padding: 0.8em 2em;
-      border-radius: 10px;
-      background: #2b2b2b;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-      font-weight: bold;
-      color: #eee;
+    .feed-item h3 {
+      margin: 0 0 0.5em;
+      font-size: 1.1em;
     }
-    .subscribe-button {
-      background: #ff4c4c;
-      color: #fff;
-      box-shadow: 0 3px 10px #ff4c4caa;
+    .feed-item p {
+      margin: 0;
+      color: #bbb;
+      font-size: 0.95em;
     }
-    .subscribe-button:hover {
-      background: #cc3333;
+    .meta-info {
+      font-size: 0.8em;
+      color: #999;
+      margin-top: 0.5em;
+    }
+
+    @media (max-width: 768px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -302,18 +202,13 @@
   <nav class="top-nav">
     <div class="nav-center">
       <div class="logo-container">
-        <div class="sphere-container">
-          <div class="sphere">
-            <div class="shadow"></div>
-          </div>
-        </div>
-        <div class="title-text">
-          <span class="ww3-white">WW3</span>
-          <span class="hourly-red">Hourly Updates</span>
+        <img src="assets/world-icon.gif" alt="Rotating Globe" class="rotating-globe" />
+        <div class="logo-text">
+          <span class="white">WW3</span> <span class="red">Hourly Updates</span>
         </div>
       </div>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html" class="active">Home</a></li>
         <li><a href="map.html">Map</a></li>
         <li><a href="archive.html">Archive</a></li>
         <li><a href="timeline.html">Timeline</a></li>
@@ -329,130 +224,78 @@
     </div>
   </nav>
 
-  <header>WW3 HOURLY UPDATES</header>
-
-  <section class="whats-now" aria-live="polite">
+  <section class="whats-now">
     <h2>🔴 What’s Happening Now</h2>
-    <div class="breaking-alert">
-      <div>
-        <div class="breaking-label">Breaking Alert</div>
-        <div id="whats-happening-now-text" class="breaking-headline">Loading top alert...</div>
+    <p id="whats-happening-now-text">Loading breaking headline...</p>
+    <p style="color:#aaa; font-size: 0.9em;">🕒 Updated hourly · Curated for global conflict alerts</p>
+  </section>
+
+  <section class="main-grid">
+    <div class="logo-area">
+      <img src="assets/long logo.png" alt="WW3 Logo" />
+    </div>
+    <div>
+      <div class="alert-box">
+        <h3>🚨 Emergency Alert</h3>
+        <p>Incoming missile detected in disputed airspace. Governments urge civilians to seek shelter immediately.</p>
+      </div>
+      <div class="related-box">
+        <h3>📰 Related Articles</h3>
+        <ul>
+          <li><a href="#">NATO mobilizes in response to Baltic tensions</a></li>
+          <li><a href="#">Cyberattack cripples major European grid</a></li>
+          <li><a href="#">Satellite images show armored movement</a></li>
+        </ul>
       </div>
     </div>
-    <p style="color: #ccc; margin-top: 1.5em;">🕒 Updated hourly · Curated for global conflict alerts</p>
   </section>
 
-  <section class="feed-container">
-    <h2>🌍 WW3 Hourly Updates — Visual News Feed</h2>
-    <div id="feed"><p>Loading live news...</p></div>
-  </section>
-
-  <footer>
-    <div class="bottom-row">
-      <a href="map.html" class="bottom-card">📍 Conflict Map</a>
-      <a href="timeline.html" class="bottom-card">🕑 Timeline</a>
-      <a href="survival.html" class="bottom-card">🎒 Survival Kit</a>
-      <a href="underground.html" class="bottom-card">🏙️ Underground Cities</a>
+  <section class="feed-section">
+    <h2>🌍 WW3 Hourly Updates — Live Feed</h2>
+    <div id="feed">
+      <div class="feed-item"><h3>Loading...</h3><p>Please wait while we fetch the latest updates.</p></div>
     </div>
-    <section class="subscribe-section">
-      <h2>📰 Stay Updated</h2>
-      <p>Subscribe for hourly WW3 alerts and global conflict data.</p>
-      <form action="https://ww3hourlyupdates.us17.list-manage.com/subscribe/post?u=bc2b4370a9fc7c46c59aeb60a&amp;id=4bc4603d64" method="post" target="_blank" novalidate>
-        <input type="email" name="EMAIL" placeholder="Enter your email" required style="padding: 0.6em; border-radius: 6px; border: none; width: 250px; max-width: 100%; margin: 1em 0;" />
-        <button class="subscribe-button" type="submit">Subscribe Now</button>
-      </form>
-    </section>
-    <p style="margin-top: 2em;">© 2025 WW3HourlyUpdates — Real-Time War Alerts, Global Conflict Tracking, and Preparedness News</p>
-  </footer>
+  </section>
 
-<<script>
-  async function fetchLiveFeed() {
-    const sources = [
-      { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
-      { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
-      { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" }
-    ];
+  <script>
+    async function fetchLiveFeed() {
+      const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
+      const feed = document.getElementById('feed');
+      const nowText = document.getElementById('whats-happening-now-text');
+      const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
+      feed.innerHTML = '';
 
-    const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
-
-    const keywords = [
-      "missile", "nuclear", "military", "airstrike",
-      "conflict", "invasion", "tensions", "ww3",
-      "troop movement", "artillery", "mobilization"
-    ];
-
-    const exclude = [
-      "hollywood", "actor", "movie", "tv", "entertainment",
-      "baseball", "football", "basketball", "tennis",
-      "strike vote", "union", "labor", "labour", "teacher", "actor"
-    ];
-
-    const feed = document.getElementById('feed');
-    feed.innerHTML = '';
-    const collectedHeadlines = [];
-
-    try {
-      for (const source of sources) {
-        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${source.url}&api_key=${apiKey}`);
+      try {
+        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.aljazeera.com/xml/rss/all.xml&api_key=${apiKey}`);
         const data = await res.json();
+        const items = data.items.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))).slice(0, 5);
 
-        const items = data.items?.filter(item => {
-          const text = (item.title + item.description).toLowerCase();
-          return (
-            keywords.some(k => text.includes(k)) &&
-            !exclude.some(bad => text.includes(bad))
-          );
-        }) || [];
-
-        items.slice(0, 3).forEach(item => {
-          collectedHeadlines.push(item);
-
+        items.forEach(item => {
           const div = document.createElement('div');
           div.className = 'feed-item';
           div.innerHTML = `
-            <img src="${item.thumbnail || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}" alt="Article thumbnail" />
-            <div class="feed-content">
-              <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-              <p>${(item.description || '').slice(0, 120).replace(/<\/?[^>]+(>|$)/g, '')}...</p>
-              <div class="meta">
-                <span>🌐 ${source.name}</span>
-                <span>🕒 ${new Date(item.pubDate).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</span>
-              </div>
-            </div>
+            <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+            <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
+            <div class="meta-info">🌐 Al Jazeera · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
           `;
           feed.appendChild(div);
         });
+
+        if (items.length > 0) {
+          nowText.textContent = `⚠️ ${items[Math.floor(Math.random() * items.length)].title}`;
+        }
+      } catch (err) {
+        feed.innerHTML = '<p style="color:#aaa;">⚠️ Could not load live feed.</p>';
+        console.error(err);
       }
-
-      // Populate “What’s Happening Now”
-      const headline = collectedHeadlines.length > 0
-        ? collectedHeadlines[Math.floor(Math.random() * collectedHeadlines.length)].title
-        : '⚠️ No major events right now.';
-
-      document.getElementById('whats-happening-now-text').innerHTML = `
-        <span style="color: #ff4c4c">⚠️</span> 
-        <span style="text-shadow: 0 0 8px #ff4c4c55">${headline}</span>
-      `;
-
-    } catch (err) {
-      console.error('Live feed error:', err);
-      feed.innerHTML = "<p style='color:#aaa;'>⚠️ Live feed unavailable.</p>";
     }
-  }
 
-  function setDefconLevel(level) {
-    const badge = document.getElementById('defcon-badge');
-    badge.textContent = `DEFCON ${level}`;
-    badge.className = 'defcon-badge defcon-' + level;
-  }
+    function toggleDefconReason() {
+      const reason = document.getElementById('defcon-reason');
+      reason.style.display = reason.style.display === 'none' ? 'block' : 'none';
+    }
 
-  function toggleDefconReason() {
-    const reason = document.getElementById('defcon-reason');
-    reason.style.display = reason.style.display === 'none' ? 'block' : 'none';
-  }
-
-  fetchLiveFeed();
-  setDefconLevel(3);
-</script>
+    fetchLiveFeed();
+  </script>
 </body>
 </html>
