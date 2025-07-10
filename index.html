@@ -164,14 +164,37 @@
     }
     .related-box {
       background: #2b2b2b;
-      padding: 1em;
+      padding: 1.5em;
       border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.5);
+      box-shadow: 0 0 12px rgba(0,0,0,0.6);
       margin-bottom: 1em;
+    }
+    .related-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .related-box li {
+      padding: 0.8em 0;
+      border-bottom: 1px solid #383838;
+    }
+    .related-box li:last-child {
+      border-bottom: none;
+    }
+    .related-box a {
+      color: #ddd;
+      display: block;
+      transition: all 0.2s ease;
+    }
+    .related-box a:hover {
+      color: #ff4c4c;
+      transform: translateX(5px);
     }
     .alert-box h3, .related-box h3 {
       color: #ff4c4c;
       margin-top: 0;
+      font-size: 1.2rem;
+      margin-bottom: 1em;
     }
 
     .feed-section {
@@ -282,8 +305,10 @@
         <p>Loading emergency information...</p>
       </div>
       <div class="related-box">
-        <h3>📌 Related Articles</h3>
-        <p>Loading related headlines...</p>
+        <h3>📌 Essential Analysis</h3>
+        <ul id="related-articles">
+          <li>Loading strategic reports...</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -340,11 +365,29 @@
         feed.appendChild(div);
       });
 
+      // Update alerts
       const alertHeadline = collectedItems.find(item => /emergency|missile|nuclear|alert|evacuation/i.test(item.title));
       if (alertHeadline) {
         document.querySelector('.alert-box p').textContent = alertHeadline.title;
       } else {
         document.querySelector('.alert-box p').textContent = "⚠️ No emergency alerts currently. Stay alert for breaking news.";
+      }
+
+      // Update related articles
+      const relatedList = document.getElementById('related-articles');
+      relatedList.innerHTML = '';
+      const relatedItems = collectedItems
+        .filter(item => /analysis|strategy|sanctions|alliance|geopolitics/i.test(item.title))
+        .slice(0, 5);
+      
+      if (relatedItems.length === 0) {
+        relatedList.innerHTML = '<li>No additional analysis available</li>';
+      } else {
+        relatedItems.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="${item.link}" target="_blank">${item.title.replace(/:/, ': ')}</a>`;
+          relatedList.appendChild(li);
+        });
       }
 
       const nowItem = collectedItems[Math.floor(Math.random() * collectedItems.length)];
