@@ -168,29 +168,52 @@
       color: #ff4c4c;
       margin-bottom: 1em;
     }
-    .feed-item {
-      background: #1f1f1f;
-      border: 1px solid #333;
-      border-left: 5px solid #ff4c4c;
-      padding: 1em;
-      margin-bottom: 1em;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    }
-    .feed-item h3 {
-      margin: 0 0 0.5em;
-      font-size: 1.1em;
-    }
-    .feed-item p {
-      margin: 0;
-      color: #bbb;
-      font-size: 0.95em;
-    }
-    .meta-info {
-      font-size: 0.8em;
-      color: #999;
-      margin-top: 0.5em;
-    }
+
+  .feed-item {
+  background: #1f1f1f;
+  border: 1px solid #333;
+  border-left: 5px solid #ff4c4c;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feed-item:hover {
+  background: #333;
+  transform: translateY(-5px);  /* subtle lift effect */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7);  /* stronger shadow on hover */
+}
+
+.feed-item img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.feed-item h3 {
+  margin: 0 0 0.5em;
+  font-size: 1.1em;
+}
+
+.feed-item p {
+  margin: 0;
+  color: #bbb;
+  font-size: 0.95em;
+}
+
+.meta-info {
+  font-size: 0.8em;
+  color: #999;
+  margin-top: 0.5em;
+}
+
 
     @media (max-width: 768px) {
       .main-grid {
@@ -274,7 +297,7 @@
           const filtered = data.items.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))).slice(0, 3);
 
           filtered.forEach(item => {
-            collectedItems.push({ ...item, source: source.name });
+            collectedItems.push({ ...item, source: source.name, thumbnail: item.enclosure?.url || '' });
           });
         } catch (err) {
           console.error(`Feed error from ${source.name}:`, err);
@@ -291,6 +314,7 @@
         const div = document.createElement('div');
         div.className = 'feed-item';
         div.innerHTML = `
+          <img src="${item.thumbnail || 'default-thumbnail.png'}" alt="Article Thumbnail" />
           <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
           <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
           <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
