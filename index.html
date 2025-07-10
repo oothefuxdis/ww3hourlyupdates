@@ -133,8 +133,9 @@
     }
     .logo-area img {
       width: 100%;
-      max-width: 700px;
+      max-width: 100%;
       height: auto;
+      object-fit: contain;
     }
     .alert-box {
       background: rgba(255, 76, 76, 0.15);
@@ -199,10 +200,10 @@
   </style>
 </head>
 <body>
-  <nav class="top-nav">
+  <div class="top-nav">
     <div class="nav-center">
       <div class="logo-container">
-        <img src="assets/world-icon.gif" alt="Rotating Globe" class="rotating-globe" />
+        <img src="assets/world-icon.gif" alt="Globe" class="rotating-globe" />
         <div class="logo-text">
           <span class="white">WW3</span> <span class="red">Hourly Updates</span>
         </div>
@@ -217,44 +218,38 @@
         <li><a href="about.html">About</a></li>
         <li><a href="admin.html">Admin</a></li>
       </ul>
-      <div class="defcon-container" title="Click to show current DEFCON explanation" onclick="toggleDefconReason()">
+      <div class="defcon-container" onclick="toggleDefconReason()">
         <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
         <div id="defcon-reason">🛡️ Current Readiness: Heightened alert due to troop movement near Taiwan.</div>
       </div>
     </div>
-  </nav>
+  </div>
 
   <section class="whats-now">
     <h2>🔴 What’s Happening Now</h2>
-    <p id="whats-happening-now-text">Loading breaking headline...</p>
-    <p style="color:#aaa; font-size: 0.9em;">🕒 Updated hourly · Curated for global conflict alerts</p>
+    <p id="whats-happening-now-text">Loading...</p>
+    <p style="color:#aaa;">🕒 Updated hourly · Curated for global conflict alerts</p>
   </section>
 
-  <section class="main-grid">
+  <div class="main-grid">
     <div class="logo-area">
       <img src="assets/long logo.png" alt="WW3 Logo" />
     </div>
     <div>
       <div class="alert-box">
-        <h3>🚨 Emergency Alert</h3>
-        <p>Incoming missile detected in disputed airspace. Governments urge civilians to seek shelter immediately.</p>
+        <h3>🚨 Emergency Alerts</h3>
+        <p>Loading emergency information...</p>
       </div>
       <div class="related-box">
-        <h3>📰 Related Articles</h3>
-        <ul>
-          <li><a href="#">NATO mobilizes in response to Baltic tensions</a></li>
-          <li><a href="#">Cyberattack cripples major European grid</a></li>
-          <li><a href="#">Satellite images show armored movement</a></li>
-        </ul>
+        <h3>📌 Related Articles</h3>
+        <p>Loading related headlines...</p>
       </div>
     </div>
-  </section>
+  </div>
 
   <section class="feed-section">
     <h2>🌍 WW3 Hourly Updates — Live Feed</h2>
-    <div id="feed">
-      <div class="feed-item"><h3>Loading...</h3><p>Please wait while we fetch the latest updates.</p></div>
-    </div>
+    <div id="feed"><p style="color:#aaa;">Loading live news...</p></div>
   </section>
 
   <script>
@@ -263,31 +258,55 @@
       const feed = document.getElementById('feed');
       const nowText = document.getElementById('whats-happening-now-text');
       const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
+      const sources = [
+        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
+        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
+        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" },
+        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" }
+      ];
       feed.innerHTML = '';
+      const collectedItems = [];
 
-      try {
-        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.aljazeera.com/xml/rss/all.xml&api_key=${apiKey}`);
-        const data = await res.json();
-        const items = data.items.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))).slice(0, 5);
+      for (const source of sources) {
+        try {
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
+          const data = await res.json();
+          const filtered = data.items.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))).slice(0, 3);
 
-        items.forEach(item => {
-          const div = document.createElement('div');
-          div.className = 'feed-item';
-          div.innerHTML = `
-            <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-            <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
-            <div class="meta-info">🌐 Al Jazeera · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
-          `;
-          feed.appendChild(div);
-        });
-
-        if (items.length > 0) {
-          nowText.textContent = `⚠️ ${items[Math.floor(Math.random() * items.length)].title}`;
+          filtered.forEach(item => {
+            collectedItems.push({ ...item, source: source.name });
+          });
+        } catch (err) {
+          console.error(`Feed error from ${source.name}:`, err);
         }
-      } catch (err) {
-        feed.innerHTML = '<p style="color:#aaa;">⚠️ Could not load live feed.</p>';
-        console.error(err);
       }
+
+      if (collectedItems.length === 0) {
+        feed.innerHTML = '<p style="color:#aaa;">⚠️ No WW3-related news found at this time.</p>';
+        nowText.textContent = '⚠️ No breaking alerts at this moment. Stay tuned.';
+        return;
+      }
+
+      collectedItems.slice(0, 10).forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'feed-item';
+        div.innerHTML = `
+          <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+          <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
+          <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
+        `;
+        feed.appendChild(div);
+      });
+
+      const alertHeadline = collectedItems.find(item => /emergency|missile|nuclear|alert|evacuation/i.test(item.title));
+      if (alertHeadline) {
+        document.querySelector('.alert-box p').textContent = alertHeadline.title;
+      } else {
+        document.querySelector('.alert-box p').textContent = "⚠️ No emergency alerts currently. Stay alert for breaking news.";
+      }
+
+      const nowItem = collectedItems[Math.floor(Math.random() * collectedItems.length)];
+      nowText.textContent = `⚠️ ${nowItem.title}`;
     }
 
     function toggleDefconReason() {
