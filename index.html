@@ -372,11 +372,20 @@
   </div>
 
   <section class="feed-section">
-    <h2>🚨 LIVE CONFLICT TRACKER — CODE RED</h2>
-    <p style="color:#ff4c4c; text-align:center; margin-top:-0.5em; font-size:0.9em; animation: pulse 1s infinite;">
-      ⚠️ Active combat zones: Ukraine (24) | Taiwan Strait (18) | Syria (9) ⚠️
-    </p>
-    <div id="feed"><p style="color:#aaa;">Loading live news...</p></div>
+    <div class="feed-header">
+      <h2>🚨 LIVE CONFLICT TRACKER — CODE RED</h2>
+      <div class="feed-tabs">
+        <button class="feed-tab active" onclick="switchFeed('breaking')">Breaking News</button>
+        <button class="feed-tab" onclick="switchFeed('military')">Military Movements</button>
+        <button class="feed-tab" onclick="switchFeed('cyber')">Cyber Warfare</button>
+      </div>
+      <p style="color:#ff4c4c; text-align:center; margin-top:0.5em; font-size:0.9em; animation: pulse 1s infinite;">
+        ⚠️ Active combat zones: Ukraine (<span id="ukraine-count">0</span>) | Taiwan Strait (<span id="taiwan-count">0</span>) | Syria (<span id="syria-count">0</span>) ⚠️
+      </p>
+    </div>
+    <div id="breaking-feed" class="feed-container"><p style="color:#aaa;">Loading breaking news...</p></div>
+    <div id="military-feed" class="feed-container" style="display:none;"><p style="color:#aaa;">Loading military movements...</p></div>
+    <div id="cyber-feed" class="feed-container" style="display:none;"><p style="color:#aaa;">Loading cyber alerts...</p></div>
   </section>
 
   <script>
