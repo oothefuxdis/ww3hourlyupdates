@@ -231,6 +231,37 @@
       50% { opacity: 1; }
       100% { opacity: 0.8; }
     }
+    .feed-header {
+      margin-bottom: 1.5em;
+    }
+
+    .feed-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      margin: 1em 0;
+    }
+
+    .feed-tab {
+      background: rgba(255,76,76,0.1);
+      border: 1px solid #ff4c4c;
+      color: #ff4c4c;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .feed-tab.active {
+      background: #ff4c4c;
+      color: white;
+    }
+
+    .feed-tab:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(255,76,76,0.3);
+    }
+
     .feed-section h2 {
       color: #ff4c4c;
       margin-bottom: 1em;
@@ -353,7 +384,6 @@
       const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
       const feed = document.getElementById('feed');
       const nowText = document.getElementById('whats-happening-now-text');
-      const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
       const sources = [
         { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
         { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
@@ -427,8 +457,59 @@
         });
       }
 
-      const nowItem = collectedItems[Math.floor(Math.random() * collectedItems.length)];
-      nowText.textContent = `⚠️ ${nowItem.title}`;
+      // Update active combat zone counts
+      const ukraineCount = collectedItems.filter(item => item.title.toLowerCase().includes('ukraine')).length;
+      const taiwanCount = collectedItems.filter(item => item.title.toLowerCase().includes('taiwan')).length;
+      const syriaCount = collectedItems.filter(item => item.title.toLowerCase().includes('syria')).length;
+      
+      document.getElementById('ukraine-count').textContent = ukraineCount;
+      document.getElementById('taiwan-count').textContent = taiwanCount;
+      document.getElementById('syria-count').textContent = syriaCount;
+
+      // Update "What's Happening Now" with most recent relevant item
+      const nowItem = collectedItems.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate))[0];
+      nowText.innerHTML = `⚠️ ${nowItem.title} <span style="color:#ff4c4c; font-size:0.8em;">(Source: ${nowItem.source})</span>`;
+
+      // Categorize feeds
+      const breakingFeed = document.getElementById('breaking-feed');
+      const militaryFeed = document.getElementById('military-feed');
+      const cyberFeed = document.getElementById('cyber-feed');
+      
+      breakingFeed.innerHTML = '';
+      militaryFeed.innerHTML = '';
+      cyberFeed.innerHTML = '';
+
+      collectedItems.forEach(item => {
+        const div = createFeedItem(item);
+        if (item.title.match(/alert|evacuation|emergency|attack|strike/i)) {
+          breakingFeed.appendChild(div);
+        } else if (item.title.match(/military|troops|navy|airforce|drone|artillery/i)) {
+          militaryFeed.appendChild(div);
+        } else if (item.title.match(/cyber|hack|ransomware|infrastructure|network/i)) {
+          cyberFeed.appendChild(div);
+        } else {
+          breakingFeed.appendChild(div);
+        }
+      });
+    }
+
+    function createFeedItem(item) {
+      const div = document.createElement('div');
+      div.className = 'feed-item';
+      div.innerHTML = `
+        <img src="${item.thumbnail || 'default-thumbnail.png'}" alt="Article Thumbnail" />
+        <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+        <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
+        <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
+      `;
+      return div;
+    }
+
+    function switchFeed(feedType) {
+      document.querySelectorAll('.feed-container').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.feed-tab').forEach(el => el.classList.remove('active'));
+      document.getElementById(`${feedType}-feed`).style.display = 'block';
+      document.querySelector(`button[onclick="switchFeed('${feedType}')"]`).classList.add('active');
     }
 
     function toggleDefconReason() {
