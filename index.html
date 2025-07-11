@@ -231,37 +231,6 @@
       50% { opacity: 1; }
       100% { opacity: 0.8; }
     }
-    .feed-header {
-      margin-bottom: 1.5em;
-    }
-
-    .feed-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 1em;
-      margin: 1em 0;
-    }
-
-    .feed-tab {
-      background: rgba(255,76,76,0.1);
-      border: 1px solid #ff4c4c;
-      color: #ff4c4c;
-      padding: 8px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .feed-tab.active {
-      background: #ff4c4c;
-      color: white;
-    }
-
-    .feed-tab:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 2px 8px rgba(255,76,76,0.3);
-    }
-
     .feed-section h2 {
       color: #ff4c4c;
       margin-bottom: 1em;
@@ -372,161 +341,66 @@
   </div>
 
   <section class="feed-section">
-    <div class="feed-header">
-      <h2>🚨 LIVE CONFLICT TRACKER — CODE RED</h2>
-      <div class="feed-tabs">
-        <button class="feed-tab active" onclick="switchFeed('breaking')">Breaking News</button>
-        <button class="feed-tab" onclick="switchFeed('military')">Military Movements</button>
-        <button class="feed-tab" onclick="switchFeed('cyber')">Cyber Warfare</button>
-      </div>
-      <p style="color:#ff4c4c; text-align:center; margin-top:0.5em; font-size:0.9em; animation: pulse 1s infinite;">
-        ⚠️ Active combat zones: Ukraine (<span id="ukraine-count">0</span>) | Taiwan Strait (<span id="taiwan-count">0</span>) | Syria (<span id="syria-count">0</span>) ⚠️
-      </p>
-    </div>
-    <div id="breaking-feed" class="feed-container"><p style="color:#aaa;">Loading breaking news...</p></div>
-    <div id="military-feed" class="feed-container" style="display:none;"><p style="color:#aaa;">Loading military movements...</p></div>
-    <div id="cyber-feed" class="feed-container" style="display:none;"><p style="color:#aaa;">Loading cyber alerts...</p></div>
+    <h2>🚨 LIVE CONFLICT TRACKER — CODE RED</h2>
+    <p style="color:#ff4c4c; text-align:center; margin-top:-0.5em; font-size:0.9em; animation: pulse 1s infinite;">
+      ⚠️ Active combat zones: Ukraine (24) | Taiwan Strait (18) | Syria (9) ⚠️
+    </p>
+    <div id="feed"><p style="color:#aaa;">Loading live news...</p></div>
   </section>
+<script>
+  async function fetchLiveFeed() {
+    const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
+    const feed = document.getElementById('feed');
+    const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
 
-  <script>
-    async function fetchLiveFeed() {
-      const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
-      const feed = document.getElementById('feed');
-      const nowText = document.getElementById('whats-happening-now-text');
-      const sources = [
-        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
-        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
-        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" },
-        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" },
-        { name: "AP News", url: "http://feed.apnews.com/feeds/apworldnews.xml" },
-        { name: "The Guardian", url: "https://www.theguardian.com/world/rss" },
-        { name: "Kyiv Independent", url: "https://kyivindependent.com/feed/" },
-        { name: "Taiwan News", url: "https://www.taiwannews.com.tw/rss" }
-      ];
-      const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", 
-                       "tensions", "military", "ww3", "drone", "sanctions", "escalation", 
-                       "exercises", "artillery", "cyberattack", "nato", "china", "russia"];
-      feed.innerHTML = '';
-      const collectedItems = [];
+    const sources = [
+      { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
+      { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
+      { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" },
+      { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" }
+    ];
 
-      for (const source of sources) {
-        try {
-          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
-          const data = await res.json();
-          const filtered = data.items.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))).slice(0, 3);
+    feed.innerHTML = '';
 
-          filtered.forEach(item => {
-            collectedItems.push({ ...item, source: source.name, thumbnail: item.enclosure?.url || '' });
-          });
-        } catch (err) {
-          console.error(`Feed error from ${source.name}:`, err);
-        }
-      }
+    const collectedItems = [];
 
-      if (collectedItems.length === 0) {
-        feed.innerHTML = '<p style="color:#aaa;">⚠️ No WW3-related news found at this time.</p>';
-        nowText.textContent = '⚠️ No breaking alerts at this moment. Stay tuned.';
-        return;
-      }
+    for (const source of sources) {
+      try {
+        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
+        const data = await res.json();
+        const filtered = data.items.filter(item =>
+          keywords.some(k => item.title.toLowerCase().includes(k))
+        ).slice(0, 3);
 
-      collectedItems.slice(0, 10).forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'feed-item';
-        div.innerHTML = `
-          <img src="${item.thumbnail || 'default-thumbnail.png'}" alt="Article Thumbnail" />
-          <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-          <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
-          <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
-        `;
-        feed.appendChild(div);
-      });
-
-      // Update alerts
-      const alertHeadline = collectedItems.find(item => /emergency|missile|nuclear|alert|evacuation/i.test(item.title));
-      if (alertHeadline) {
-        document.querySelector('.alert-box p').textContent = alertHeadline.title;
-      } else {
-        document.querySelector('.alert-box p').textContent = "⚠️ No emergency alerts currently. Stay alert for breaking news.";
-      }
-
-      // Update related articles
-      const relatedList = document.getElementById('related-articles');
-      relatedList.innerHTML = '';
-      const relatedItems = collectedItems
-        .filter(item => /analysis|strategy|sanctions|alliance|geopolitics/i.test(item.title))
-        .slice(0, 5);
-      
-      if (relatedItems.length === 0) {
-        relatedList.innerHTML = '<li>No additional analysis available</li>';
-      } else {
-        relatedItems.forEach(item => {
-          const li = document.createElement('li');
-          li.innerHTML = `<a href="${item.link}" target="_blank">${item.title.replace(/:/, ': ')}</a>`;
-          relatedList.appendChild(li);
+        filtered.forEach(item => {
+          collectedItems.push({ ...item, source: source.name, thumbnail: item.enclosure?.url || '' });
         });
+      } catch (err) {
+        console.error(`Feed error from ${source.name}:`, err);
       }
-
-      // Update active combat zone counts
-      const ukraineCount = collectedItems.filter(item => item.title.toLowerCase().includes('ukraine')).length;
-      const taiwanCount = collectedItems.filter(item => item.title.toLowerCase().includes('taiwan')).length;
-      const syriaCount = collectedItems.filter(item => item.title.toLowerCase().includes('syria')).length;
-      
-      document.getElementById('ukraine-count').textContent = ukraineCount;
-      document.getElementById('taiwan-count').textContent = taiwanCount;
-      document.getElementById('syria-count').textContent = syriaCount;
-
-      // Update "What's Happening Now" with most recent relevant item
-      const nowItem = collectedItems.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate))[0];
-      nowText.innerHTML = `⚠️ ${nowItem.title} <span style="color:#ff4c4c; font-size:0.8em;">(Source: ${nowItem.source})</span>`;
-
-      // Categorize feeds
-      const breakingFeed = document.getElementById('breaking-feed');
-      const militaryFeed = document.getElementById('military-feed');
-      const cyberFeed = document.getElementById('cyber-feed');
-      
-      breakingFeed.innerHTML = '';
-      militaryFeed.innerHTML = '';
-      cyberFeed.innerHTML = '';
-
-      collectedItems.forEach(item => {
-        const div = createFeedItem(item);
-        if (item.title.match(/alert|evacuation|emergency|attack|strike/i)) {
-          breakingFeed.appendChild(div);
-        } else if (item.title.match(/military|troops|navy|airforce|drone|artillery/i)) {
-          militaryFeed.appendChild(div);
-        } else if (item.title.match(/cyber|hack|ransomware|infrastructure|network/i)) {
-          cyberFeed.appendChild(div);
-        } else {
-          breakingFeed.appendChild(div);
-        }
-      });
     }
 
-    function createFeedItem(item) {
+    if (collectedItems.length === 0) {
+      feed.innerHTML = '<p style="color:#aaa;">⚠️ No WW3-related news found at this time.</p>';
+      return;
+    }
+
+    collectedItems.forEach(item => {
       const div = document.createElement('div');
       div.className = 'feed-item';
       div.innerHTML = `
-        <img src="${item.thumbnail || 'default-thumbnail.png'}" alt="Article Thumbnail" />
-        <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-        <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
-        <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
+        <img src="${item.thumbnail || 'assets/thumb-placeholder.png'}" alt="Thumb" />
+        <div>
+          <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+          <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
+          <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+        </div>
       `;
-      return div;
-    }
+      feed.appendChild(div);
+    });
+  }
 
-    function switchFeed(feedType) {
-      document.querySelectorAll('.feed-container').forEach(el => el.style.display = 'none');
-      document.querySelectorAll('.feed-tab').forEach(el => el.classList.remove('active'));
-      document.getElementById(`${feedType}-feed`).style.display = 'block';
-      document.querySelector(`button[onclick="switchFeed('${feedType}')"]`).classList.add('active');
-    }
+  fetchLiveFeed();
+</script>
 
-    function toggleDefconReason() {
-      const reason = document.getElementById('defcon-reason');
-      reason.style.display = reason.style.display === 'none' ? 'block' : 'none';
-    }
-
-    fetchLiveFeed();
-  </script>
-</body>
 </html>
