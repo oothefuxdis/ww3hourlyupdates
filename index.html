@@ -258,11 +258,13 @@
 }
 
 .feed-item img {
-  width: 64px;
-  height: 64px;
+  width: 100px;
+  height: 65px;
   object-fit: cover;
   border-radius: 4px;
   flex-shrink: 0;
+  background: #2a2a2a;
+  border: 1px solid #444;
 }
 
 .feed-item h3 {
@@ -373,7 +375,7 @@
         ).slice(0, 3);
 
         filtered.forEach(item => {
-          collectedItems.push({ ...item, source: source.name, thumbnail: item.enclosure?.url || '' });
+          collectedItems.push({ ...item, source: source.name, thumbnail: item.thumbnail || '' });
         });
       } catch (err) {
         console.error(`Feed error from ${source.name}:`, err);
@@ -389,7 +391,7 @@
       const div = document.createElement('div');
       div.className = 'feed-item';
       div.innerHTML = `
-        <img src="${item.thumbnail || 'assets/thumb-placeholder.png'}" alt="Thumb" />
+        <img src="${item.thumbnail || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}" alt="Thumb" style="width: 100px; height: 65px; object-fit: cover; display: block;" />
         <div>
           <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
           <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
