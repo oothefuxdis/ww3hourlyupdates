@@ -96,6 +96,39 @@
       font-family: 'Anton', sans-serif;
       letter-spacing: 1.5px;
       box-shadow: 0 0 8px #ff4c4caa;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .defcon-badge::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: rotate(45deg);
+      animation: radarScan 3s infinite linear;
+    }
+    @keyframes radarScan {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
+    }
+    .defcon-timeline {
+      background: rgba(0,0,0,0.3);
+      padding: 1em;
+      margin-top: 1em;
+      border-radius: 6px;
+      font-size: 0.8em;
+    }
+    .defcon-event {
+      padding: 0.5em 0;
+      border-bottom: 1px solid rgba(255,76,76,0.2);
+    }
+    .defcon-event:last-child {
+      border-bottom: 0;
     }
     #defcon-reason {
       margin-top: 8px;
@@ -312,6 +345,11 @@
       <div class="defcon-container" onclick="toggleDefconReason()">
         <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
         <div id="defcon-reason">🚨 CRITICAL: Massing of forces in Kaliningrad Oblast | Black Sea fleet activation | Cyber attacks targeting NATO infrastructure</div>
+        <div class="defcon-timeline" id="defconTimeline">
+          <div class="defcon-event">🕒 [07/11] DEFCON 2: Black Sea fleet mobilization</div>
+          <div class="defcon-event">🕒 [07/10] DEFCON 3: Taiwan Strait tensions</div>
+          <div class="defcon-event">🕒 [07/09] DEFCON 4: NATO summit conclusions</div>
+        </div>
       </div>
     </div>
   </div>
@@ -429,11 +467,44 @@
 
       const nowItem = collectedItems[Math.floor(Math.random() * collectedItems.length)];
       nowText.textContent = `⚠️ ${nowItem.title}`;
+      
+      // Update DEFCON history
+      const timeline = document.getElementById('defconTimeline');
+      const newEvent = document.createElement('div');
+      newEvent.className = 'defcon-event';
+      newEvent.innerHTML = `🕒 [${new Date().toLocaleDateString('en-US', {month: '2-digit', day: '2-digit'})}] DEFCON 2: Live update - ${collectedItems.length} conflict-related events tracked`;
+      timeline.insertBefore(newEvent, timeline.firstChild);
+      
+      // Keep only last 5 entries
+      if(timeline.children.length > 5) {
+        timeline.removeChild(timeline.lastChild);
+      }
     }
 
+    let historyVisible = false;
     function toggleDefconReason() {
       const reason = document.getElementById('defcon-reason');
-      reason.style.display = reason.style.display === 'none' ? 'block' : 'none';
+      const timeline = document.getElementById('defconTimeline');
+      historyVisible = !historyVisible;
+      reason.style.display = historyVisible ? 'block' : 'none';
+      timeline.style.display = historyVisible ? 'block' : 'none';
+      
+      // Add pulse animation when showing
+      if(historyVisible) {
+        document.querySelector('.defcon-badge').style.animation = 'pulseCritical 1s infinite';
+      } else {
+        document.querySelector('.defcon-badge').style.animation = '';
+      }
+    }
+
+    // Initialize timeline visibility
+    document.getElementById('defconTimeline').style.display = 'none';
+    document.querySelector('.defcon-badge').style.cursor = 'pointer';
+
+    @keyframes pulseCritical {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
     fetchLiveFeed();
