@@ -87,34 +87,15 @@
       transform: translateX(-50%);
     }
     .defcon-badge {
-      background: #222;
-      color: #ff4c4c;
+      background: #ff4c4c;
+      color: white;
       font-weight: 700;
       padding: 6px 14px;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      font-family: 'Roboto Mono', monospace;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-family: 'Anton', sans-serif;
       letter-spacing: 1.5px;
-      border: 1px solid #ff4c4c;
-      text-transform: uppercase;
-    }
-    @keyframes radarScan {
-      0% { transform: translateX(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) rotate(45deg); }
-    }
-    .defcon-timeline {
-      background: rgba(0,0,0,0.3);
-      padding: 1em;
-      margin-top: 1em;
-      border-radius: 6px;
-      font-size: 0.8em;
-    }
-    .defcon-event {
-      padding: 0.5em 0;
-      border-bottom: 1px solid rgba(255,76,76,0.2);
-    }
-    .defcon-event:last-child {
-      border-bottom: 0;
+      box-shadow: 0 0 8px #ff4c4caa;
     }
     #defcon-reason {
       margin-top: 8px;
@@ -330,7 +311,7 @@
       </ul>
       <div class="defcon-container" onclick="toggleDefconReason()">
         <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
-        <div id="defcon-reason">🛡️ Enhanced readiness: Increased naval activity in Black Sea | Cyber defense protocols activated</div>
+        <div id="defcon-reason">🚨 CRITICAL: Massing of forces in Kaliningrad Oblast | Black Sea fleet activation | Cyber attacks targeting NATO infrastructure</div>
       </div>
     </div>
   </div>
@@ -448,18 +429,6 @@
 
       const nowItem = collectedItems[Math.floor(Math.random() * collectedItems.length)];
       nowText.textContent = `⚠️ ${nowItem.title}`;
-      
-      // Update DEFCON history
-      const timeline = document.getElementById('defconTimeline');
-      const newEvent = document.createElement('div');
-      newEvent.className = 'defcon-event';
-      newEvent.innerHTML = `🕒 [${new Date().toLocaleDateString('en-US', {month: '2-digit', day: '2-digit'})}] DEFCON 2: Live update - ${collectedItems.length} conflict-related events tracked`;
-      timeline.insertBefore(newEvent, timeline.firstChild);
-      
-      // Keep only last 5 entries
-      if(timeline.children.length > 5) {
-        timeline.removeChild(timeline.lastChild);
-      }
     }
 
     function toggleDefconReason() {
