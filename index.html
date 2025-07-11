@@ -120,6 +120,57 @@
       font-size: 2.2rem;
       letter-spacing: -0.03em;
     }
+    
+    .featured-article {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto 1em;
+      background: rgba(0,0,0,0.3);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #ff4c4c33;
+    }
+    
+    .featured-thumbnail {
+      width: 100%;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    
+    .featured-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .featured-excerpt {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      color: #ccc;
+    }
+    
+    .featured-meta {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .source-tag {
+      background: #ff4c4c;
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    
+    .time-tag {
+      color: #aaa;
+      font-size: 0.9rem;
+    }
     #whats-happening-now-text {
       font-size: 1.4rem;
       line-height: 1.5;
@@ -391,7 +442,7 @@
       const div = document.createElement('div');
       div.className = 'feed-item';
       div.innerHTML = `
-        <img src="${item.thumbnail || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}" alt="Thumb" style="width: 100px; height: 65px; object-fit: cover; display: block;" />
+        <img src="${item.thumbnail || 'assets/logo.png'}" alt="Thumb" style="width: 100px; height: 65px; object-fit: contain; padding: 5px; background: #2a2a2a; display: block;" />
         <div>
           <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
           <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
