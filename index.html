@@ -114,9 +114,45 @@
       margin: 0 auto;
       width: 100%;
     }
+    .whats-now-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5em;
+    }
+    
+    .refresh-button {
+      background: rgba(255,76,76,0.1);
+      border: 1px solid #ff4c4c;
+      color: #ff4c4c;
+      padding: 0.8em 1.5em;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    
+    .refresh-button:hover {
+      background: #ff4c4c;
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .refresh-button:active {
+      transform: translateY(0);
+    }
+    
+    .status-text {
+      font-size: 0.8em;
+      color: #aaa;
+    }
+    
     .whats-now h2 {
       color: #ff4c4c;
-      margin: 0 0 0.8em;
+      margin: 0;
       font-size: 2.2rem;
       letter-spacing: -0.03em;
     }
@@ -277,6 +313,10 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(100%); }
     }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
     @keyframes pulse {
       0% { opacity: 0.8; }
       50% { opacity: 1; }
@@ -370,7 +410,13 @@
   </div>
 
   <section class="whats-now">
-    <h2>🔴 What’s Happening Now</h2>
+    <div class="whats-now-header">
+      <h2>🔴 What’s Happening Now</h2>
+      <button onclick="fetchFeaturedUpdate()" class="refresh-button">
+        ↻ Refresh
+        <span id="refresh-status" class="status-text"></span>
+      </button>
+    </div>
     <div class="featured-article">
       <img src="assets/logo.png" alt="WW3 Updates Logo" class="featured-thumbnail" />
       <div class="featured-content">
@@ -463,7 +509,37 @@
     });
   }
 
-  fetchLiveFeed();
+  let lastUpdateTime = null;
+  
+  async function fetchFeaturedUpdate() {
+    const refreshBtn = document.querySelector('.refresh-button');
+    const statusText = document.getElementById('refresh-status');
+    
+    try {
+      refreshBtn.disabled = true;
+      statusText.textContent = 'Updating...';
+      refreshBtn.style.opacity = '0.7';
+      
+      await fetchLiveFeed();
+      
+      // Update timestamp
+      lastUpdateTime = new Date();
+      document.getElementById('featured-time').textContent = `🕒 Updated ${lastUpdateTime.toLocaleTimeString()}`;
+      statusText.textContent = `Last: ${lastUpdateTime.toLocaleTimeString()}`;
+      
+    } catch (err) {
+      statusText.textContent = 'Update failed';
+      console.error('Refresh error:', err);
+    } finally {
+      refreshBtn.disabled = false;
+      refreshBtn.style.opacity = '1';
+      setTimeout(() => statusText.textContent = '', 3000);
+    }
+  }
+
+  // Initial load
+  fetchFeaturedUpdate();
+  setInterval(fetchFeaturedUpdate, 300000); // Auto-update every 5 minutes
 </script>
 
 </html>
