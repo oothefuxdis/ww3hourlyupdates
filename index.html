@@ -87,30 +87,16 @@
       transform: translateX(-50%);
     }
     .defcon-badge {
-      background: #ff4c4c;
-      color: white;
+      background: #222;
+      color: #ff4c4c;
       font-weight: 700;
       padding: 6px 14px;
-      border-radius: 14px;
-      font-size: 1rem;
-      font-family: 'Anton', sans-serif;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-family: 'Roboto Mono', monospace;
       letter-spacing: 1.5px;
-      box-shadow: 0 0 8px #ff4c4caa;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-    .defcon-badge::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
-      transform: rotate(45deg);
-      animation: radarScan 3s infinite linear;
+      border: 1px solid #ff4c4c;
+      text-transform: uppercase;
     }
     @keyframes radarScan {
       0% { transform: translateX(-100%) rotate(45deg); }
@@ -344,12 +330,7 @@
       </ul>
       <div class="defcon-container" onclick="toggleDefconReason()">
         <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
-        <div id="defcon-reason">🚨 CRITICAL: Massing of forces in Kaliningrad Oblast | Black Sea fleet activation | Cyber attacks targeting NATO infrastructure</div>
-        <div class="defcon-timeline" id="defconTimeline">
-          <div class="defcon-event">🕒 [07/11] DEFCON 2: Black Sea fleet mobilization</div>
-          <div class="defcon-event">🕒 [07/10] DEFCON 3: Taiwan Strait tensions</div>
-          <div class="defcon-event">🕒 [07/09] DEFCON 4: NATO summit conclusions</div>
-        </div>
+        <div id="defcon-reason">🛡️ Enhanced readiness: Increased naval activity in Black Sea | Cyber defense protocols activated</div>
       </div>
     </div>
   </div>
@@ -481,30 +462,9 @@
       }
     }
 
-    let historyVisible = false;
     function toggleDefconReason() {
       const reason = document.getElementById('defcon-reason');
-      const timeline = document.getElementById('defconTimeline');
-      historyVisible = !historyVisible;
-      reason.style.display = historyVisible ? 'block' : 'none';
-      timeline.style.display = historyVisible ? 'block' : 'none';
-      
-      // Add pulse animation when showing
-      if(historyVisible) {
-        document.querySelector('.defcon-badge').style.animation = 'pulseCritical 1s infinite';
-      } else {
-        document.querySelector('.defcon-badge').style.animation = '';
-      }
-    }
-
-    // Initialize timeline visibility
-    document.getElementById('defconTimeline').style.display = 'none';
-    document.querySelector('.defcon-badge').style.cursor = 'pointer';
-
-    @keyframes pulseCritical {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      reason.style.display = reason.style.display === 'none' ? 'block' : 'none';
     }
 
     fetchLiveFeed();
