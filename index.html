@@ -21,33 +21,70 @@
     a:hover {
       color: #ff4c4c;
     }
-    nav.top-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .top-nav {
       background-color: #222;
       padding: 12px 24px;
+      user-select: none;
       box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    }
+    .nav-center {
+      margin: 0 auto;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+      max-width: none;
     }
     .nav-links {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
-      gap: 24px;
+      gap: 12px;
+      margin-left: auto;
     }
     .nav-links li a {
       color: #ddd;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
       transition: color 0.25s ease;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
+      padding: 0 6px;
     }
-    .nav-links li a:hover,
-    .nav-links li a:focus {
+    .nav-links li a.active {
       color: #ff4c4c;
-      outline: none;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-right: 16px;
+    }
+    .rotating-globe {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      background-color: #222;
+      border-radius: 50%;
+    }
+    .logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 1px;
+    }
+    .logo-text .white {
+      color: white;
+    }
+    .logo-text .red {
+      color: #ff4c4c;
+    }
+    .defcon-container {
+      text-align: center;
+      cursor: pointer;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
     .defcon-badge {
       background: #ff4c4c;
@@ -70,126 +107,22 @@
 
     .whats-now {
       background-color: #181818;
-      padding: 3em 2em;
+      padding: 2em;
       text-align: center;
       border-bottom: 2px solid #444;
-      border-top: 3px solid #ff4c4c;
-      margin: 0 auto;
-      width: 100%;
     }
-    .whats-now-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5em;
-    }
-    
-    .refresh-button {
-      background: rgba(255,76,76,0.1);
-      border: 1px solid #ff4c4c;
-      color: #ff4c4c;
-      padding: 0.8em 1.5em;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Montserrat', sans-serif;
-      display: flex;
-      align-items: center;
-      gap: 0.5em;
-    }
-    
-    .refresh-button:hover {
-      background: #ff4c4c;
-      color: white;
-      transform: translateY(-2px);
-    }
-    
-    .refresh-button:active {
-      transform: translateY(0);
-    }
-    
-    .status-text {
-      font-size: 0.8em;
-      color: #aaa;
-    }
-    
     .whats-now h2 {
       color: #ff4c4c;
-      margin: 0;
-      font-size: 2.2rem;
-      letter-spacing: -0.03em;
-    }
-    
-    .featured-article {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 1.5rem;
-      max-width: 1000px;
-      margin: 0 auto 1em;
-      background: rgba(0,0,0,0.3);
-      padding: 1.5rem;
-      border-radius: 8px;
-      border: 1px solid #ff4c4c33;
-    }
-    
-    .featured-thumbnail {
-      width: 100%;
-      height: 120px;
-      object-fit: contain;
-      border-radius: 4px;
-    }
-    
-    .featured-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .featured-excerpt {
-      font-size: 1.1rem;
-      line-height: 1.4;
-      color: #ccc;
-    }
-    
-    .featured-meta {
-      margin-top: 1rem;
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-    
-    .source-tag {
-      background: #ff4c4c;
-      color: white;
-      padding: 0.3rem 0.8rem;
-      border-radius: 4px;
-      font-size: 0.8rem;
-    }
-    
-    .time-tag {
-      color: #aaa;
-      font-size: 0.9rem;
-    }
-    #whats-happening-now-text {
-      font-size: 1.4rem;
-      line-height: 1.5;
-      max-width: 800px;
-      margin: 0 auto 1em;
+      margin: 0 0 0.5em;
     }
 
     .main-grid {
       display: grid;
       grid-template-columns: 3fr 1fr;
-      gap: 2em;
+      gap: 1em;
       max-width: 1200px;
-      margin: 3em auto;
-      padding: 0 2em;
-    }
-    .logo-area {
-      margin-bottom: 1.5em;
-    }
-    .alert-box, .related-box {
-      margin-bottom: 2em;
+      margin: 2em auto;
+      padding: 0 1em;
     }
     .logo-area {
       background: #181818;
@@ -214,130 +147,61 @@
     }
     .related-box {
       background: #2b2b2b;
-      padding: 1.5em;
+      padding: 1em;
       border-radius: 8px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.6);
+      box-shadow: 0 0 8px rgba(0,0,0,0.5);
       margin-bottom: 1em;
-    }
-    .related-box ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .related-box li {
-      padding: 0.8em 0;
-      border-bottom: 1px solid #383838;
-    }
-    .related-box li:last-child {
-      border-bottom: none;
-    }
-    .related-box a {
-      color: #ddd;
-      display: block;
-      transition: all 0.2s ease;
-    }
-    .related-box a:hover {
-      color: #ff4c4c;
-      transform: translateX(5px);
     }
     .alert-box h3, .related-box h3 {
       color: #ff4c4c;
       margin-top: 0;
-      font-size: 1.2rem;
-      margin-bottom: 1em;
     }
 
     .feed-section {
-      background: linear-gradient(15deg, #2e2e2e, #3a1a1a);
-      padding: 2.5em 1em;
+      background: #2e2e2e;
+      padding: 2em 1em;
       max-width: 1200px;
-      margin: 3em auto;
-      border: 1px solid #ff4c4c33;
-      border-radius: 8px;
-      position: relative;
-      overflow: hidden;
-    }
-    .feed-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 200%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent 25%,
-        #ff4c4c15 50%,
-        transparent 75%
-      );
-      animation: scan 45s infinite linear;
-    }
-    @keyframes scan {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(100%); }
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    @keyframes pulse {
-      0% { opacity: 0.8; }
-      50% { opacity: 1; }
-      100% { opacity: 0.8; }
+      margin: 2em auto;
+      border-top: 2px solid #444;
     }
     .feed-section h2 {
       color: #ff4c4c;
       margin-bottom: 1em;
     }
 
-  .feed-item {
-  background: #1f1f1f;
-  border: 1px solid #333;
-  border-left: 5px solid #ff4c4c;
-  padding: 1.2em;
-  margin-bottom: 1.5em;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.6);
-  display: flex;
-  gap: 1.5em;
-  align-items: center;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.feed-item:hover {
-  background: #2a2a2a;
-  transform: translateY(-7px) scale(1.02);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.8);
-  z-index: 1;
-}
-
-.feed-item img {
-  width: 100px;
-  height: 65px;
-  object-fit: cover;
-  border-radius: 4px;
-  flex-shrink: 0;
-  background: #2a2a2a;
-  border: 1px solid #444;
-}
-
-.feed-item h3 {
-  margin: 0 0 0.5em;
-  font-size: 1.1em;
-}
-
-.feed-item p {
-  margin: 0;
-  color: #bbb;
-  font-size: 0.95em;
-}
-
-.meta-info {
-  font-size: 0.8em;
-  color: #999;
-  margin-top: 0.5em;
-}
-
+    .feed-item {
+      background: #1f1f1f;
+      border: 1px solid #333;
+      border-left: 5px solid #ff4c4c;
+      padding: 1em;
+      margin-bottom: 1em;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      display: flex;
+      gap: 1em;
+      align-items: center;
+    }
+    .feed-item img {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .feed-item h3 {
+      margin: 0 0 0.5em;
+      font-size: 1.1em;
+    }
+    .feed-item p {
+      margin: 0;
+      color: #bbb;
+      font-size: 0.95em;
+    }
+    .meta-info {
+      font-size: 0.8em;
+      color: #999;
+      margin-top: 0.5em;
+    }
 
     @media (max-width: 768px) {
       .main-grid {
@@ -366,32 +230,16 @@
         <li><a href="admin.html">Admin</a></li>
       </ul>
       <div class="defcon-container" onclick="toggleDefconReason()">
-        <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
-        <div id="defcon-reason">🚨 CRITICAL: Massing of forces in Kaliningrad Oblast | Black Sea fleet activation | Cyber attacks targeting NATO infrastructure</div>
+        <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
+        <div id="defcon-reason">🛡️ Current Readiness: Heightened alert due to troop movement near Taiwan.</div>
       </div>
     </div>
   </div>
 
   <section class="whats-now">
-    <div class="whats-now-header">
-      <h2>🔴 What’s Happening Now</h2>
-      <button onclick="fetchFeaturedUpdate()" class="refresh-button">
-        ↻ Refresh
-        <span id="refresh-status" class="status-text"></span>
-      </button>
-    </div>
-    <div class="featured-article">
-      <img src="assets/logo.png" alt="WW3 Updates Logo" class="featured-thumbnail" />
-      <div class="featured-content">
-        <h3 id="whats-happening-now-title">Strategic Situation Report</h3>
-        <p id="whats-happening-now-text" class="featured-excerpt">Analyzing real-time conflict developments...</p>
-        <div class="featured-meta">
-          <span id="featured-source" class="source-tag">WW3 Intelligence</span>
-          <span id="featured-time" class="time-tag">🕒 Just updated</span>
-        </div>
-      </div>
-    </div>
-    <p style="color:#aaa; margin-top:1em;">Curated global conflict alerts updated hourly</p>
+    <h2>🔴 What’s Happening Now</h2>
+    <p id="whats-happening-now-text">Loading...</p>
+    <p style="color:#aaa;">🕒 Updated hourly · Curated for global conflict alerts</p>
   </section>
 
   <div class="main-grid">
@@ -404,77 +252,81 @@
         <p>Loading emergency information...</p>
       </div>
       <div class="related-box">
-        <h3>📌 Essential Analysis</h3>
-        <ul id="related-articles">
-          <li>Loading strategic reports...</li>
-        </ul>
+        <h3>📌 Related Articles</h3>
+        <p>Loading related headlines...</p>
       </div>
     </div>
   </div>
- <section class="feed-section">
-    <h2>🚨 LIVE CONFLICT TRACKER — CODE RED</h2>
+
+  <section class="feed-section">
+    <h2>🌍 WW3 Hourly Updates — Live Feed</h2>
     <div id="feed"><p style="color:#aaa;">Loading live news...</p></div>
   </section>
 
-<script>
-  async function fetchLiveFeed() {
-    let collectedItems = [];
-    const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
-    const feed = document.getElementById('feed');
-    const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
+  <script>
+    async function fetchLiveFeed() {
+      const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
+      const feed = document.getElementById('feed');
+      const nowText = document.getElementById('whats-happening-now-text');
+      const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
+      const sources = [
+        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
+        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
+        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" },
+        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" }
+      ];
+      feed.innerHTML = '';
+      const collectedItems = [];
 
-    const sources = [
-      { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
-      { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
-      { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" },
-      { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" }
-    ];
+      for (const source of sources) {
+        try {
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
+          const data = await res.json();
+          const filtered = data.items.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))).slice(0, 3);
 
-    feed.innerHTML = '';
-
-    for (const source of sources) {
-      try {
-        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
-        const data = await res.json();
-        const filtered = data.items.filter(item =>
-          keywords.some(k => item.title.toLowerCase().includes(k))
-        ).slice(0, 3);
-
-        filtered.forEach(item => {
-          collectedItems.push({
-            ...item,
-            source: source.name,
-            thumbnail: item.enclosure?.url || '',
-            pubDate: item.pubDate ? new Date(item.pubDate) : new Date()
+          filtered.forEach(item => {
+            collectedItems.push({ ...item, source: source.name, thumbnail: item.enclosure?.url || '' });
           });
-        });
-      } catch (err) {
-        console.error(`Feed error from ${source.name}:`, err);
+        } catch (err) {
+          console.error(`Feed error from ${source.name}:`, err);
+        }
       }
+
+      if (collectedItems.length === 0) {
+        feed.innerHTML = '<p style="color:#aaa;">⚠️ No WW3-related news found at this time.</p>';
+        nowText.textContent = '⚠️ No breaking alerts at this moment. Stay tuned.';
+        return;
+      }
+
+      collectedItems.slice(0, 10).forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'feed-item';
+        div.innerHTML = `
+          <img src="${item.thumbnail || 'default-thumbnail.png'}" alt="Article Thumbnail" />
+          <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+          <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
+          <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
+        `;
+        feed.appendChild(div);
+      });
+
+      const alertHeadline = collectedItems.find(item => /emergency|missile|nuclear|alert|evacuation/i.test(item.title));
+      if (alertHeadline) {
+        document.querySelector('.alert-box p').textContent = alertHeadline.title;
+      } else {
+        document.querySelector('.alert-box p').textContent = "⚠️ No emergency alerts currently. Stay alert for breaking news.";
+      }
+
+      const nowItem = collectedItems[Math.floor(Math.random() * collectedItems.length)];
+      nowText.textContent = `⚠️ ${nowItem.title}`;
     }
 
-    if (collectedItems.length === 0) {
-      feed.innerHTML = '<p style="color:#aaa;">⚠️ No WW3-related news found at this time.</p>';
-      return;
+    function toggleDefconReason() {
+      const reason = document.getElementById('defcon-reason');
+      reason.style.display = reason.style.display === 'none' ? 'block' : 'none';
     }
 
-    collectedItems.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'feed-item';
-      div.innerHTML = `
-        <a href="${item.link}" target="_blank" style="display: block; text-decoration: none; color: inherit;">
-          <img src="${item.thumbnail}" alt="Thumb" />
-          <div>
-            <h3>${item.title}</h3>
-            <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
-            <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-          </div>
-        </a>`;
-      feed.appendChild(div);
-    });
-  }
-
-  fetchLiveFeed();
-</script>
+    fetchLiveFeed();
+  </script>
 </body>
 </html>
