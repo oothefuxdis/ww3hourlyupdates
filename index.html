@@ -448,14 +448,11 @@
       </div>
     </div>
   </div>
-
-  <section class="feed-section">
+ <section class="feed-section">
     <h2>🚨 LIVE CONFLICT TRACKER — CODE RED</h2>
-    <p style="color:#ff4c4c; text-align:center; margin-top:-0.5em; font-size:0.9em; animation: pulse 1s infinite;">
-      ⚠️ Active combat zones: Ukraine (24) | Taiwan Strait (18) | Syria (9) ⚠️
-    </p>
     <div id="feed"><p style="color:#aaa;">Loading live news...</p></div>
   </section>
+
 <script>
   async function fetchLiveFeed() {
     let collectedItems = [];
@@ -472,8 +469,6 @@
 
     feed.innerHTML = '';
 
-    const collectedItems = [];
-
     for (const source of sources) {
       try {
         const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
@@ -483,9 +478,9 @@
         ).slice(0, 3);
 
         filtered.forEach(item => {
-          collectedItems.push({ 
-            ...item, 
-            source: source.name, 
+          collectedItems.push({
+            ...item,
+            source: source.name,
             thumbnail: item.enclosure?.url || '',
             pubDate: item.pubDate ? new Date(item.pubDate) : new Date()
           });
@@ -505,68 +500,18 @@
       div.className = 'feed-item';
       div.innerHTML = `
         <a href="${item.link}" target="_blank" style="display: block; text-decoration: none; color: inherit;">
-          <div style="display: flex; gap: 1.5em; align-items: center;">
-            <img src="${item.enclosure?.url || 'assets/logo.png'}" alt="Thumb" style="width: 100px; height: 65px; object-fit: contain; padding: 5px; background: #2a2a2a;" />
-            <div>
-              <h3>${item.title}</h3>
-          <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
-          <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-        </div>
-      `;
+          <img src="${item.thumbnail}" alt="Thumb" />
+          <div>
+            <h3>${item.title}</h3>
+            <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
+            <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+          </div>
+        </a>`;
       feed.appendChild(div);
     });
-    
-    return collectedItems;
   }
 
-  let lastUpdateTime = null;
-  
-  async function fetchFeaturedUpdate() {
-    const refreshBtn = document.querySelector('.refresh-button');
-    const statusText = document.getElementById('refresh-status');
-    
-    try {
-      refreshBtn.disabled = true;
-      statusText.textContent = 'Updating...';
-      refreshBtn.style.opacity = '0.7';
-      
-      const collectedItems = await fetchLiveFeed();
-      
-      // Update featured section with latest item
-      // Sort items properly and handle missing pubDates
-      const nowItem = collectedItems
-        .filter(item => item.pubDate)
-        .sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate))[0];
-      
-      if (nowItem) {
-        document.getElementById('whats-happening-now-title').textContent = nowItem.title;
-        document.getElementById('whats-happening-now-text').textContent = 
-          (nowItem.description || 'No description available')
-          .replace(/<[^>]+>/g, '')
-          .replace(/&nbsp;/g, ' ')
-          .slice(0, 200) + '...';
-        document.getElementById('featured-source').textContent = nowItem.source;
-      }
-      document.getElementById('featured-source').textContent = nowItem.source;
-
-      // Update timestamp
-      lastUpdateTime = new Date();
-      document.getElementById('featured-time').textContent = `🕒 Updated ${lastUpdateTime.toLocaleTimeString()}`;
-      statusText.textContent = `Last: ${lastUpdateTime.toLocaleTimeString()}`;
-      
-    } catch (err) {
-      statusText.textContent = 'Update failed';
-      console.error('Refresh error:', err);
-    } finally {
-      refreshBtn.disabled = false;
-      refreshBtn.style.opacity = '1';
-      setTimeout(() => statusText.textContent = '', 3000);
-    }
-  }
-
-  // Initial load
-  fetchFeaturedUpdate();
-  setInterval(fetchFeaturedUpdate, 300000); // Auto-update every 5 minutes
+  fetchLiveFeed();
 </script>
-
+</body>
 </html>
