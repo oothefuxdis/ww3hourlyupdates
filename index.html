@@ -458,6 +458,7 @@
   </section>
 <script>
   async function fetchLiveFeed() {
+    let collectedItems = [];
     const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
     const feed = document.getElementById('feed');
     const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
@@ -498,15 +499,18 @@
       const div = document.createElement('div');
       div.className = 'feed-item';
       div.innerHTML = `
-        <img src="${item.thumbnail || 'assets/logo.png'}" alt="Thumb" style="width: 100px; height: 65px; object-fit: contain; padding: 5px; background: #2a2a2a; display: block;" />
-        <div>
-          <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+        <a href="${item.link}" target="_blank" style="display: contents;">
+          <img src="${item.thumbnail || 'assets/logo.png'}" alt="Thumb" style="width: 100px; height: 65px; object-fit: contain; padding: 5px; background: #2a2a2a; display: block;" />
+          <div>
+            <h3>${item.title}</h3>
           <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
           <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
         </div>
       `;
       feed.appendChild(div);
     });
+    
+    return collectedItems;
   }
 
   let lastUpdateTime = null;
@@ -520,8 +524,15 @@
       statusText.textContent = 'Updating...';
       refreshBtn.style.opacity = '0.7';
       
-      await fetchLiveFeed();
+      const collectedItems = await fetchLiveFeed();
       
+      // Update featured section with latest item
+      const nowItem = collectedItems.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate))[0];
+      document.getElementById('whats-happening-now-title').textContent = nowItem.title;
+      document.getElementById('whats-happening-now-text').textContent = 
+        (nowItem.description || '').replace(/<[^>]+>/g, '').slice(0, 200) + '...';
+      document.getElementById('featured-source').textContent = nowItem.source;
+
       // Update timestamp
       lastUpdateTime = new Date();
       document.getElementById('featured-time').textContent = `🕒 Updated ${lastUpdateTime.toLocaleTimeString()}`;
