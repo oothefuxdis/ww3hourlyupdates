@@ -194,7 +194,20 @@
   </div>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([35, 10], 3);
+  const map = L.map('map', {
+    center: [35, 10],
+    zoom: 3,
+    minZoom: 3,
+    maxBounds: [[-85, -180], [85, 180]],
+    worldCopyJump: false
+  });
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 18
+  }).addTo(map);
+</script>
+
 
     const baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
