@@ -13,33 +13,64 @@
       background: #111;
       color: #fff;
     }
-    nav.top-nav {
+    .top-nav {
+      background-color: #222;
+      padding: 12px 16px;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      background-color: #222;
-      padding: 12px 24px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
-    .nav-links {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .nav-center {
       display: flex;
-      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rotating-globe {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .logo-text {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.2rem;
+    }
+    .logo-text .white { color: white; }
+    .logo-text .red { color: #ff4c4c; }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      list-style: none;
+      margin-left: auto;
+      padding: 0;
     }
     .nav-links li a {
       color: #ddd;
+      font-weight: bold;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: color 0.25s ease;
-      letter-spacing: 0.04em;
+      font-size: 0.85rem;
+      transition: color 0.3s ease;
     }
     .nav-links li a:hover,
-    .nav-links li a:focus {
+    .nav-links li a.active {
       color: #ff4c4c;
-      outline: none;
+    }
+    .defcon-container {
+      margin-top: 10px;
+      margin-left: auto;
+      text-align: center;
+      cursor: pointer;
+      flex: 1 1 100%;
     }
     .defcon-badge {
       background: #ff4c4c;
@@ -47,85 +78,196 @@
       font-weight: 700;
       padding: 6px 14px;
       border-radius: 14px;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-family: 'Anton', sans-serif;
       letter-spacing: 1.5px;
       box-shadow: 0 0 8px #ff4c4caa;
+      display: inline-block;
+      margin: 4px 0;
     }
     #map {
-      height: 90vh;
+      height: calc(100vh - 60px);
+      width: 100%;
     }
-    .leaflet-popup-content {
-      font-size: 0.9em;
-      line-height: 1.4em;
+    .layer-control {
+      position: absolute;
+      top: 70px;
+      right: 10px;
+      background: #222;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      color: white;
+      font-size: 0.85rem;
+    }
+    .layer-control label {
+      display: block;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+    .report-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ff4c4c;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 76, 76, 0.4);
+      z-index: 999;
+    }
+    #reportForm {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #222;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      z-index: 999;
+      display: none;
+      width: 90vw;
+      max-width: 320px;
+    }
+    #reportForm input,
+    #reportForm textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 6px;
+      background: #111;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-family: 'Roboto';
+    }
+    #reportForm button {
+      background: #ff4c4c;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 4px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <nav class="top-nav">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="map.html">Map</a></li>
-      <li><a href="archive.html">Archive</a></li>
-      <li><a href="timeline.html">Timeline</a></li>
-      <li><a href="survival.html">Survival</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
-  </nav>
-
+  <div class="top-nav">
+    <div class="nav-center">
+      <div class="logo-container">
+        <img src="assets/world-icon.gif" alt="Globe" class="rotating-globe" />
+        <div class="logo-text">
+          <span class="white">WW3</span> <span class="red">Hourly Updates</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="map.html" class="active">Map</a></li>
+        <li><a href="archive.html">Archive</a></li>
+        <li><a href="timeline.html">Timeline</a></li>
+        <li><a href="survival.html">Survival</a></li>
+        <li><a href="underground.html">Underground</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+      <div class="defcon-container">
+        <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
+      </div>
+    </div>
+  </div>
+  <div class="layer-control">
+    <label><input type="checkbox" id="cloudsToggle" /> ☁️ Clouds</label>
+    <label><input type="checkbox" id="windToggle" /> 🌬️ Wind</label>
+    <label><input type="checkbox" id="rainToggle" /> 🌧️ Precipitation</label>
+    <label><input type="checkbox" id="quakeToggle" /> 🔴 Earthquakes</label>
+  </div>
   <div id="map"></div>
-
+  <button class="report-button" onclick="toggleForm()">Report Incident</button>
+  <div id="reportForm">
+    <input type="text" id="reportTitle" placeholder="Title" />
+    <textarea id="reportDescription" rows="3" placeholder="Description"></textarea>
+    <button onclick="submitReport()">Submit</button>
+  </div>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([35, 10], 2.2);
+    const map = L.map('map').setView([35, 10], 3);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
-      maxZoom: 18
+    const baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    const hotspots = [
-      {
-        coords: [54.6872, 25.2797],
-        title: "Kaliningrad Tensions",
-        message: "⚠️ NATO and Russian forces on alert near Kaliningrad - July 2, 2025"
-      },
-      {
-        coords: [32.0853, 34.7818],
-        title: "Israel-Iran Proxy Clash",
-        message: "🔥 Israeli strikes reported near Syrian border - July 1, 2025"
-      },
-      {
-        coords: [51.9194, 19.1451],
-        title: "Strike in Poland",
-        message: "💥 Missile hit near military base in Poland - June 30, 2025"
-      },
-      {
-        coords: [37.5665, 126.9780],
-        title: "Tensions in Korea",
-        message: "🛡️ Reports of DPRK missile tests detected by South Korea - June 29, 2025"
-      },
-      {
-        coords: [24.7136, 46.6753],
-        title: "Strait of Hormuz Activity",
-        message: "🚢 Iranian naval movement near Hormuz Strait - June 28, 2025"
+    const cloudsLayer = L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=59a92889e413ec962c3b3d5f5d2ce76d`);
+    const windLayer = L.tileLayer(`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=59a92889e413ec962c3b3d5f5d2ce76d`);
+    const rainLayer = L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=59a92889e413ec962c3b3d5f5d2ce76d`);
+
+    const quakeLayer = L.layerGroup();
+
+    document.getElementById('cloudsToggle').onchange = e => e.target.checked ? map.addLayer(cloudsLayer) : map.removeLayer(cloudsLayer);
+    document.getElementById('windToggle').onchange = e => e.target.checked ? map.addLayer(windLayer) : map.removeLayer(windLayer);
+    document.getElementById('rainToggle').onchange = e => e.target.checked ? map.addLayer(rainLayer) : map.removeLayer(rainLayer);
+    document.getElementById('quakeToggle').onchange = e => {
+      if (e.target.checked) {
+        map.addLayer(quakeLayer);
+        fetchEarthquakes();
+      } else {
+        map.removeLayer(quakeLayer);
       }
+    };
+
+    function fetchEarthquakes() {
+      fetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson")
+        .then(res => res.json())
+        .then(data => {
+          quakeLayer.clearLayers();
+          data.features.forEach(eq => {
+            const coords = eq.geometry.coordinates;
+            const mag = eq.properties.mag;
+            const place = eq.properties.place;
+            const marker = L.circleMarker([coords[1], coords[0]], {
+              radius: 6 + mag,
+              color: 'red',
+              fillColor: 'orange',
+              fillOpacity: 0.7
+            }).bindPopup(`<strong>Magnitude ${mag}</strong><br>${place}`);
+            quakeLayer.addLayer(marker);
+          });
+        });
+    }
+
+    const hotspots = [
+      { coords: [54.6872, 25.2797], title: "Kaliningrad Tensions", message: "⚠️ NATO and Russian forces on alert - July 2" },
+      { coords: [32.0853, 34.7818], title: "Israel-Iran Clash", message: "🔥 Israeli strikes - July 1" },
+      { coords: [51.9194, 19.1451], title: "Strike in Poland", message: "💥 Missile hit - June 30" },
+      { coords: [37.5665, 126.9780], title: "Korean Peninsula", message: "🛡️ DPRK missile detected - June 29" },
+      { coords: [24.7136, 46.6753], title: "Strait of Hormuz", message: "🚢 Iranian naval activity - June 28" }
     ];
 
-    hotspots.forEach(spot => {
-      L.marker(spot.coords).addTo(map)
-        .bindPopup(`<strong>${spot.title}</strong><br>${spot.message}`);
+    hotspots.forEach(({ coords, title, message }) => {
+      L.marker(coords).addTo(map).bindPopup(`<strong>${title}</strong><br>${message}`);
     });
 
-    // DEFCON logic placeholder (optional dynamic control)
-    function setDefconLevel(level) {
-      const badge = document.getElementById('defcon-badge');
-      badge.textContent = `DEFCON ${level}`;
-      badge.className = 'defcon-badge defcon-' + level;
+    function toggleForm() {
+      const form = document.getElementById('reportForm');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
     }
-    setDefconLevel(3);
+
+    function submitReport() {
+      const title = document.getElementById('reportTitle').value.trim();
+      const description = document.getElementById('reportDescription').value.trim();
+      if (title && description) {
+        const popup = L.popup()
+          .setLatLng(map.getCenter())
+          .setContent(`<strong>${title}</strong><br>${description}`)
+          .openOn(map);
+        toggleForm();
+        document.getElementById('reportTitle').value = '';
+        document.getElementById('reportDescription').value = '';
+      }
+    }
   </script>
 </body>
 </html>
-
