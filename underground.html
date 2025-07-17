@@ -3,39 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Underground Cities | WW3 Hourly Updates</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet">
+  <title>WW3 Underground</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet" />
   <style>
     body {
-      background-color: #111;
-      color: #eee;
-      font-family: 'Roboto', Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: #111;
+      color: #fff;
     }
     .top-nav {
+      background-color: #222;
+      padding: 12px 16px;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      background-color: #222;
-      padding: 12px 24px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
-    .nav-links {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .nav-center {
       display: flex;
-      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rotating-globe {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .logo-text {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.2rem;
+    }
+    .logo-text .white { color: white; }
+    .logo-text .red { color: #ff4c4c; }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      list-style: none;
+      margin-left: auto;
+      padding: 0;
     }
     .nav-links li a {
       color: #ddd;
+      font-weight: bold;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.85rem;
+      transition: color 0.3s ease;
     }
-    .nav-links li a:hover {
+    .nav-links li a:hover,
+    .nav-links li a.active {
       color: #ff4c4c;
+    }
+    .defcon-container {
+      margin-top: 10px;
+      margin-left: auto;
+      text-align: center;
+      cursor: pointer;
+      flex: 1 1 100%;
     }
     .defcon-badge {
       background: #ff4c4c;
@@ -43,93 +77,79 @@
       font-weight: 700;
       padding: 6px 14px;
       border-radius: 14px;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-family: 'Anton', sans-serif;
+      letter-spacing: 1.5px;
       box-shadow: 0 0 8px #ff4c4caa;
+      display: inline-block;
+      margin: 4px 0;
     }
-    header {
-      text-align: center;
-      padding: 2rem 1rem 1rem;
-      font-size: 2.2em;
-      font-family: 'Anton', sans-serif;
-      color: #ff4c4c;
-      text-shadow: 0 0 6px #ff4c4cbb;
-    }
-    .content {
-      max-width: 1000px;
-      margin: 2em auto;
-      padding: 0 1em;
-    }
-    .content h2 {
-      color: #ff4c4c;
-      margin-top: 2rem;
-    }
-    .content p, .content ul {
-      line-height: 1.6;
-    }
-    .content ul li {
-      margin-bottom: 0.8em;
-    }
-    footer {
-      text-align: center;
+    .underground-section {
       padding: 2em 1em;
-      font-size: 0.9em;
-      color: #888;
+      max-width: 900px;
+      margin: auto;
+    }
+    .section-title {
+      font-size: 1.6rem;
+      color: #ff4c4c;
+      border-bottom: 1px solid #444;
+      margin-top: 2em;
+      padding-bottom: 0.5em;
+    }
+    .section-content {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+      margin-top: 0.5em;
     }
   </style>
 </head>
 <body>
-  <nav class="top-nav">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="map.html">Map</a></li>
-      <li><a href="archive.html">Archive</a></li>
-      <li><a href="timeline.html">Timeline</a></li>
-      <li><a href="survival.html">Survival</a></li>
-      <li><a href="underground.html">Underground</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
-  </nav>
+  <div class="top-nav">
+    <div class="nav-center">
+      <div class="logo-container">
+        <img src="assets/world-icon.gif" alt="Globe" class="rotating-globe" />
+        <div class="logo-text">
+          <span class="white">WW3</span> <span class="red">Hourly Updates</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="map.html">Map</a></li>
+        <li><a href="archive.html">Archive</a></li>
+        <li><a href="timeline.html">Timeline</a></li>
+        <li><a href="survival.html">Survival</a></li>
+        <li><a href="underground.html" class="active">Underground</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+      <div class="defcon-container">
+        <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
+      </div>
+    </div>
+  </div>
 
-  <header>🏙️ Underground Cities & Shelters</header>
+  <section class="underground-section">
+    <h2 class="section-title">🚇 Underground Network</h2>
+    <div class="section-content">
+      In the event of WW3 escalation, civilian and tactical underground bunkers become critical. This section outlines tips for:
+      <ul class="checklist">
+        <li>Locating or constructing local shelters</li>
+        <li>Securing power, filtration, and ventilation</li>
+        <li>Creating underground comms (e.g. mesh networks)</li>
+        <li>Connecting with others securely offline</li>
+      </ul>
+    </div>
 
-  <section class="content">
-    <h2>Global Underground Infrastructure</h2>
-    <ul>
-      <li><strong>🇷🇺 Russia – Metro-2:</strong> Secret tunnels beneath Moscow believed to be for government escape.</li>
-      <li><strong>🇺🇸 USA – Cheyenne Mountain:</strong> Cold War-era NORAD complex built into a mountain.</li>
-      <li><strong>🇨🇭 Switzerland – Civil Defense Bunkers:</strong> Every citizen has bunker space by law.</li>
-      <li><strong>🇰🇵 North Korea – Deep Tunnels:</strong> Unknown depth networks built beneath Pyongyang.</li>
-    </ul>
+    <h2 class="section-title">🔐 Secure Communication</h2>
+    <div class="section-content">
+      Use encrypted apps like Signal, Bridgefy, or mesh radios. Avoid open Wi-Fi. In extreme cases, use paper notes, burner phones, or face-to-face code words.
+    </div>
 
-    <h2>Types of Underground Shelters</h2>
-    <ul>
-      <li><strong>🚇 Metro Systems:</strong> Can serve dual use for civilian evacuation and blast protection.</li>
-      <li><strong>🛡️ Military Bunkers:</strong> Hardened locations for command, storage, and defense.</li>
-      <li><strong>💰 Private Bunkers:</strong> Custom shelters built by wealthy individuals or communities.</li>
-      <li><strong>🔨 DIY Bunkers:</strong> Backyard or rural preppers using shipping containers, concrete, or earth berms.</li>
-    </ul>
-
-    <h2>Building or Finding Shelter</h2>
-    <ul>
-      <li>📏 Depth needed to survive blast/EMP varies by weapon size and soil type.</li>
-      <li>🔍 Look for public shelter registries or metro access tunnels in cities.</li>
-      <li>🏗️ DIY costs can range from $5k to $50k+ depending on size/material.</li>
-      <li>📚 Learn the basics of air filtration, water storage, and shielding.</li>
-    </ul>
-
-    <h2>Myths vs Reality</h2>
-    <ul>
-      <li>✅ Some governments do have deep continuity-of-government shelters.</li>
-      <li>❌ No, there are not habitable "underground cities" for every civilian.</li>
-      <li>✅ Subway tunnels may be survivable but not ideal for long-term use without prep.</li>
-    </ul>
+    <h2 class="section-title">🌐 Digital Contingency</h2>
+    <div class="section-content">
+      Download maps, survival docs, contact lists, and offline tools now. Assume no internet access. Mirror this site on USB or SD card backups.
+    </div>
   </section>
-
-  <footer>
-    © 2025 WW3HourlyUpdates — Exploring Conflict, Preparedness, and Survival
-  </footer>
 </body>
 </html>
-
