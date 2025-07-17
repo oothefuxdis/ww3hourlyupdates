@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WW3 Archive</title>
+  <title>WW3 Timeline</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -84,33 +84,43 @@
       display: inline-block;
       margin: 4px 0;
     }
-    .archive-section {
+    .timeline-section {
       padding: 2em 1em;
-      max-width: 1000px;
+      max-width: 800px;
       margin: auto;
     }
-    .archive-header {
-      text-align: center;
-      color: #ff4c4c;
+    .event {
+      border-left: 3px solid #ff4c4c;
+      padding-left: 1em;
       margin-bottom: 2em;
-      font-size: 1.8rem;
+      position: relative;
     }
-    .archive-item {
-      border-bottom: 1px solid #444;
-      padding: 1em 0;
+    .event::before {
+      content: '🔻';
+      position: absolute;
+      left: -1em;
+      top: 0;
     }
-    .archive-date {
+    .event-time {
       font-size: 0.85rem;
       color: #aaa;
     }
-    .archive-title {
+    .event-title {
       font-size: 1.1rem;
       font-weight: bold;
-      margin: 0.2em 0;
+      margin: 0.3em 0;
     }
-    .archive-summary {
+    .event-desc {
       font-size: 0.95rem;
       color: #ccc;
+    }
+    .archive-link {
+      display: block;
+      text-align: center;
+      margin: 2em auto;
+      color: #ff4c4c;
+      font-weight: bold;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -126,8 +136,8 @@
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="map.html">Map</a></li>
-        <li><a href="archive.html" class="active">Archive</a></li>
-        <li><a href="timeline.html">Timeline</a></li>
+        <li><a href="archive.html">Archive</a></li>
+        <li><a href="timeline.html" class="active">Timeline</a></li>
         <li><a href="survival.html">Survival</a></li>
         <li><a href="underground.html">Underground</a></li>
         <li><a href="about.html">About</a></li>
@@ -139,26 +149,34 @@
     </div>
   </div>
 
-  <section class="archive-section">
-    <h2 class="archive-header">📂 Full WW3 Event Archive</h2>
+  <section class="timeline-section">
+    <h2 style="text-align:center; color:#ff4c4c; margin-bottom: 1.5em;">📅 Global Escalation Timeline</h2>
 
-    <div class="archive-item">
-      <div class="archive-date">🕒 July 15, 2025 — 20:30 UTC</div>
-      <div class="archive-title">Satellite blackout over South China Sea</div>
-      <div class="archive-summary">Global positioning disruptions confirmed. Suspected electronic jamming source traced to artificial island installations.</div>
+    <div class="event">
+      <div class="event-time">🕒 July 16, 2025 — 18:00 UTC</div>
+      <div class="event-title">Russian subs detected under Arctic ice</div>
+      <div class="event-desc">NATO radar stations identified submarine movement under Arctic waters near Norway.</div>
     </div>
 
-    <div class="archive-item">
-      <div class="archive-date">🕒 July 15, 2025 — 14:15 UTC</div>
-      <div class="archive-title">Drone strike hits NATO convoy in Romania</div>
-      <div class="archive-summary">Convoy ambushed near Black Sea; origin of UAV remains under investigation by allied forces.</div>
+    <div class="event">
+      <div class="event-time">🕒 July 16, 2025 — 16:45 UTC</div>
+      <div class="event-title">Cyber attack disables UK military satellite</div>
+      <div class="event-desc">Unconfirmed breach suspected from foreign actor; impact ongoing.</div>
     </div>
 
-    <div class="archive-item">
-      <div class="archive-date">🕒 July 14, 2025 — 10:00 UTC</div>
-      <div class="archive-title">Global internet outage across multiple countries</div>
-      <div class="archive-summary">Major routing blackouts in South America, Eastern Europe, and Southeast Asia. Suspected cyber warfare escalation.</div>
+    <div class="event">
+      <div class="event-time">🕒 July 16, 2025 — 15:30 UTC</div>
+      <div class="event-title">Missile launch detected in Persian Gulf</div>
+      <div class="event-desc">Satellite imagery shows possible cruise missile activity launched from Iranian territory.</div>
     </div>
+
+    <div class="event">
+      <div class="event-time">🕒 July 16, 2025 — 13:00 UTC</div>
+      <div class="event-title">US fleet rerouted toward Taiwan Strait</div>
+      <div class="event-desc">Carrier group deployed east of Taiwan amid regional tensions.</div>
+    </div>
+
+    <a class="archive-link" href="archive.html">📂 View Full Archive →</a>
   </section>
 </body>
 </html>
