@@ -3,39 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WW3 Timeline | Escalation Events</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet">
+  <title>WW3 Timeline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet" />
   <style>
     body {
-      background-color: #111;
-      color: #eee;
-      font-family: 'Roboto', Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: #111;
+      color: #fff;
     }
     .top-nav {
+      background-color: #222;
+      padding: 12px 16px;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      background-color: #222;
-      padding: 12px 24px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
-    .nav-links {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .nav-center {
       display: flex;
-      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rotating-globe {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .logo-text {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.2rem;
+    }
+    .logo-text .white { color: white; }
+    .logo-text .red { color: #ff4c4c; }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      list-style: none;
+      margin-left: auto;
+      padding: 0;
     }
     .nav-links li a {
       color: #ddd;
+      font-weight: bold;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.85rem;
+      transition: color 0.3s ease;
     }
-    .nav-links li a:hover {
+    .nav-links li a:hover,
+    .nav-links li a.active {
       color: #ff4c4c;
+    }
+    .defcon-container {
+      margin-top: 10px;
+      margin-left: auto;
+      text-align: center;
+      cursor: pointer;
+      flex: 1 1 100%;
     }
     .defcon-badge {
       background: #ff4c4c;
@@ -43,116 +77,106 @@
       font-weight: 700;
       padding: 6px 14px;
       border-radius: 14px;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-family: 'Anton', sans-serif;
+      letter-spacing: 1.5px;
       box-shadow: 0 0 8px #ff4c4caa;
+      display: inline-block;
+      margin: 4px 0;
     }
-    header {
-      text-align: center;
-      padding: 2rem 1rem 1rem;
-      font-size: 2.2em;
-      font-family: 'Anton', sans-serif;
-      color: #ff4c4c;
-      text-shadow: 0 0 6px #ff4c4cbb;
-    }
-    .timeline {
+    .timeline-section {
+      padding: 2em 1em;
       max-width: 800px;
-      margin: 2em auto;
-      padding: 0 1em;
-      position: relative;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 20px;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: #ff4c4c;
+      margin: auto;
     }
     .event {
-      position: relative;
-      margin-left: 50px;
-      margin-bottom: 2em;
+      border-left: 3px solid #ff4c4c;
       padding-left: 1em;
-      border-left: 4px solid transparent;
+      margin-bottom: 2em;
+      position: relative;
     }
     .event::before {
-      content: '🕒';
+      content: '🔻';
       position: absolute;
-      left: -32px;
+      left: -1em;
       top: 0;
-      font-size: 1.2em;
     }
-    .event h3 {
-      margin: 0;
-      font-size: 1.2em;
-      color: #ff4c4c;
-    }
-    .event time {
-      display: block;
-      font-size: 0.9em;
+    .event-time {
+      font-size: 0.85rem;
       color: #aaa;
-      margin-bottom: 0.5em;
     }
-    .event p {
-      margin: 0;
-      line-height: 1.5em;
+    .event-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 0.3em 0;
     }
-    footer {
+    .event-desc {
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+    .archive-link {
+      display: block;
       text-align: center;
-      padding: 2em 1em;
-      font-size: 0.9em;
-      color: #888;
+      margin: 2em auto;
+      color: #ff4c4c;
+      font-weight: bold;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <nav class="top-nav">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="map.html">Map</a></li>
-      <li><a href="archive.html">Archive</a></li>
-      <li><a href="timeline.html">Timeline</a></li>
-      <li><a href="survival.html">Survival</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
-  </nav>
+  <div class="top-nav">
+    <div class="nav-center">
+      <div class="logo-container">
+        <img src="assets/world-icon.gif" alt="Globe" class="rotating-globe" />
+        <div class="logo-text">
+          <span class="white">WW3</span> <span class="red">Hourly Updates</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="map.html">Map</a></li>
+        <li><a href="archive.html">Archive</a></li>
+        <li><a href="timeline.html" class="active">Timeline</a></li>
+        <li><a href="survival.html">Survival</a></li>
+        <li><a href="underground.html">Underground</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+      <div class="defcon-container">
+        <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
+      </div>
+    </div>
+  </div>
 
-  <header>📅 WW3 Escalation Timeline</header>
+  <section class="timeline-section">
+    <h2 style="text-align:center; color:#ff4c4c; margin-bottom: 1.5em;">📅 Global Escalation Timeline</h2>
 
-  <section class="timeline">
     <div class="event">
-      <h3>Missile Strike in Poland</h3>
-      <time>July 2, 2025 – 18:45</time>
-      <p>Russian missiles reportedly hit NATO-aligned military installations in eastern Poland.</p>
+      <div class="event-time">🕒 July 16, 2025 — 18:00 UTC</div>
+      <div class="event-title">Russian subs detected under Arctic ice</div>
+      <div class="event-desc">NATO radar stations identified submarine movement under Arctic waters near Norway.</div>
     </div>
+
     <div class="event">
-      <h3>Cyberattack on UK Grid</h3>
-      <time>July 1, 2025 – 22:10</time>
-      <p>Major coordinated cyberstrike knocks out power across multiple U.K. counties overnight.</p>
+      <div class="event-time">🕒 July 16, 2025 — 16:45 UTC</div>
+      <div class="event-title">Cyber attack disables UK military satellite</div>
+      <div class="event-desc">Unconfirmed breach suspected from foreign actor; impact ongoing.</div>
     </div>
+
     <div class="event">
-      <h3>China Expands Naval Patrols</h3>
-      <time>June 30, 2025 – 16:20</time>
-      <p>Chinese destroyers pass through Taiwan Strait in a show of force, triggering alerts in Taipei.</p>
+      <div class="event-time">🕒 July 16, 2025 — 15:30 UTC</div>
+      <div class="event-title">Missile launch detected in Persian Gulf</div>
+      <div class="event-desc">Satellite imagery shows possible cruise missile activity launched from Iranian territory.</div>
     </div>
+
     <div class="event">
-      <h3>Nuclear Drill in Moscow</h3>
-      <time>June 28, 2025 – 12:00</time>
-      <p>Russian Federation initiates unannounced nationwide nuclear preparedness drill.</p>
+      <div class="event-time">🕒 July 16, 2025 — 13:00 UTC</div>
+      <div class="event-title">US fleet rerouted toward Taiwan Strait</div>
+      <div class="event-desc">Carrier group deployed east of Taiwan amid regional tensions.</div>
     </div>
-    <div class="event">
-      <h3>Iran Launches Drones Toward Israel</h3>
-      <time>June 26, 2025 – 07:30</time>
-      <p>Multiple drone incursions reported from Iranian territory into disputed zones near the Golan Heights.</p>
-    </div>
+
+    <a class="archive-link" href="archive.html">📂 View Full Archive →</a>
   </section>
-
-  <footer>
-    © 2025 WW3HourlyUpdates — Global Risk Monitoring Timeline
-  </footer>
 </body>
 </html>
-
