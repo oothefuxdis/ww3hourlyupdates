@@ -130,6 +130,29 @@
   </div>
 </section>
 
+<!-- 🌍 Conflict Map Preview Section -->
+<section style="background: #1a1a1a; padding: 2em 1.5em; text-align: center; border-top: 3px solid #ff4c4c;">
+  <h2 style="color: #ff4c4c; font-size: 1.8rem; margin-bottom: 1em;">🗺️ Live Conflict Map</h2>
+  <a href="map.html" style="display: inline-block; text-decoration: none;">
+    <img src="assets/map-preview.png" alt="Conflict Map Preview" style="width: 100%; max-width: 600px; border-radius: 10px; box-shadow: 0 0 10px #000; margin-bottom: 1em;">
+    <div style="font-size: 1rem; color: #ccc;">Track hotspots, alerts & activity in real-time</div>
+    <div style="margin-top: 0.5em; padding: 12px 24px; background: #ff4c4c; color: white; border-radius: 6px; display: inline-block; font-weight: bold;">Open the Map</div>
+  </a>
+</section>
+
+<!-- 🛡️ Situation Room Section -->
+<section style="background: #121212; padding: 2em 1.5em; text-align: center; border-top: 3px solid #444;">
+  <h2 style="color: #ff4c4c; font-size: 1.8rem; margin-bottom: 1em;">🛡️ Situation Room</h2>
+  <div id="situation-log" style="max-width: 700px; margin: 0 auto; text-align: left; font-family: monospace; font-size: 0.9rem; color: #ddd;">
+    <p>🕒 [17:00] — New satellite movement near Kaliningrad detected.</p>
+    <p>🕒 [16:20] — Internet disruption in southern Ukraine under review.</p>
+    <p>🕒 [15:45] — Missile launch observed near the Persian Gulf.</p>
+    <p>🕒 [15:00] — US jets scrambled over Alaska.</p>
+    <p>🕒 [14:30] — China mobilizes second carrier group.</p>
+  </div>
+  <a href="timeline.html" style="margin-top: 1em; display: inline-block; color: #ff4c4c; font-weight: bold; text-decoration: none;">📅 View Full Timeline →</a>
+</section>
+
   <script>
     async function fetchLiveFeed() {
       const feed = document.getElementById('feed-container');
