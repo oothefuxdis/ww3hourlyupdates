@@ -1,42 +1,75 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Survival Kit & Skills | WW3 Hourly Updates</title>
+  <title>WW3 Survival Guide</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Anton&display=swap" rel="stylesheet" />
   <style>
     body {
-      background-color: #111;
-      color: #eee;
-      font-family: 'Roboto', Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      line-height: 1.6;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: #111;
+      color: #fff;
     }
     .top-nav {
+      background-color: #222;
+      padding: 12px 16px;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      background-color: #222;
-      padding: 12px 24px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
-    .nav-links {
-      list-style: none;
+    .nav-center {
       display: flex;
-      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rotating-globe {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .logo-text {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.2rem;
+    }
+    .logo-text .white { color: white; }
+    .logo-text .red { color: #ff4c4c; }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      list-style: none;
+      margin-left: auto;
       padding: 0;
-      margin: 0;
     }
     .nav-links li a {
       color: #ddd;
+      font-weight: bold;
       text-decoration: none;
-      font-weight: 600;
+      font-size: 0.85rem;
+      transition: color 0.3s ease;
     }
-    .nav-links li a:hover {
+    .nav-links li a:hover,
+    .nav-links li a.active {
       color: #ff4c4c;
+    }
+    .defcon-container {
+      margin-top: 10px;
+      margin-left: auto;
+      text-align: center;
+      cursor: pointer;
+      flex: 1 1 100%;
     }
     .defcon-badge {
       background: #ff4c4c;
@@ -44,190 +77,88 @@
       font-weight: 700;
       padding: 6px 14px;
       border-radius: 14px;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-family: 'Anton', sans-serif;
       letter-spacing: 1.5px;
       box-shadow: 0 0 8px #ff4c4caa;
+      display: inline-block;
+      margin: 4px 0;
     }
-    header, main {
-      padding: 2rem;
+    .survival-section {
+      padding: 2em 1em;
+      max-width: 900px;
+      margin: auto;
     }
-    h1, h2 {
-      color: #ff4747;
+    .section-title {
+      font-size: 1.6rem;
+      color: #ff4c4c;
+      border-bottom: 1px solid #444;
+      margin-top: 2em;
+      padding-bottom: 0.5em;
     }
-    section {
-      margin-bottom: 3rem;
+    .section-content {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+      margin-top: 0.5em;
     }
-    .kit-grid, .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
+    ul.checklist {
+      list-style-type: '\2714';
+      padding-left: 1.5em;
+      color: #ccc;
     }
-    .card {
-      background-color: #222;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #000;
-    }
-    .card h3 {
-      margin-top: 0;
-      color: #00e1ff;
-    }
-    footer {
-      text-align: center;
-      padding: 1.2em 0;
-      margin-top: 3.5em;
-      font-size: 0.9rem;
-      color: #999;
-      background-color: #222;
-      user-select: none;
+    ul.checklist li {
+      margin-bottom: 0.5em;
     }
   </style>
 </head>
 <body>
-  <nav class="top-nav">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="map.html">Map</a></li>
-      <li><a href="archive.html">Archive</a></li>
-      <li><a href="timeline.html">Timeline</a></li>
-      <li><a href="survival.html">Survival</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
-  </nav>
-
-  <header>
-    <h1>Survival Kit & Skills</h1>
-    <p>Everything you need to be ready before, during, and after crisis.</p>
-  </header>
-
-  <div style="margin: 2rem;">
-    <a href="survival_kit_checklist.pdf" download style="display: inline-block; background-color: #ff4747; color: white; padding: 0.75rem 1.25rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
-      📄 Download Printable Checklist (PDF)
-    </a>
+  <div class="top-nav">
+    <div class="nav-center">
+      <div class="logo-container">
+        <img src="assets/world-icon.gif" alt="Globe" class="rotating-globe" />
+        <div class="logo-text">
+          <span class="white">WW3</span> <span class="red">Hourly Updates</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="map.html">Map</a></li>
+        <li><a href="archive.html">Archive</a></li>
+        <li><a href="timeline.html">Timeline</a></li>
+        <li><a href="survival.html" class="active">Survival</a></li>
+        <li><a href="underground.html">Underground</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+      <div class="defcon-container">
+        <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
+      </div>
+    </div>
   </div>
 
-  <main>
-    <section>
-      <h2>🧰 Survival Kit Essentials</h2>
-      <div class="kit-grid">
-        <div class="card">
-          <h3>💧 Water</h3>
-          <ul>
-            <li>Portable water filter</li>
-            <li>Purification tablets</li>
-            <li>Collapsible water containers</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>🍲 Food</h3>
-          <ul>
-            <li>MREs / freeze-dried meals</li>
-            <li>Portable stove + fuel</li>
-            <li>Manual can opener</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>🏕️ Shelter & Warmth</h3>
-          <ul>
-            <li>Emergency blanket</li>
-            <li>Sleeping bag / tarp</li>
-            <li>Firestarter kit</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>🛠️ Tools</h3>
-          <ul>
-            <li>Multitool / knife</li>
-            <li>Duct tape / paracord</li>
-            <li>Headlamp + batteries</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>🚑 First Aid</h3>
-          <ul>
-            <li>Basic med kit</li>
-            <li>Gloves / antiseptic</li>
-            <li>Personal meds</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>📡 Communication</h3>
-          <ul>
-            <li>Hand-crank radio</li>
-            <li>Compass + map</li>
-            <li>Power bank</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+  <section class="survival-section">
+    <h2 class="section-title">🧰 Emergency Survival Checklist</h2>
+    <ul class="checklist">
+      <li>72-hour food and water supply per person</li>
+      <li>Portable water filtration or purification tablets</li>
+      <li>Flashlights, lanterns, and extra batteries</li>
+      <li>Emergency radio (hand-crank or solar-powered)</li>
+      <li>Basic first-aid kit and medication</li>
+      <li>Cash (small bills) and backup documents</li>
+      <li>Sturdy clothing, blankets, and shelter materials</li>
+      <li>Self-defense tools (as permitted by law)</li>
+    </ul>
 
-    <section>
-      <h2>🧠 Essential Survival Skills</h2>
-      <div class="skills-grid">
-        <div class="card">
-          <h3>🔥 Fire Making</h3>
-          <p>Start fires with ferro rods, cotton balls, or solar reflectors.</p>
-        </div>
-        <div class="card">
-          <h3>💦 Water Purification</h3>
-          <p>Use filters, boiling, or tablets to purify water safely.</p>
-        </div>
-        <div class="card">
-          <h3>⛺ Shelter Building</h3>
-          <p>Learn to build a tarp shelter or lean-to with limited materials.</p>
-        </div>
-        <div class="card">
-          <h3>🩹 Basic First Aid</h3>
-          <p>How to treat wounds, burns, dehydration, and perform CPR.</p>
-        </div>
-        <div class="card">
-          <h3>🏃 Evacuation Planning</h3>
-          <p>Build a bug-out plan and route with meet-up locations.</p>
-        </div>
-        <div class="card">
-          <h3>📻 Emergency Comms</h3>
-          <p>How to get alerts and send distress signals during outages.</p>
-        </div>
-      </div>
-    </section>
+    <h2 class="section-title">📦 Safe Storage & Bug-Out Prep</h2>
+    <div class="section-content">
+      Know your local evacuation routes and shelters. Pre-pack "go bags" for quick exit with essential supplies. Store backups in safe, dry, and accessible locations.
+    </div>
 
-    <section>
-      <h2>❌ Top 5 Survival Mistakes to Avoid</h2>
-      <ul>
-        <li>Ignoring water needs – always plan for more than you think.</li>
-        <li>Overpacking or underpacking – focus on essentials, not luxuries.</li>
-        <li>Forgetting to test gear – try tools and equipment before an emergency.</li>
-        <li>Lack of physical readiness – fitness matters when bugging out.</li>
-        <li>No communication plan – make sure others know your location and plans.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>⚡ Quick Tips to Remember</h2>
-      <ul>
-        <li>3 minutes without air, 3 days without water, 3 weeks without food — prioritize accordingly.</li>
-        <li>Use cotton balls and petroleum jelly as cheap, powerful firestarters.</li>
-        <li>Always have a whistle – it carries farther than yelling.</li>
-        <li>Layer clothing for insulation, not bulk.</li>
-        <li>Stay calm — panic is your worst enemy in a crisis.</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer>
-    © 2025 WW3HourlyUpdates — Real-Time War Alerts, Global Conflict Tracking, and Preparedness News
-  </footer>
-
-  <script>
-    function setDefconLevel(level) {
-      const badge = document.getElementById('defcon-badge');
-      badge.textContent = `DEFCON ${level}`;
-      badge.className = 'defcon-badge defcon-' + level;
-    }
-    setDefconLevel(3);
-  </script>
+    <h2 class="section-title">📡 Staying Informed & Safe</h2>
+    <div class="section-content">
+      Sign up for SMS alerts, follow trusted sources, and keep tuned to shortwave or NOAA radio in case of internet blackout.
+    </div>
+  </section>
 </body>
 </html>
-
