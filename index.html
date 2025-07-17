@@ -95,25 +95,22 @@
         <span class="white">WW3</span> <span class="red">Hourly Updates</span>
       </div>
     </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="timeline.html">Timeline</a></li>
+      <li><a href="survival.html">Survival</a></li>
+      <li><a href="underground.html">Underground</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+    <div class="defcon-container">
+      <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
 </div>
 </div>
-
-
-      </div>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="map.html">Map</a></li>
-        <li><a href="archive.html">Archive</a></li>
-        <li><a href="timeline.html">Timeline</a></li>
-        <li><a href="survival.html">Survival</a></li>
-        <li><a href="underground.html">Underground</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="admin.html">Admin</a></li>
-      </ul>
-      <div class="defcon-container">
-        <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
-      </div>
-    </div>
+</div>
+</div>
   </div>
 
 
@@ -248,231 +245,5 @@ fetchLiveFeed();
   </form>
 </section>
 
-</body>
-</html>
-
-    .whats-now {
-      background-color: #181818;
-      padding: 2em;
-      text-align: center;
-      border-bottom: 2px solid #444;
-    }
-    .whats-now h2 {
-      color: #ff4c4c;
-      margin: 0 0 0.5em;
-    }
-
-    .main-grid {
-      display: grid;
-      grid-template-columns: 3fr 1fr;
-      gap: 1em;
-      max-width: 1200px;
-      margin: 2em auto;
-      padding: 0 1em;
-    }
-    .logo-area {
-      background: #181818;
-      padding: 1em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .logo-area img {
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-      object-fit: contain;
-    }
-    .alert-box {
-      background: rgba(255, 76, 76, 0.15);
-      border: 1px solid #ff4c4c;
-      padding: 1em;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(255, 76, 76, 0.4);
-      margin-bottom: 1em;
-    }
-    .related-box {
-      background: #2b2b2b;
-      padding: 1em;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.5);
-      margin-bottom: 1em;
-    }
-    .alert-box h3, .related-box h3 {
-      color: #ff4c4c;
-      margin-top: 0;
-    }
-
-    .feed-section {
-      background: #2e2e2e;
-      padding: 2em 1em;
-      max-width: 1200px;
-      margin: 2em auto;
-      border-top: 2px solid #444;
-    }
-    .feed-section h2 {
-      color: #ff4c4c;
-      margin-bottom: 1em;
-    }
-
-    .feed-item {
-      background: #1f1f1f;
-      border: 1px solid #333;
-      border-left: 5px solid #ff4c4c;
-      padding: 1em;
-      margin-bottom: 1em;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-      display: flex;
-      gap: 1em;
-      align-items: center;
-    }
-    .feed-item img {
-      width: 64px;
-      height: 64px;
-      object-fit: cover;
-      border-radius: 4px;
-      flex-shrink: 0;
-    }
-    .feed-item h3 {
-      margin: 0 0 0.5em;
-      font-size: 1.1em;
-    }
-    .feed-item p {
-      margin: 0;
-      color: #bbb;
-      font-size: 0.95em;
-    }
-    .meta-info {
-      font-size: 0.8em;
-      color: #999;
-      margin-top: 0.5em;
-    }
-
-    @media (max-width: 768px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="top-nav">
-    <div class="nav-center">
-      <div class="logo-container">
-        <img src="assets/world-icon.gif" alt="Globe" class="rotating-globe" />
-        <div class="logo-text">
-          <span class="white">WW3</span> <span class="red">Hourly Updates</span>
-        </div>
-      </div>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="map.html">Map</a></li>
-        <li><a href="archive.html">Archive</a></li>
-        <li><a href="timeline.html">Timeline</a></li>
-        <li><a href="survival.html">Survival</a></li>
-        <li><a href="underground.html">Underground</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="admin.html">Admin</a></li>
-      </ul>
-      <div class="defcon-container" onclick="toggleDefconReason()">
-        <div id="defcon-badge" class="defcon-badge">DEFCON 3</div>
-        <div id="defcon-reason">🛡️ Current Readiness: Heightened alert due to troop movement near Taiwan.</div>
-      </div>
-    </div>
-  </div>
-
-  <section class="whats-now">
-    <h2>🔴 What’s Happening Now</h2>
-    <p id="whats-happening-now-text">Loading...</p>
-    <p style="color:#aaa;">🕒 Updated hourly · Curated for global conflict alerts</p>
-  </section>
-
-  <div class="main-grid">
-    <div class="logo-area">
-      <img src="assets/long logo.png" alt="WW3 Logo" />
-    </div>
-    <div>
-      <div class="alert-box">
-        <h3>🚨 Emergency Alerts</h3>
-        <p>Loading emergency information...</p>
-      </div>
-      <div class="related-box">
-        <h3>📌 Related Articles</h3>
-        <p>Loading related headlines...</p>
-      </div>
-    </div>
-  </div>
-
-  <section class="feed-section">
-    <h2>🌍 WW3 Hourly Updates — Live Feed</h2>
-    <div id="feed"><p style="color:#aaa;">Loading live news...</p></div>
-  </section>
-
-  <script>
-    async function fetchLiveFeed() {
-      const apiKey = "zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq";
-      const feed = document.getElementById('feed');
-      const nowText = document.getElementById('whats-happening-now-text');
-      const keywords = ["war", "missile", "strike", "nuclear", "conflict", "invasion", "attack", "tensions", "military", "ww3"];
-      const sources = [
-        { name: "Al Jazeera", url: "https://www.aljazeera.com/xml/rss/all.xml" },
-        { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all" },
-        { name: "Reuters", url: "http://feeds.reuters.com/Reuters/worldNews" },
-        { name: "BBC", url: "http://feeds.bbci.co.uk/news/world/rss.xml" }
-      ];
-      feed.innerHTML = '';
-      const collectedItems = [];
-
-      for (const source of sources) {
-        try {
-          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
-          const data = await res.json();
-          const filtered = data.items.filter(item => keywords.some(k => item.title.toLowerCase().includes(k))).slice(0, 3);
-
-          filtered.forEach(item => {
-            collectedItems.push({ ...item, source: source.name, thumbnail: item.enclosure?.url || '' });
-          });
-        } catch (err) {
-          console.error(`Feed error from ${source.name}:`, err);
-        }
-      }
-
-      if (collectedItems.length === 0) {
-        feed.innerHTML = '<p style="color:#aaa;">⚠️ No WW3-related news found at this time.</p>';
-        nowText.textContent = '⚠️ No breaking alerts at this moment. Stay tuned.';
-        return;
-      }
-
-      collectedItems.slice(0, 10).forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'feed-item';
-        div.innerHTML = `
-          <img src="${item.thumbnail || 'default-thumbnail.png'}" alt="Article Thumbnail" />
-          <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-          <p>${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 120)}...</p>
-          <div class="meta-info">🌐 ${item.source} · 🕒 ${new Date(item.pubDate).toLocaleString()}</div>
-        `;
-        feed.appendChild(div);
-      });
-
-      const alertHeadline = collectedItems.find(item => /emergency|missile|nuclear|alert|evacuation/i.test(item.title));
-      if (alertHeadline) {
-        document.querySelector('.alert-box p').textContent = alertHeadline.title;
-      } else {
-        document.querySelector('.alert-box p').textContent = "⚠️ No emergency alerts currently. Stay alert for breaking news.";
-      }
-
-      const nowItem = collectedItems[Math.floor(Math.random() * collectedItems.length)];
-      nowText.textContent = `⚠️ ${nowItem.title}`;
-    }
-
-    function toggleDefconReason() {
-      const reason = document.getElementById('defcon-reason');
-      reason.style.display = reason.style.display === 'none' ? 'block' : 'none';
-    }
-
-    fetchLiveFeed();
-  </script>
 </body>
 </html>
