@@ -129,6 +129,93 @@
     </div>
   </div>
 </section>
+<!-- 📡 WW3 Hourly Visual News Feed -->
+<section style="background: #181818; padding: 2em 1.5em; border-top: 3px solid #ff4c4c;">
+  <h2 style="color: #ff4c4c; font-size: 1.8rem; text-align: center; margin-bottom: 1em;">📰 WW3 Hourly Updates — Visual Feed</h2>
+  <div id="visual-news-feed" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: auto;"></div>
+</section>
+
+<script>
+const apiKey = 'zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq';
+const fallbackThumb = 'assets/logo.png';
+const container = document.getElementById('visual-news-feed');
+
+const fallbackArticles = [
+  {
+    title: "⚠️ NATO intercepts Russian aircraft near Finland",
+    description: "Tensions continue as NATO jets scrambled over Finnish airspace this morning.",
+    pubDate: "Just now",
+    link: "#",
+    source: "WW3 Backup",
+    thumb: fallbackThumb
+  },
+  {
+    title: "💣 Missile strike hits naval base in Yemen",
+    description: "Local sources confirm large explosion with unknown casualties.",
+    pubDate: "10 min ago",
+    link: "#",
+    source: "WW3 Backup",
+    thumb: fallbackThumb
+  }
+];
+
+async function fetchVisualFeed() {
+  const sources = [
+    { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml' },
+    { name: 'DW', url: 'https://rss.dw.com/rdf/rss-en-all' },
+    { name: 'Reuters', url: 'http://feeds.reuters.com/Reuters/worldNews' },
+    { name: 'BBC', url: 'http://feeds.bbci.co.uk/news/world/rss.xml' }
+  ];
+
+  const keywords = ['war', 'missile', 'strike', 'nuclear', 'conflict', 'invasion', 'attack', 'tensions', 'military', 'ww3'];
+
+  let loaded = false;
+
+  for (const source of sources) {
+    try {
+      const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
+      const data = await res.json();
+
+      const items = data.items.filter(item =>
+        keywords.some(word => item.title.toLowerCase().includes(word))
+      ).slice(0, 2);
+
+      items.forEach(item => {
+        const thumb = item.enclosure?.url || fallbackThumb;
+        container.innerHTML += `
+          <div style="background:#1e1e1e;border:1px solid #333;border-radius:8px;overflow:hidden;">
+            <img src="${thumb}" alt="news" style="width:100%;height:160px;object-fit:cover;">
+            <div style="padding:1em">
+              <h3 style="margin:0 0 0.5em;color:#ff4c4c;font-size:1rem;">${item.title}</h3>
+              <p style="font-size:0.9rem;color:#aaa;">${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 100)}...</p>
+              <div style="font-size:0.8rem;color:#888;">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
+            </div>
+          </div>`;
+        loaded = true;
+      });
+    } catch (err) {
+      console.warn('Feed error from', source.name, err);
+    }
+  }
+
+  if (!loaded) {
+    // Fallback mode
+    fallbackArticles.forEach(item => {
+      container.innerHTML += `
+        <div style="background:#1e1e1e;border:1px solid #333;border-radius:8px;overflow:hidden;">
+          <img src="${item.thumb}" alt="news" style="width:100%;height:160px;object-fit:cover;">
+          <div style="padding:1em">
+            <h3 style="margin:0 0 0.5em;color:#ff4c4c;font-size:1rem;">${item.title}</h3>
+            <p style="font-size:0.9rem;color:#aaa;">${item.description}</p>
+            <div style="font-size:0.8rem;color:#888;">🌐 ${item.source} · 🕒 ${item.pubDate}</div>
+          </div>
+        </div>`;
+    });
+  }
+}
+
+fetchVisualFeed();
+</script>
 
 <!-- 🌍 Conflict Map Preview Section -->
 <section style="background: #1a1a1a; padding: 2em 1.5em; text-align: center; border-top: 3px solid #ff4c4c;">
