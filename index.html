@@ -166,7 +166,7 @@
             keywords.some(word => item.title.toLowerCase().includes(word))
           ).slice(0, 2);
           items.forEach(item => {
-            const thumb = item.enclosure?.url || fallbackThumb;
+            const thumb = item.enclosure?.url || item.thumbnail || item.media?.content?.url || fallbackThumb;
             container.innerHTML += `
               <a href="${item.link}" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div style="background:#1e1e1e;border:1px solid #333;border-radius:8px;overflow:hidden;transition: transform 0.2s ease;">
