@@ -84,175 +84,78 @@
       display: inline-block;
       margin: 4px 0;
     }
+    a:hover > div {
+      transform: scale(1.02);
+      box-shadow: 0 0 10px #ff4c4c66;
+    }
   </style>
 </head>
 <body>
   <div class="top-nav">
-  <div class="nav-center">
-    <div class="logo-container">
-      <img src="assets/world-icon.gif" alt="Globe" class="rotating-globe" />
-      <div class="logo-text">
-        <span class="white">WW3</span> <span class="red">Hourly Updates</span>
+    <div class="nav-center">
+      <div class="logo-container">
+        <img src="assets/world-icon.gif" alt="Globe" class="rotating-globe" />
+        <div class="logo-text">
+          <span class="white">WW3</span> <span class="red">Hourly Updates</span>
+        </div>
       </div>
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="map.html">Map</a></li>
-      <li><a href="archive.html">Archive</a></li>
-      <li><a href="timeline.html">Timeline</a></li>
-      <li><a href="survival.html">Survival</a></li>
-      <li><a href="underground.html">Underground</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
-    <div class="defcon-container">
-      <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
-</div>
-</div>
-</div>
-</div>
-  </div>
-
-
-  
-
-<section class="whats-now" style="border-top: 3px solid #ff4c4c; background: #181818; padding: 2em 1.5em; text-align: center;">
-  <h2 style="color: #ff4c4c; font-size: 2rem; letter-spacing: -0.02em;">🔴 What’s Happening Now</h2>
-  <div class="featured-article" style="max-width: 800px; margin: 1.5em auto; background: #1f1f1f; padding: 1.5em; border-radius: 8px; border: 1px solid #333; display: flex; gap: 1.2em;">
-    <img src="assets/logo.png" alt="WW3 Logo" style="width: 100px; height: 100px; object-fit: contain; border-radius: 6px;">
-    <div style="text-align: left;">
-      <h3 id="whats-happening-now-title" style="margin: 0; color: #fff; font-size: 1.25em;">🌐 Global Escalation Briefing</h3>
-      <p id="whats-happening-now-text" style="margin: 0.5em 0 0; color: #ccc; font-size: 0.95em;">In the last 12 hours, NATO intercepts near Kaliningrad escalated, satellite intel shows increased submarine activity in the Arctic, and large-scale cyber probes were detected across European infrastructure.</p>
-      <div class="featured-meta" style="margin-top: 0.8em; font-size: 0.8em; color: #aaa;">
-        <span id="featured-source">WW3 Intelligence</span> · <span id="featured-time">🕒 Just updated</span>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="map.html">Map</a></li>
+        <li><a href="archive.html">Archive</a></li>
+        <li><a href="timeline.html">Timeline</a></li>
+        <li><a href="survival.html">Survival</a></li>
+        <li><a href="underground.html">Underground</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+      <div class="defcon-container">
+        <div id="defcon-badge" class="defcon-badge">DEFCON 2</div>
       </div>
     </div>
   </div>
-</section>
-<!-- 📡 WW3 Hourly Visual News Feed -->
-<section style="background: #181818; padding: 2em 1.5em; border-top: 3px solid #ff4c4c;">
-  <h2 style="color: #ff4c4c; font-size: 1.8rem; text-align: center; margin-bottom: 1em;">📰 WW3 Hourly Updates — Visual Feed</h2>
-  <div id="visual-news-feed" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: auto;"></div>
-</section>
 
-<script>
-const apiKey = 'zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq';
-const fallbackThumb = 'assets/logo.png';
-const container = document.getElementById('visual-news-feed');
+  <section id="whats-happening-now" style="border-top: 3px solid #ff4c4c; background: #181818; padding: 2em 1.5em; text-align: center;">
+    <h2>
+      <a href="#whats-happening-now" style="color: #ff4c4c; font-size: 2rem; letter-spacing: -0.02em; text-decoration: none; transition: color 0.3s;">
+        🔴 What’s Happening Now
+      </a>
+    </h2>
+    <div style="max-width: 800px; margin: 1.5em auto; background: #1f1f1f; padding: 1.5em; border-radius: 8px; border: 1px solid #333; display: flex; gap: 1.2em;">
+      <img src="assets/logo.png" alt="WW3 Logo" style="width: 100px; height: 100px; object-fit: contain; border-radius: 6px;">
+      <div style="text-align: left;">
+        <h3 style="margin: 0; color: #fff; font-size: 1.25em;">🌐 Global Escalation Briefing</h3>
+        <p style="margin: 0.5em 0 0; color: #ccc; font-size: 0.95em;">
+          In the last 12 hours, NATO intercepts near Kaliningrad escalated, submarine activity increased in the Arctic, and cyber probes hit EU infrastructure.
+        </p>
+        <div style="margin-top: 0.8em; font-size: 0.8em; color: #aaa;">
+          WW3 Intelligence · 🕒 Just updated
+        </div>
+      </div>
+    </div>
+  </section>
 
-const fallbackArticles = [
-  {
-    title: "⚠️ NATO intercepts Russian aircraft near Finland",
-    description: "Tensions continue as NATO jets scrambled over Finnish airspace this morning.",
-    pubDate: "Just now",
-    link: "#",
-    source: "WW3 Backup",
-    thumb: fallbackThumb
-  },
-  {
-    title: "💣 Missile strike hits naval base in Yemen",
-    description: "Local sources confirm large explosion with unknown casualties.",
-    pubDate: "10 min ago",
-    link: "#",
-    source: "WW3 Backup",
-    thumb: fallbackThumb
-  }
-];
-
-async function fetchVisualFeed() {
-  const sources = [
-    { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml' },
-    { name: 'DW', url: 'https://rss.dw.com/rdf/rss-en-all' },
-    { name: 'Reuters', url: 'http://feeds.reuters.com/Reuters/worldNews' },
-    { name: 'BBC', url: 'http://feeds.bbci.co.uk/news/world/rss.xml' }
-  ];
-
-  const keywords = ['war', 'missile', 'strike', 'nuclear', 'conflict', 'invasion', 'attack', 'tensions', 'military', 'ww3'];
-
-  let loaded = false;
-
-  for (const source of sources) {
-    try {
-      const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
-      const data = await res.json();
-
-      const items = data.items.filter(item =>
-        keywords.some(word => item.title.toLowerCase().includes(word))
-      ).slice(0, 2);
-
-      items.forEach(item => {
-        const thumb = item.enclosure?.url || fallbackThumb;
-        container.innerHTML += `
-          <div style="background:#1e1e1e;border:1px solid #333;border-radius:8px;overflow:hidden;">
-            <img src="${thumb}" alt="news" style="width:100%;height:160px;object-fit:cover;">
-            <div style="padding:1em">
-              <h3 style="margin:0 0 0.5em;color:#ff4c4c;font-size:1rem;">${item.title}</h3>
-              <p style="font-size:0.9rem;color:#aaa;">${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 100)}...</p>
-              <div style="font-size:0.8rem;color:#888;">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
-            </div>
-          </div>`;
-        loaded = true;
-      });
-    } catch (err) {
-      console.warn('Feed error from', source.name, err);
-    }
-  }
-
-  if (!loaded) {
-    // Fallback mode
-    fallbackArticles.forEach(item => {
-      container.innerHTML += `
-        <div style="background:#1e1e1e;border:1px solid #333;border-radius:8px;overflow:hidden;">
-          <img src="${item.thumb}" alt="news" style="width:100%;height:160px;object-fit:cover;">
-          <div style="padding:1em">
-            <h3 style="margin:0 0 0.5em;color:#ff4c4c;font-size:1rem;">${item.title}</h3>
-            <p style="font-size:0.9rem;color:#aaa;">${item.description}</p>
-            <div style="font-size:0.8rem;color:#888;">🌐 ${item.source} · 🕒 ${item.pubDate}</div>
-          </div>
-        </div>`;
-    });
-  }
-}
-
-fetchVisualFeed();
-</script>
-
-<!-- 🌍 Conflict Map Preview Section -->
-<section style="background: #1a1a1a; padding: 2em 1.5em; text-align: center; border-top: 3px solid #ff4c4c;">
-  <h2 style="color: #ff4c4c; font-size: 1.8rem; margin-bottom: 1em;">🗺️ Live Conflict Map</h2>
-  <a href="map.html" style="display: inline-block; text-decoration: none;">
-    <img src="assets/map-preview.png" alt="Conflict Map Preview" style="width: 100%; max-width: 600px; border-radius: 10px; box-shadow: 0 0 10px #000; margin-bottom: 1em;">
-    <div style="font-size: 1rem; color: #ccc;">Track hotspots, alerts & activity in real-time</div>
-    <div style="margin-top: 0.5em; padding: 12px 24px; background: #ff4c4c; color: white; border-radius: 6px; display: inline-block; font-weight: bold;">Open the Map</div>
-  </a>
-</section>
-
-<!-- 🛡️ Situation Room Section -->
-<section style="background: #121212; padding: 2em 1.5em; text-align: center; border-top: 3px solid #444;">
-  <h2 style="color: #ff4c4c; font-size: 1.8rem; margin-bottom: 1em;">🛡️ Situation Room</h2>
-  <div id="situation-log" style="max-width: 700px; margin: 0 auto; text-align: left; font-family: monospace; font-size: 0.9rem; color: #ddd;">
-    <p>🕒 [17:00] — New satellite movement near Kaliningrad detected.</p>
-    <p>🕒 [16:20] — Internet disruption in southern Ukraine under review.</p>
-    <p>🕒 [15:45] — Missile launch observed near the Persian Gulf.</p>
-    <p>🕒 [15:00] — US jets scrambled over Alaska.</p>
-    <p>🕒 [14:30] — China mobilizes second carrier group.</p>
-  </div>
-  <a href="timeline.html" style="margin-top: 1em; display: inline-block; color: #ff4c4c; font-weight: bold; text-decoration: none;">📅 View Full Timeline →</a>
-</section>
+  <section style="background: #181818; padding: 2em 1.5em; border-top: 3px solid #ff4c4c;">
+    <h2>
+      <a href="#visual-news-feed" style="color: #ff4c4c; font-size: 1.8rem; text-align: center; margin-bottom: 1em; text-decoration: none; transition: color 0.3s;">
+        📰 WW3 Hourly Updates — Visual Feed
+      </a>
+    </h2>
+    <div id="visual-news-feed" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: auto;"></div>
+  </section>
 
   <script>
-    async function fetchLiveFeed() {
-      const feed = document.getElementById('feed-container');
-      const apiKey = 'zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq';
-      const fallbackThumb = 'assets/logo.png';
+    const apiKey = 'zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq';
+    const fallbackThumb = 'assets/logo.png';
+    const container = document.getElementById('visual-news-feed');
 
+    async function fetchVisualFeed() {
       const sources = [
         { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml' },
         { name: 'DW', url: 'https://rss.dw.com/rdf/rss-en-all' },
         { name: 'Reuters', url: 'http://feeds.reuters.com/Reuters/worldNews' },
         { name: 'BBC', url: 'http://feeds.bbci.co.uk/news/world/rss.xml' }
       ];
-
       const keywords = ['war', 'missile', 'strike', 'nuclear', 'conflict', 'invasion', 'attack', 'tensions', 'military', 'ww3'];
 
       for (const source of sources) {
@@ -262,98 +165,27 @@ fetchVisualFeed();
           const items = data.items.filter(item =>
             keywords.some(word => item.title.toLowerCase().includes(word))
           ).slice(0, 2);
-
           items.forEach(item => {
             const thumb = item.enclosure?.url || fallbackThumb;
-            const div = document.createElement('div');
-            div.style = 'background: #1f1f1f; margin-bottom: 1em; padding: 1em; border-left: 5px solid #ff4c4c; border-radius: 8px; max-width: 700px; margin-inline: auto; text-align: left;';
-            div.innerHTML = `
-              <div style="display: flex; gap: 1em; align-items: center;">
-                <img src="${thumb}" alt="Thumbnail" style="width: 100px; height: 60px; object-fit: cover; border-radius: 4px;">
-                <div>
-                  <h3 style="margin: 0; font-size: 1.1em;">${item.title}</h3>
-                  <p style="font-size: 0.9em; color: #ccc;">${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 100)}...</p>
-                  <div style="font-size: 0.8em; color: #aaa;">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+            container.innerHTML += `
+              <a href="${item.link}" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
+                <div style="background:#1e1e1e;border:1px solid #333;border-radius:8px;overflow:hidden;transition: transform 0.2s ease;">
+                  <img src="${thumb}" alt="news" style="width:100%;height:160px;object-fit:cover;">
+                  <div style="padding:1em">
+                    <h3 style="margin:0 0 0.5em;color:#ff4c4c;font-size:1rem;">${item.title}</h3>
+                    <p style="font-size:0.9rem;color:#aaa;">${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 100)}...</p>
+                    <div style="font-size:0.8rem;color:#888;">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
+                  </div>
                 </div>
-              </div>
-            `;
-            feed.appendChild(div);
+              </a>`;
           });
         } catch (err) {
-          console.warn('Feed error from:', source.name, err);
+          console.warn('Feed error from', source.name, err);
         }
       }
     }
 
-    fetchLiveFeed();
-  // Also update the featured section
-function updateFeaturedSection(item) {
-  // Overridden to preserve curated Global Briefing
-  console.log('Featured section remains static with manual summary.');
-});
-}
-
-// Call it on the first relevant item found
-let updatedOnce = false;
-
-async function fetchLiveFeed() {
-  const feed = document.getElementById('feed-container');
-  const apiKey = 'zswbk0uonulghwh1vad1lxtti1e7btls2qkbkvxq';
-  const fallbackThumb = 'assets/logo.png';
-
-  const sources = [
-    { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml' },
-    { name: 'DW', url: 'https://rss.dw.com/rdf/rss-en-all' },
-    { name: 'Reuters', url: 'http://feeds.reuters.com/Reuters/worldNews' },
-    { name: 'BBC', url: 'http://feeds.bbci.co.uk/news/world/rss.xml' }
-  ];
-
-  const keywords = ['war', 'missile', 'strike', 'nuclear', 'conflict', 'invasion', 'attack', 'tensions', 'military', 'ww3'];
-
-  for (const source of sources) {
-    try {
-      const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=${apiKey}`);
-      const data = await res.json();
-      const items = data.items.filter(item =>
-        keywords.some(word => item.title.toLowerCase().includes(word))
-      ).slice(0, 3);
-
-      items.forEach(item => {
-        const thumb = item.enclosure?.url || fallbackThumb;
-        const div = document.createElement('div');
-        div.style = 'background: #1f1f1f; margin-bottom: 1em; padding: 1em; border-left: 5px solid #ff4c4c; border-radius: 8px; max-width: 700px; margin-inline: auto; text-align: left;';
-        div.innerHTML = `
-          <div style="display: flex; gap: 1em; align-items: center;">
-            <img src="${thumb}" alt="Thumbnail" style="width: 100px; height: 60px; object-fit: cover; border-radius: 4px;">
-            <div>
-              <h3 style="margin: 0; font-size: 1.1em;">${item.title}</h3>
-              <p style="font-size: 0.9em; color: #ccc;">${(item.description || '').replace(/<[^>]+>/g, '').slice(0, 100)}...</p>
-              <div style="font-size: 0.8em; color: #aaa;">🌐 ${source.name} · 🕒 ${new Date(item.pubDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-            </div>
-          </div>
-        `;
-        feed.appendChild(div);
-
-        if (!updatedOnce) {
-          updateFeaturedSection({ ...item, source: source.name });
-          updatedOnce = true;
-        }
-      });
-    } catch (err) {
-      console.warn('Feed error from:', source.name, err);
-    }
-  }
-}
-
-fetchLiveFeed();
-</script>
-<section class="newsletter" style="text-align: center; margin: 40px auto; padding: 24px; max-width: 500px;">
-  <h2>Subscribe for Hourly Alerts</h2>
-  <form action="http://eepurl.com/jhJvBw" method="post" target="_blank">
-    <input type="email" name="EMAIL" placeholder="Your email address" required style="padding: 12px; border: none; border-radius: 4px; font-size: 1rem; margin-right: 8px; width: 65%;">
-    <input type="submit" value="Subscribe" style="padding: 12px 20px; background-color: #ff4c4c; border: none; border-radius: 4px; color: white; font-weight: bold; cursor: pointer; transition: background 0.3s ease;">
-  </form>
-</section>
-
+    fetchVisualFeed();
+  </script>
 </body>
 </html>
